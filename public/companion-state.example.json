@@ -1,0 +1,23 @@
+{
+  "schema_version": "annunimas.citadel.companion.v1",
+  "scenario": "collections",
+  "phase": "agent_arrival",
+  "event": "inquiry",
+  "banner": "ATHENA knowledge ready",
+  "inquiry": "Review synthesized candidate clusters",
+  "action": "Open the review packet before queue mutation",
+  "primary_agent": "athena",
+  "support_agents": [
+    "arandur",
+    "mnemosyne"
+  ],
+  "focus": [
+    "athena",
+    "mnemosyne"
+  ],
+  "urgency": "normal",
+  "event_id": "example-athena-knowledge",
+  "source": "annunimas",
+  "timestamp": "2026-05-18T12:00:00.000Z",
+  "arda_scenario": "knowledge"
+}
