@@ -24,8 +24,7 @@ soterion:
 > build. Broader suite/native stable evidence is recorded in
 > `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`.
 >
-> **Companion direction file:** `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md`
-
+> **Companion direction file:** `ARDA_CONTRACTS_MANIFEST.md`
 This file is the factual implementation audit for `apps/arda-hud`. It supersedes
 the older rebuild inventory that described missing scene/runtime layers before
 the Phase 2-7 implementation work was completed.
@@ -170,9 +169,9 @@ Primary loaded projections and ledgers:
 These are the most important gaps after the audit:
 
 1. **Plan closeout and sequencing**
-   - `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md` is now the central product
-     bridge, while `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md` carries the
-     operating-surface implementation evidence.
+   - The planning bridge content from `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md`
+     is now folded into `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`; use that
+     plan as the current operating-surface evidence and execution record.
    - Remaining work is no longer "which plan is current"; it is closing the
      documented Phase 8 tasks in order.
 
@@ -313,13 +312,10 @@ These are the most important gaps after the audit:
 
 | File | Keep as | Current role |
 | --- | --- | --- |
-| `MYTHOS_SPEC.md` | Vision source | Broadest idea inventory: Night City, remote agents, file forest, voice, live sync, Git rivers, AR/XR. |
 | `ARDA_PRD.md` | Experience source | Boardroom/throne product intent and interaction feel. |
 | `ARDA_IMPLEMENTATION_PLAN.md` | Completion record | Historical record of completed Phase 2-7 rebuild and active Phase 8 productization pass. |
-| `ARDA_DATA_SURFACE_MAP_2026-05-21.md` | Data audit snapshot | Yesterday's detailed source inventory and immediate data-wiring findings. |
-| `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md` | Planning bridge | Current central path forward that reconciles vision, shipped work, incoming data, and gaps. |
 | `ARDA_AUDIT.md` | Current factual audit | This file: factual implementation/data/gap audit. |
-|| `ARDA_CONTRACTS_MANIFEST.md` | Surface-slot contract | Current authority for boardroom slot assignments and per-slot `surface_layout`. |
+| `ARDA_CONTRACTS_MANIFEST.md` | Contract authority | Merged authority for boardroom slots, world districts, data provenance, and asset budgets. |
 
 ## Recommended Next Package
 

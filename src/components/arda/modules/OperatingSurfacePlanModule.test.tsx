@@ -31,7 +31,7 @@ const laneReports: OperatingSurfaceLaneReport[] = [
     current: 'Source map and system evidence are visible through operating surface drilldowns.',
     gap: 'Evidence lane still needs a compact provenance/freshness rollup.',
     next: 'Expose lane-level evidence counts and source coverage on the first screen.',
-    evidence: ['ARDA_DATA_PROVENANCE_CONTRACT.md'],
+    evidence: ['ARDA_CONTRACTS_MANIFEST.md'],
     status: 'gap',
   },
 ]

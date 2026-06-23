@@ -6,11 +6,12 @@ import { primarySigilForSource } from '../../../../lib/soterionRender'
 import type { OperatorCockpitSurface } from './OperatorCockpitPanel'
 
 type QueueTask = OperatorCockpitSurface['queue']['items'][number]
-
+type ListItem = OperatorCockpitSurface['queue']['items'][number]
 interface TaskListViewerProps {
   surface: OperatorCockpitSurface
   onApprove?: (taskId: string) => void
   onDiscard?: (taskId: string) => void
+  listItems?: ListItem[] | null
 }
 
 function slugFromTitle(title: string): string {
@@ -85,13 +86,25 @@ export default function TaskListViewer({ surface, onApprove, onDiscard }: TaskLi
 
       <div className="systems-kpi-grid">
         <article className={`systems-kpi ${surface.queue.openTotal > 0 ? 'systems-kpi--warn' : 'systems-kpi--good'}`}>
-          <span className="systems-kpi__label">Open Tasks</span>
+          <span className="systems-kpi__label">Open Total</span>
           <strong className="systems-kpi__value">{surface.queue.openTotal}</strong>
+          <span className="systems-kpi__note">in-flight metadata only</span>
         </article>
-        <article className="systems-kpi systems-kpi--accent">
-          <span className="systems-kpi__label">Loaded</span>
-          <strong className="systems-kpi__value">{tasks.length}</strong>
-        </article>
+      </div>
+
+      <div className="systems-chip-cloud">
+        <span className={`systems-chip ${surface.queue.statusSplit.ready > 0 ? 'systems-chip--good' : 'systems-chip--warn'}`}>
+          ready {surface.queue.statusSplit.ready}
+        </span>
+        <span className={`systems-chip ${surface.queue.statusSplit.pending > 0 ? 'systems-chip--warn' : 'systems-chip--good'}`}>
+          pending {surface.queue.statusSplit.pending}
+        </span>
+        <span className={`systems-chip ${surface.queue.statusSplit.inProgress > 0 ? 'systems-chip--warn' : 'systems-chip--good'}`}>
+          in progress {surface.queue.statusSplit.inProgress}
+        </span>
+        <span className={`systems-chip ${surface.queue.statusSplit.blocked > 0 ? 'systems-chip--warn' : 'systems-chip--good'}`}>
+          blocked {surface.queue.statusSplit.blocked}
+        </span>
       </div>
 
       <div className="task-list-viewer__layout">

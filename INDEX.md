@@ -6,12 +6,19 @@ Consolidated ARDA HUD index and source index.
 ## Documents
 
 - `README.md`
-- `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`
 - `ARDA_CONTRACTS_MANIFEST.md`
 - `ARDA_HUD_INTEGRATION.md`
 - `src/scene/ARDA_SCENE_CONTRACTS.md`
 - `src/scene/systems/CONTRACTS.md`
+- `docs/contracts/ARDA_ASSET_PERFORMANCE_BUDGET.md`
+- `docs/contracts/ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md`
+- `docs/contracts/ARDA_DATA_PROVENANCE_CONTRACT.md`
+- `docs/contracts/ARDA_WORLD_DISTRICT_CONTRACT.md`
 - `docs/archived/ARCHIVED_MYTHOS_SPEC.md`
+- `docs/archived/ARDA_AUDIT.md`
+- `docs/archived/ARDA_IMPLEMENTATION_PLAN.md`
+- `docs/archived/ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`
+- `docs/archived/ARDA_PRD.md`
 
 ## Current implementation notes
 

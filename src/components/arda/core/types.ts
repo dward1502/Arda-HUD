@@ -28,6 +28,16 @@ export interface ThemeOption {
 
 export type ViewMode = 'boardroom' | 'world' | 'panel'
 
+export type OperatingSurfaceNavKey =
+  | 'Now'
+  | 'Work'
+  | 'Decisions'
+  | 'Knowledge'
+  | 'Health'
+  | 'Business'
+  | 'Evidence'
+  | 'Settings'
+
 export interface MonitorAssignment {
   slot: string
   label: string

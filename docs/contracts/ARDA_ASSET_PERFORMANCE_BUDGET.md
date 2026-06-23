@@ -6,10 +6,10 @@ soterion:
   role: "performance_contract"
   owner: "HADES"
   status: "active"
-  last_reviewed: "2026-06-01"
+  last_reviewed: "2026-06-23"
 ---
 
-> 🜏 Soterion: 📜 performance_contract | owner: HADES | status: active | reviewed: 2026-06-01
+> 🜏 Soterion: 📜 performance_contract | owner: HADES | status: active | reviewed: 2026-06-23
 
 # ARDA Asset Performance Budget
 

@@ -8,6 +8,7 @@ describe('OperatorCockpitPanel', () => {
         surface={{
           queue: {
             openTotal: 2,
+            statusSplit: { ready: 1, pending: 1, inProgress: 0, blocked: 0 },
             items: [
               { id: 'tsk_1', title: 'Wire cockpit truth', owner: 'arda', status: 'queued', priority: 'high' },
             ],

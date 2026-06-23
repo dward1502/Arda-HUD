@@ -12,10 +12,9 @@ import {
   TerminalSquare,
   UserRound,
   X,
-  Minus,
-  Maximize2,
 } from 'lucide-react'
 import {
+  BoardroomEditOverlay,
   BusinessModule,
   ExecutiveOverviewModule,
   HermesDashboardModule,
@@ -35,26 +34,33 @@ import {
   PersonalGrowthModule,
   QueueProvenancePanel,
   ReviewGateWorkstation,
+  buildReviewGateDecisionRecordPreview,
   ServiceEmbedModule,
   SettingsModule,
   SectionFocusModule,
   SourceCoverageBadge,
   SystemsModule,
   WorldTerminalActionContractPanel,
-  buildReviewGateDecisionRecordPreview,
-  type ModuleId,
-  type CommandConsoleSurface,
-  type OperatingSurfaceLaneReport,
-  type OperatorCockpitSurface,
-  type ThemeId,
-  type ThemeOption,
-  type ViewMode,
-  type ArandurQueueWriteRequest,
-  type ReviewGateItem,
-  type SourceCoverageBadgeState,
+  WindowControls,
 } from './components/arda'
-import BoardroomViewport from './scene/boardroom/BoardroomViewport'
+import type {
+  OperatingSurfaceNavKey,
+  ModuleId,
+  ViewMode,
+  ThemeOption,
+  ThemeId,
+  ArandurQueueWriteRequest,
+  ReviewGateItem,
+  SourceCoverageBadgeState,
+  RoutableProviderEntry,
+  RoutableProviderModel,
+  CommandConsoleSurface,
+  OperatingSurfaceLaneReport,
+  OperatorCockpitSurface,
+  HumanAugmentationApproval,
+} from './components/arda/types'
 import { deriveBoardroomHudInstruments } from './scene/boardroom/boardroomHudInstruments'
+import BoardroomViewport from './scene/boardroom/BoardroomViewport'
 import WorldRuntimeViewport from './scene/world/WorldViewport'
 import { calculateWorldDistrictUrgencies } from './scene/world/worldDistrictUrgency'
 import {
@@ -88,7 +94,6 @@ import {
   windowManager,
   type WorkstationBridgeState,
 } from './utils/multiWindow'
-import type { RoutableProviderEntry, RoutableProviderModel } from './components/arda/modules/systems/RoutableProvidersPanel'
 import { useArdaActionAdapters } from './components/arda/hooks/useArdaActionAdapters'
 import { useArdaBundle } from './components/arda/hooks/useArdaBundle'
 import { useArdaRuntimePulse } from './components/arda/hooks/useArdaRuntimePulse'
@@ -105,7 +110,7 @@ import {
   WORLD_TERMINAL_SURFACE_IDS,
   type WorldSceneSurfaceId,
 } from './lib/worldSurfaceSettings'
-import type { SceneAnchorDefinition, SceneZoneDefinition } from './scene/systems/runtimeTypes'
+import type { SceneAnchorDefinition, SceneZoneDefinition, WorkstationManifestDefinition } from './scene/systems/runtimeTypes'
 
 const THEMES: ThemeOption[] = [
   { id: 'cyberpunk', label: 'Cyberpunk' },
@@ -159,16 +164,6 @@ const PANEL_LAYOUTS: Record<string, ModuleId[]> = {
   media_library: ['media_library', 'service_embed'],
   agent_remote_session: ['service_embed'],
 }
-
-type OperatingSurfaceNavKey =
-  | 'Now'
-  | 'Work'
-  | 'Decisions'
-  | 'Knowledge'
-  | 'Health'
-  | 'Business'
-  | 'Evidence'
-  | 'Settings'
 
 const OPERATING_SURFACE_NAV: Array<{
   lane: OperatingSurfaceNavKey
@@ -1060,6 +1055,19 @@ function getOperatorCockpitSurface(bundle: ArdaBundle, reviewGateItems: ReviewGa
     }))
   const deletedBytes = getNumber(storageApplySummary?.deleted_bytes, 0)
 
+  const statusSplit = latestTasks.reduce<Record<string, number>>((acc, entry) => {
+    const status = getString(entry.status, 'unknown')
+    acc[status] = (acc[status] || 0) + 1
+    return acc
+  }, {} as Record<string, number>)
+
+  const queueStatusSplit = {
+    ready: getNumber(statusSplit['ready'], 0) + getNumber(statusSplit['planned'], 0),
+    pending: getNumber(statusSplit['pending'], 0) + getNumber(statusSplit['queued'], 0),
+    inProgress: getNumber(statusSplit['in_progress'], 0),
+    blocked: getNumber(statusSplit['blocked'], 0),
+  }
+
   return {
     queue: {
       openTotal: openTasks.length,
@@ -1070,6 +1078,7 @@ function getOperatorCockpitSurface(bundle: ArdaBundle, reviewGateItems: ReviewGa
         status: getString(entry.status, 'unknown'),
         priority: getString(entry.priority, 'normal'),
       })),
+      statusSplit: queueStatusSplit,
     },
     humanGates: {
       blockedTotal: humanGates.length,
@@ -2418,7 +2427,7 @@ export default function App() {
   )
   const operatorCockpit = useMemo(
     () => (bundle ? getOperatorCockpitSurface(bundle, reviewGateItems) : {
-      queue: { openTotal: 0, items: [] },
+      queue: { openTotal: 0, statusSplit: { ready: 0, pending: 0, inProgress: 0, blocked: 0 }, items: [] },
       humanGates: { blockedTotal: 0, items: [] },
       warden: { effectiveAttention: 0, rawAttention: 0, repeatedNoise: 0, activeRepairFiles: 0, resolvedRepairFiles: 0 },
       chronos: { runnerStatus: 'missing', readyTaskCount: 0, scheduledTaskCount: 0, dueTasks: [] },
@@ -4213,29 +4222,11 @@ export default function App() {
   return (
     <div className={`arda-app arda-app--${viewMode}`}>
       {showCustomWindowControls ? (
-        <div className="window-controls" data-tauri-drag-region>
-          <button
-            className="window-control-btn"
-            onClick={minimizeWindow}
-            title="Minimize"
-          >
-            <Minus size={14} />
-          </button>
-          <button
-            className="window-control-btn"
-            onClick={toggleFullscreen}
-            title="Toggle Fullscreen"
-          >
-            <Maximize2 size={14} />
-          </button>
-          <button
-            className="window-control-btn window-control-btn--close"
-            onClick={closeWindow}
-            title="Close"
-          >
-            <X size={14} />
-          </button>
-        </div>
+        <WindowControls
+          onMinimize={minimizeWindow}
+          onToggleFullscreen={toggleFullscreen}
+          onClose={closeWindow}
+        />
       ) : null}
       <div className="keyboard-hints">
         <span className="kbd">Tab</span> Navigate
@@ -4297,7 +4288,7 @@ export default function App() {
           <BoardroomViewport
             active
             debug={editMode}
-            zones={boardroomSceneZones.map((zone): import('./scene/systems/runtimeTypes').SceneZoneDefinition => ({
+            zones={boardroomSceneZones.map((zone): SceneZoneDefinition => ({
               id: zone.id,
               title: zone.title,
               scene: zone.scene,
@@ -4308,7 +4299,7 @@ export default function App() {
               workstationIds: zone.workstation_ids,
               sourceIds: zone.source_ids,
             }))}
-            anchors={boardroomSceneAnchors.map((anchor): import('./scene/systems/runtimeTypes').SceneAnchorDefinition => ({
+            anchors={boardroomSceneAnchors.map((anchor): SceneAnchorDefinition => ({
               id: anchor.id,
               scene: anchor.scene,
               type: anchor.type,
@@ -4317,7 +4308,7 @@ export default function App() {
               activationBehavior: anchor.activation_behavior,
               dataBinding: anchor.data_binding,
             }))}
-            workstations={workstationManifests.map((workstation): import('./scene/systems/runtimeTypes').WorkstationManifestDefinition => ({
+            workstations={workstationManifests.map((workstation): WorkstationManifestDefinition => ({
               id: workstation.id,
               title: workstation.title,
               sourceZoneId: workstation.source_zone_id,

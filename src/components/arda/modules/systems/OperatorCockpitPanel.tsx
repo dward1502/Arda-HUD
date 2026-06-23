@@ -1,10 +1,19 @@
 // sigil: REPAIR
 import { primarySigilForSource } from '../../../../lib/soterionRender'
 
+export interface QueueStatusSplit {
+  ready: number
+  pending: number
+  inProgress: number
+  blocked: number
+}
+
 export interface OperatorCockpitSurface {
   queue: {
     openTotal: number
-    items: Array<{ id: string; title: string; owner: string; status: string; priority: string }>
+    deliveredTotal?: number
+    items: Array<{ id: string; title: string; owner: string; status: string; priority: string; recordClass?: string }>
+    statusSplit: QueueStatusSplit
   }
   humanGates: {
     blockedTotal: number
@@ -117,6 +126,18 @@ export default function OperatorCockpitPanel({ surface }: OperatorCockpitPanelPr
       </div>
 
       <div className="systems-chip-cloud">
+        <span className={`systems-chip ${surface.queue.statusSplit.ready > 0 ? 'systems-chip--good' : 'systems-chip--warn'}`}>
+          queue ready {surface.queue.statusSplit.ready}
+        </span>
+        <span className={`systems-chip ${surface.queue.statusSplit.pending > 0 ? 'systems-chip--warn' : 'systems-chip--good'}`}>
+          pending {surface.queue.statusSplit.pending}
+        </span>
+        <span className={`systems-chip ${surface.queue.statusSplit.inProgress > 0 ? 'systems-chip--warn' : 'systems-chip--good'}`}>
+          in progress {surface.queue.statusSplit.inProgress}
+        </span>
+        <span className={`systems-chip ${surface.queue.statusSplit.blocked > 0 ? 'systems-chip--warn' : 'systems-chip--good'}`}>
+          blocked {surface.queue.statusSplit.blocked}
+        </span>
         <span className={`systems-chip ${attentionClear ? 'systems-chip--good' : 'systems-chip--warn'}`}>
           warden effective {surface.warden.effectiveAttention}
         </span>

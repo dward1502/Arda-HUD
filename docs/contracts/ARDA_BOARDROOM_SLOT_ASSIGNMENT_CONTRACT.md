@@ -6,10 +6,10 @@ soterion:
   role: "arda_boardroom_contract"
   owner: "PROMETHEUS"
   status: "active"
-  last_reviewed: "2026-06-06"
+  last_reviewed: "2026-06-23"
 ---
 
-> 🜏 Soterion: 📜 arda_boardroom_contract | owner: PROMETHEUS | status: active | reviewed: 2026-06-06
+> 🜏 Soterion: 📜 arda_boardroom_contract | owner: PROMETHEUS | status: active | reviewed: 2026-06-23
 
 # ARDA Boardroom Slot Assignment Contract
 

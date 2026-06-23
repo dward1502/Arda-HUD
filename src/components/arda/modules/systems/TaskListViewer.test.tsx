@@ -5,6 +5,7 @@ import type { OperatorCockpitSurface } from './OperatorCockpitPanel'
 const surface: OperatorCockpitSurface = {
   queue: {
     openTotal: 2,
+    statusSplit: { ready: 0, pending: 2, inProgress: 0, blocked: 0 },
     items: [
       {
         id: 'tsk_20260605_arda_task_viewer',

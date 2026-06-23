@@ -1,5 +1,5 @@
 // sigil: REPAIR
-import bundledSoterionRenderContract from '../../../../core/state/soterion_render_contract.json'
+import bundledSoterionRenderContract from '../../core/state/soterion_render_contract.json'
 import type { JsonRecord } from './ardaSource'
 
 type ProtocolMarkerKey = 'REVIEW' | 'JOULE_WORK' | 'TRIAD_GATE' | string

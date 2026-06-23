@@ -1,44 +1,45 @@
-// sigil: REPAIR
-export type ArdaRuntimeMode = 'tauri-native' | 'tauri-dev' | 'static-preview' | 'browser-dev'
+import type { ReactNode } from 'react'
 
 export interface ArdaRuntimeModeStatus {
-  mode: ArdaRuntimeMode
+  label: string
+  mode: string
+  detail: string
+  dataSource: string
   isTauri: boolean
   isDev: boolean
-  dataSource: 'tauri-ipc' | 'unavailable'
   nativeProofRequired: boolean
-  label: string
-  detail: string
 }
 
 export function detectArdaRuntimeMode(): ArdaRuntimeModeStatus {
-  const isTauri = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window
-  const isDev = import.meta.env.DEV
-  const mode: ArdaRuntimeMode = isTauri
-    ? isDev ? 'tauri-dev' : 'tauri-native'
-    : isDev ? 'browser-dev' : 'static-preview'
+  const dataSource = 'env'
+  const isTauri = typeof window !== 'undefined' && !!(window as unknown as Record<string, unknown>).__TAURI__
+  const isDev = process.env.NODE_ENV !== 'production'
+  const nativeProofRequired = isTauri && !isDev
 
-  const labels: Record<ArdaRuntimeMode, string> = {
-    'tauri-native': 'Tauri native',
-    'tauri-dev': 'Tauri dev',
-    'static-preview': 'Static preview',
-    'browser-dev': 'Browser dev',
+  let mode = 'native'
+  let detail = 'Tauri desktop shell detected'
+
+  if (mode !== 'native') {
+    mode = 'web'
+    detail = 'Detected runtime uses web transport.'
   }
 
-  const details: Record<ArdaRuntimeMode, string> = {
-    'tauri-native': 'Canonical ARDA runtime: WebKit plus Tauri IPC file access.',
-    'tauri-dev': 'Native shell with development frontend; validate against production native before release.',
-    'static-preview': 'Built frontend preview without Tauri IPC; useful for layout only.',
-    'browser-dev': 'Vite browser mode without Tauri IPC; useful for layout only.',
+  if (isDev) {
+    detail = `${detail} (development profile active) `
+  }
+
+  if (nativeProofRequired) {
+    detail = `${detail} Native proof required.`
   }
 
   return {
+    label: `${mode.toUpperCase()} runtime`,
     mode,
+    detail,
+    dataSource,
     isTauri,
     isDev,
-    dataSource: isTauri ? 'tauri-ipc' : 'unavailable',
-    nativeProofRequired: mode !== 'tauri-native',
-    label: labels[mode],
-    detail: details[mode],
+    nativeProofRequired,
   }
 }
+
