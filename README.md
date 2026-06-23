@@ -25,27 +25,22 @@ in `apps/arda-hud`, but its runtime data contract is rooted in `/core/state`,
 - current machine-readable path contract: `config/arda_hud.settings.json`
 - current human-readable baseline: `README.md` + `INDEX.md`
 - current operating-surface evidence plan: `ARDA_CONTRACTS_MANIFEST.md` and `INDEX.md`
-- historical operating-surface plan: `docs/archived/ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`
-  (plan content from the former `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md` is now
-  folded into the operating-surface plan or the merged README/INDEX entries)
 The old template-era README and host-specific system note are retired. Treat the
 files above as the current source of truth for what ARDA HUD consumes and how it
 is intended to operate.
 
 ## Active Documentation
 
-- `ARDA_CONTRACTS_MANIFEST.md` — merged root ARDA contracts; authorities are now in `docs/contracts/` and this file points there.
-- `ARDA_HUD_INTEGRATION.md` — pending integration target (state-source proof plan; not yet complete).
-- `docs/contracts/ARDA_ASSET_PERFORMANCE_BUDGET.md` — scene asset size budgets.
-- `docs/contracts/ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md` — boardroom slot surface-layout authority.
-- `docs/contracts/ARDA_DATA_PROVENANCE_CONTRACT.md` — source provenance/freshness rules.
-- `docs/contracts/ARDA_WORLD_DISTRICT_CONTRACT.md` — world district field/action/urgency rules.
-- `docs/archived/ARDA_AUDIT.md` — historical factual implementation/data/gap audit.
-- `docs/archived/ARDA_IMPLEMENTATION_PLAN.md` — historical Phase 2-7 completion record.
-- `docs/archived/ARDA_PRD.md` — historical boardroom/throne product intent.
-- `src/scene/ARDA_SCENE_CONTRACTS.md` — merged scene-level contracts (boardroom, world, workstations, slots, tuning).
-- `src/scene/systems/CONTRACTS.md` — merged system-level scene contracts (runtime, presence, materials, lighting, atmosphere, interaction, camera).
-- `docs/archived/ARCHIVED_MYTHOS_SPEC.md` — historical ARDA/MYTHOS vision archive.
+- `INDEX.md` — top-level doc map and routing
+- `ARDA_CONTRACTS_MANIFEST.md` — authority map for cross-cutting contracts
+- `ARDA_HUD_INTEGRATION.md` — pending integration target (state-source proof plan)
+- `docs/contracts/ARDA_ASSET_PERFORMANCE_BUDGET.md` — scene asset size budgets
+- `docs/contracts/ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md` — boardroom slot surface-layout authority
+- `docs/contracts/ARDA_DATA_PROVENANCE_CONTRACT.md` — source provenance/freshness rules
+- `docs/contracts/ARDA_WORLD_DISTRICT_CONTRACT.md` — world district field/action/urgency rules
+- `src/scene/ARDA_SCENE_CONTRACTS.md` — merged scene-level contracts
+- `src/scene/systems/CONTRACTS.md` — merged system-level scene contracts
+- `docs/archived/` — historical artifacts kept for context only
 
 ## Active Implementation Boundary
 
@@ -66,20 +61,9 @@ stable `lothlorien` path described below.
 
 ## Document History and Supersession
 
-| Retired / Archived File | Current Authority | Why |
-|---|---|---|
-| `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md` (root) | `README.md` / `INDEX.md` | Plan content folded into active docs; detailed authorities moved to `docs/contracts/`. |
-| `ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md` (root) | `docs/contracts/ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md` | Root copy retired; canonical authority is in `docs/contracts/`. |
-| `ARDA_DATA_PROVENANCE_CONTRACT.md` (root) | `docs/contracts/ARDA_DATA_PROVENANCE_CONTRACT.md` | Root copy retired; canonical authority is in `docs/contracts/`. |
-| `ARDA_WORLD_DISTRICT_CONTRACT.md` (root) | `docs/contracts/ARDA_WORLD_DISTRICT_CONTRACT.md` | Root copy retired; canonical authority is in `docs/contracts/`. |
-| `ARDA_ASSET_PERFORMANCE_BUDGET.md` (root) | `docs/contracts/ARDA_ASSET_PERFORMANCE_BUDGET.md` | Root copy retired; canonical authority is in `docs/contracts/`. |
-| `ARDA_AUDIT.md` (root) | `docs/archived/ARDA_AUDIT.md` | Historical audit; preserved for context, superseded by current contracts. |
-| `ARDA_IMPLEMENTATION_PLAN.md` (root copy) | `ARDA_IMPLEMENTATION_PLAN.md` (root) | Root plan updated to include later Phases; old section retained in `docs/archived/`. |
-| `ARDA_PRD.md` (root) | `docs/archived/ARDA_PRD.md` | Historical product intent; superseded by active boardroom/throne implementation. |
-| `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md` | Content folded into above | Absorbed into operating-surface plan and merged README/INDEX entries. |
-| `ARCHIVED_MYTHOS_SPEC.md` (root) | `docs/archived/ARCHIVED_MYTHOS_SPEC.md` | Historical ARDA/MYTHOS vision; preserved for context. |
-
-Do not revive per-file authority for retired root paths. Use the `Current Authority` column above as the single source of truth.
+The long-form supersession table has been removed. See `INDEX.md` for the
+current active/archived doc map and the canonical source of truth for each
+contract.
 
 ## Runtime Contract
 

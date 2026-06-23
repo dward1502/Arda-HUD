@@ -1,51 +1,28 @@
 <!-- sigil: REPAIR -->
 # ARDA HUD Index
 
-Consolidated ARDA HUD index and source index.
+Consolidated ARDA HUD documentation index.
 
-## Documents
+## Active docs
 
-- `README.md`
-- `ARDA_CONTRACTS_MANIFEST.md`
-- `ARDA_HUD_INTEGRATION.md`
-- `src/scene/ARDA_SCENE_CONTRACTS.md`
-- `src/scene/systems/CONTRACTS.md`
-- `docs/contracts/ARDA_ASSET_PERFORMANCE_BUDGET.md`
-- `docs/contracts/ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md`
-- `docs/contracts/ARDA_DATA_PROVENANCE_CONTRACT.md`
-- `docs/contracts/ARDA_WORLD_DISTRICT_CONTRACT.md`
-- `docs/archived/ARCHIVED_MYTHOS_SPEC.md`
-- `docs/archived/ARDA_AUDIT.md`
-- `docs/archived/ARDA_IMPLEMENTATION_PLAN.md`
-- `docs/archived/ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`
-- `docs/archived/ARDA_PRD.md`
+- `README.md` — project overview, build/test commands, launch/packaging paths
+- `INDEX.md` — this file; top-level doc map and routing
+- `RUNTIME.md` — native Tauri/WebKit runtime proof instructions
+- `ARDA_IMPLEMENTATION_PLAN.md` — canonical completion record through current phases
+- `ARDA_CONTRACTS_MANIFEST.md` — authority map for cross-cutting contracts
+- `ARDA_HUD_INTEGRATION.md` — integration target and verification checklist
+- `docs/contracts/` — canonical contract authorities:
+  - `ARDA_ASSET_PERFORMANCE_BUDGET.md`
+  - `ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md`
+  - `ARDA_DATA_PROVENANCE_CONTRACT.md`
+  - `ARDA_WORLD_DISTRICT_CONTRACT.md`
+- `src/scene/ARDA_SCENE_CONTRACTS.md` — merged scene-level contracts
+- `src/scene/systems/CONTRACTS.md` — merged system-level scene contracts
 
-## Current implementation notes
+## Archived docs
 
-- `RUNTIME.md` is the canonical runtime proof note. Final ARDA validation is
-  native Tauri/WebKit in distrobox `lothlorien`; host Vite/browser is useful
-  for fast visual iteration but is not final proof.
-- `src/lib/ardaRuntimeMode.ts` and
-  `src/components/arda/core/RuntimeModeBadge.tsx` expose whether the current
-  surface is running as Vite/browser, Tauri dev, Tauri static, or a degraded
-  fallback.
-- `src/lib/ardaBundleTypes.ts`, `src/lib/ardaReaders.rs`, and
-  `src/lib/ardaSource.rs` split ARDA bundle typing, Rust file/static readers, and
-  the public bundle loader.
-- `src/lib/ardaProvenance.ts` defines the shared ARDA source provenance and
-  freshness model used by `DataFreshnessBadge.tsx` and
-  `DataSourceDetailsPanel.tsx`.
-- `ARDA_CONTRACTS_MANIFEST.md` defines current scene asset size budgets,
-  boardroom surface layout semantics, source freshness/provenance behavior,
-  and world district field/action/urgency rules after the 2026-06-23
-  contract merge.
-- `src/components/arda/modules/WorkerReportSummary.tsx` is a lightweight
-  positive-path check. It verifies the module renders, emits the expected
-  surface-split summary for workers, and respects the ARDA status reporting
-  contract.
+- `docs/archived/ARCHIVED_MYTHOS_SPEC.md` — historical vision archive
+- `docs/archived/ARDA_AUDIT.md` — historical implementation/data/gap audit
+- `docs/archived/ARDA_PRD.md` — historical boardroom product intent (superseded; delete or merge into `ARDA_IMPLEMENTATION_PLAN.md` appendix)
 
-## Archived paths
-
-The old split contract docs were retired into the merged docs above.
-This index is the migration surface; do not revive per-file authority
-for those source paths.
+Do not revive per-file authority for retired/superseded paths. Use the active docs above as the single source of truth.

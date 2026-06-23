@@ -2,7 +2,7 @@
 title: ARDA HUD Integration Plan
 status: pending
 owner: arda-hud
-updated: 2026-06-22
+updated: 2026-06-23
 ---
 
 # ARDA HUD Integration Plan
@@ -49,9 +49,6 @@ When no core path is mounted, HUD should show empty panels with a `LOCAL ONLY` b
 - [ ] Queue counters match `cat core/projects/tasks/queue.jsonl | wc -l` minus closed tasks.
 - [ ] Local-only mode renders cleanly with zero config.
 
-## Notes
-The ARDA HUD binaries exist at:
-- `/var/home/mythos/Eregion/arda-hud/arda_hud`
-- `/var/home/mythos/Eregion/arda-hud/arda_hud_bin`
-
-The current plan entry is `PROMETHEUS.md` task #6.
+## Owners
+- ARDA: `arda-hud`
+- Provenance: `ARDA_CONTRACTS_MANIFEST.md` → `docs/contracts/ARDA_DATA_PROVENANCE_CONTRACT.md`
