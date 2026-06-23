@@ -18,18 +18,17 @@ soterion:
 **Date:** 2026-02-23  
 **Status:** Vision archive / idea bank, not the current execution plan.
 
-> Current execution lives in `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md`,
-> `ARDA_IMPLEMENTATION_PLAN.md`, `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`,
-> and `RUNTIME.md`. Use this file only as the broad MYTHOS/ARDA vision source;
-> do not treat every feature below as active scope.
+> Current execution lives in `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`,
+> `ARDA_IMPLEMENTATION_PLAN.md`, and `RUNTIME.md`. Use this file only as the
+> broad MYTHOS/ARDA vision source. Supporting detail from the former
+> `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md` is now incorporated into
+> `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md` Appendix A.
 
 ---
 
 ## Core Vision
 
 > "This is no longer an app. This is your personal Night City where you are the netrunner god-king and every agent is your crew."
-
-
 
 ---
 

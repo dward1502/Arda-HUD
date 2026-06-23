@@ -23,9 +23,9 @@ Expected structure:
 - `systems/` — scene controllers, anchors, and contracts
 
 Canonical contracts:
-- `systems/SCENE_RUNTIME_CONTRACT.md`
-- `systems/CAMERA_CONTRACT.md`
-- `systems/INTERACTION_CONTRACT.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
 - `boardroom/BOARDROOM_CONTRACT.md`
 - `world/WORLD_CONTRACT.md`
 - `workstations/WORKSTATION_CONTRACT.md`

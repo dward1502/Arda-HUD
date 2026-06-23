@@ -132,8 +132,7 @@ the registry.
 This contract depends on:
 
 - `src/assets/scene/ASSET_PIPELINE_CONTRACT.md`
-- `systems/LIGHTING_CONTRACT.md`
-- `systems/ATMOSPHERE_CONTRACT.md`
+- `systems/CONTRACTS.md`
 - `shaders/SHADER_CONTRACT.md`
 
 ## Exit Requirement

@@ -35,15 +35,14 @@ For a photoreal target with clean licensing:
   [Poly Haven textures](https://polyhaven.com/textures). Primary source for
   the `materials/` domain.
 - **HDRIs / environment maps (CC0)** — [Poly Haven HDRIs](https://polyhaven.com/hdris).
-  Feeds the boardroom and world `environmentMap` per
-  `systems/ATMOSPHERE_CONTRACT.md`.
+  Feeds the boardroom and world `environmentMap` per `systems/CONTRACTS.md`.
 - **Meshes (CC0, limited)** — [Poly Haven models](https://polyhaven.com/models).
   Selection is thin; expect to author the boardroom desk and monitor
   bezels in Blender.
 - **Larger mesh kits (commercial)** — Quixel Megascans, Kitbash3D. Worth the
   license for the world districts; overkill for the boardroom shell.
 - **Hologram / presence** — author in-house. No stock asset matches the
-  restraint rules in `systems/PRESENCE_CONTRACT.md`; the shader carries most
+  restraint rules in `systems/CONTRACTS.md`; the shader carries most
   of the look.
 
 Main tradeoff: CC0 sources are free and license-clean but force you to
@@ -75,7 +74,7 @@ Structural boardroom trio (PBR materials, consumed via
   suspect-metalness range the material contract flags)
 
 Boardroom IBL (image-based lighting, governed by
-`systems/ATMOSPHERE_CONTRACT.md`):
+`systems/CONTRACTS.md`):
 
 - `window/boardroom_environment/` — boardroom HDRI environment map (.hdr).
   Single biggest photoreal lever; activating this lifts every PBR material

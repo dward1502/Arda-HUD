@@ -72,7 +72,7 @@ handoff between the generic spatial HUD and the system-specific adapters.
 The current slot assignment authority is
 `core/state/arda_boardroom_slots.json`, parsed by
 `apps/arda-hud/src/lib/boardroomSlotSettings.ts` and documented in
-`apps/arda-hud/ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md`. Each assignment may
+`ARDA_CONTRACTS_MANIFEST.md`. Each assignment may
 carry `surface_layout` metadata that describes:
 
 - adapter type: ARDA component, local service, document, media, terminal,

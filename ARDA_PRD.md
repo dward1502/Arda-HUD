@@ -16,7 +16,7 @@ Version: 0.1 (Mythos Throne Phase)
 Date: 2026-05-11
 Owner: Netrunner God-King (you) + Grok
 Status: Vision Source. Current execution lives in `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md`,
-`ARDA_IMPLEMENTATION_PLAN.md`, and `ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md`.
+`ARDA_IMPLEMENTATION_PLAN.md`, and `ARDA_CONTRACTS_MANIFEST.md`.
 
 Implementation status note — 2026-06-01:
 

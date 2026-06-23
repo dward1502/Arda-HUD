@@ -85,7 +85,7 @@ Every non-trivial asset group (a `district_*` mesh, a `window_*` plate, a
 - `id`
 - `domain` (`window` | `hologram` | `world` | `materials`)
 - `scene_binding` (anchor id, zone id, or `shared`)
-- `material_family` (see `systems/MATERIAL_CONTRACT.md`)
+- `material_family` (see `systems/CONTRACTS.md`)
 - `source` (origin tool or vendor reference)
 - `license`
 
@@ -123,7 +123,7 @@ If an asset has no valid scene binding, it does not belong in this pipeline.
 
 - assets enter the repo only after a metadata sidecar exists
 - binary assets larger than 1 MB should be reviewed before commit
-- runtime assets must satisfy `ARDA_ASSET_PERFORMANCE_BUDGET.md` before being
+- runtime assets must satisfy `ARDA_CONTRACTS_MANIFEST.md` before being
   treated as production-ready; oversized starter assets require an explicit
   lazy-load/archive/optimization note
 - source/working files (`.blend`, `.psd`, `.spp`) do not belong under
@@ -177,10 +177,10 @@ Scene code must not:
 
 This pipeline depends on:
 
-- `systems/MATERIAL_CONTRACT.md`
-- `systems/LIGHTING_CONTRACT.md`
-- `systems/ATMOSPHERE_CONTRACT.md`
-- `systems/PRESENCE_CONTRACT.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
 - `shaders/SHADER_CONTRACT.md`
 
 ## Exit Requirement

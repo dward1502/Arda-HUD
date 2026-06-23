@@ -44,12 +44,11 @@ The world must compose its lighting from these named roles:
 - `world_key_light` — directional anchor
 - `world_district_accent` — local district-specific tint
 - `world_terminal_glow` — emissive terminal highlight
-- `world_traversal_path_light` — low traversal/path contribution
-
-Stars, fog, and atmosphere are governed by
-`systems/ATMOSPHERE_CONTRACT.md`, not by this rig.
-
-## Tone & Exposure
+|- `world_traversal_path_light` — low traversal/path contribution
+|
+|Stars, fog, and atmosphere are governed by `systems/CONTRACTS.md`, not by this rig.
+|
+|## Tone & Exposure
 
 - the renderer must run in physically correct mode
   (Three.js `physicallyCorrectLights = true`)
@@ -101,10 +100,10 @@ Scene transitions may not:
 
 This contract depends on:
 
-- `systems/MATERIAL_CONTRACT.md`
-- `systems/ATMOSPHERE_CONTRACT.md`
-- `systems/PRESENCE_CONTRACT.md`
-- `systems/CAMERA_CONTRACT.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
 
 ## Exit Requirement
 

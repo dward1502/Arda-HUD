@@ -61,7 +61,7 @@ The current implementation loads boardroom assignments from workspace/core state
 at `core/state/arda_boardroom_slots.json`, with browser-local operator state as
 a fallback while the workspace document is unavailable. The durable assignment
 schema and `surface_layout` display contract are documented in
-`apps/arda-hud/ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md`.
+`ARDA_CONTRACTS_MANIFEST.md`.
 
 ## Rendering Rule
 

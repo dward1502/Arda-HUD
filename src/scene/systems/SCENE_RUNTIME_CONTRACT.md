@@ -113,8 +113,8 @@ This runtime contract depends on:
 - `boardroom/BOARDROOM_CONTRACT.md`
 - `world/WORLD_CONTRACT.md`
 - `workstations/WORKSTATION_CONTRACT.md`
-- `systems/CAMERA_CONTRACT.md`
-- `systems/INTERACTION_CONTRACT.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
 
 ## Phase Exit Requirement
 

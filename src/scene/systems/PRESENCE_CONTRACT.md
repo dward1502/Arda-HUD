@@ -97,7 +97,7 @@ It must:
 
 - stay anchored to the hologram position
 - remain subordinate to the presence silhouette
-- respect `INTERACTION_CONTRACT.md` for activation
+- respect `systems/CONTRACTS.md` for activation
 
 It must not:
 
@@ -119,9 +119,9 @@ It must not:
 This contract depends on:
 
 - `boardroom/BOARDROOM_CONTRACT.md`
-- `systems/LIGHTING_CONTRACT.md`
-- `systems/MATERIAL_CONTRACT.md`
-- `systems/INTERACTION_CONTRACT.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
 - `shaders/SHADER_CONTRACT.md`
 
 ## Exit Requirement

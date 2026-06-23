@@ -29,9 +29,9 @@ Atmosphere refers to:
 
 It does not refer to:
 
-- emissive materials on geometry (see `MATERIAL_CONTRACT.md`)
-- directional or local lights (see `LIGHTING_CONTRACT.md`)
-- hologram projection (see `PRESENCE_CONTRACT.md`)
+- emissive materials on geometry (see `systems/CONTRACTS.md`)
+- directional or local lights (see `systems/CONTRACTS.md`)
+- hologram projection (see `systems/CONTRACTS.md`)
 
 ## Boardroom Atmosphere
 
@@ -118,9 +118,9 @@ ramp across a scene transition, but:
 
 This contract depends on:
 
-- `systems/LIGHTING_CONTRACT.md`
-- `systems/MATERIAL_CONTRACT.md`
-- `systems/PRESENCE_CONTRACT.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
 
 ## Exit Requirement
 

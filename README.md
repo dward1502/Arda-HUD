@@ -25,13 +25,22 @@ in `apps/arda-hud`, but its runtime data contract is rooted in `/core/state`,
 - current machine-readable path contract: `config/arda_hud.settings.json`
 - current human-readable baseline: `docs/arda/ARDA_HUD.md`
 - current scene-first rebuild history: `docs/arda/ARDA_FRONTEND_REBUILD.md`
-- current app product path: `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md`
 - current operating-surface evidence plan: `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md`
-- current native runtime proof note: `RUNTIME.md`
-
+  (includes Appendix A: integrated product path and execution vision from the
+  former `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md`; archived content is now
+  integrated into this plan's Appendix A).
 The old template-era README and host-specific system note are retired. Treat the
 files above as the current source of truth for what ARDA HUD consumes and how it
 is intended to operate.
+
+## Active Documentation
+
+- `ARDA_CONTRACTS_MANIFEST.md` — merged root ARDA contracts (world districts, boardroom slots, provenance, asset budget).
+- `ARDA_HUD_INTEGRATION.md` — HUD integration target and verification surface.
+- `ARDA_OPERATING_SURFACE_PLAN_2026-05-27.md` — active operating-surface evidence plan/record.
+- `src/scene/ARDA_SCENE_CONTRACTS.md` — merged scene-level contracts (boardroom, world, workstations, slots, tuning).
+- `src/scene/systems/CONTRACTS.md` — merged system-level scene contracts (runtime, presence, materials, lighting, atmosphere, interaction, camera).
+- `docs/archived/ARCHIVED_MYTHOS_SPEC.md` — historical ARDA/MYTHOS vision archive.
 
 ## Active Implementation Boundary
 
@@ -95,7 +104,7 @@ Boardroom monitor/desk assignments are backed by:
 
 - authority file: `core/state/arda_boardroom_slots.json`
 - frontend contract: `src/lib/boardroomSlotSettings.ts`
-- human contract: `ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md`
+- human contract: `ARDA_CONTRACTS_MANIFEST.md`
 
 Each slot can include a `surface_layout` with:
 
@@ -200,22 +209,4 @@ the last package pass, rerun `bash scripts/package_arda_hud.sh` before trusting 
 
 ## Related Files
 
-- `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md` — central product path that
-  reconciles the vision, PRD, completed rebuild work, live data surface, and
-  missing pieces.
-- `ARDA_AUDIT.md` — current factual implementation/data/gap audit for the ARDA
-  HUD app.
-- `ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md` — current boardroom slot and
-  `surface_layout` contract.
-- `ARDA_DATA_SURFACE_MAP_2026-05-21.md` — current detailed data-source map for
-  frontend component work.
-- `MYTHOS_SPEC.md` — broad ARDA/MYTHOS vision and idea bank.
-- `ARDA_PRD.md` — boardroom/throne product and experience direction.
-- `ARDA_IMPLEMENTATION_PLAN.md` — current completion record for the scene-first
-  rebuild pass.
-- `HUD_EVENT_SCHEMA.md` — active event schema reference for HUD/workstation
-  feeds.
-- `RUNTIME.md` — active operational launch/build and native-validation note.
-- `ARDA_ASSET_PERFORMANCE_BUDGET.md` — active GLB/texture/runtime payload gates
-  for Three.js scene assets.
 - `src/lib/hudEventSchema.ts`

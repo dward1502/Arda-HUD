@@ -280,7 +280,7 @@ These are the most important gaps after the audit:
 8. **Asset polish and performance budget**
    - The production build includes large scene assets, including multi-megabyte
      GLBs/textures.
-   - `ARDA_ASSET_PERFORMANCE_BUDGET.md` now defines per-asset and total build
+   - `ARDA_CONTRACTS_MANIFEST.md` defines per-asset and total build
      budgets, and `assetPerformanceBudget.ts` can classify oversized runtime
      assets before the next Blender pass.
    - 2026-06-01 initial evidence showed the default build was over budget: the
@@ -319,7 +319,7 @@ These are the most important gaps after the audit:
 | `ARDA_DATA_SURFACE_MAP_2026-05-21.md` | Data audit snapshot | Yesterday's detailed source inventory and immediate data-wiring findings. |
 | `ARDA_UNIFIED_PATH_FORWARD_2026-05-22.md` | Planning bridge | Current central path forward that reconciles vision, shipped work, incoming data, and gaps. |
 | `ARDA_AUDIT.md` | Current factual audit | This file: factual implementation/data/gap audit. |
-| `ARDA_BOARDROOM_SLOT_ASSIGNMENT_CONTRACT.md` | Surface-slot contract | Current authority for boardroom slot assignments and per-slot `surface_layout`. |
+|| `ARDA_CONTRACTS_MANIFEST.md` | Surface-slot contract | Current authority for boardroom slot assignments and per-slot `surface_layout`. |
 
 ## Recommended Next Package
 

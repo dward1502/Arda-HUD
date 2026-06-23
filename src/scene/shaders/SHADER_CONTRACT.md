@@ -66,10 +66,10 @@ Within a category, each shader lives in its own subfolder containing:
 
 ## Integration Rules
 
-- a shader binds to a material family from `systems/MATERIAL_CONTRACT.md`
+- a shader binds to a material family from `systems/CONTRACTS.md`
   when it replaces a standard PBR material on geometry
 - the hologram body shader binds exclusively to the `hologram_body` surface
-  declared in `systems/PRESENCE_CONTRACT.md`
+  declared in `systems/CONTRACTS.md`
 - monitor shaders bind to the `boardroom_monitor_surface` family
 - window-atmosphere shaders bind to the `boardroom_window_plate` family
 
@@ -98,10 +98,10 @@ go through the category's factory function.
 
 This contract depends on:
 
-- `systems/MATERIAL_CONTRACT.md`
-- `systems/LIGHTING_CONTRACT.md`
-- `systems/ATMOSPHERE_CONTRACT.md`
-- `systems/PRESENCE_CONTRACT.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
+- `systems/CONTRACTS.md`
 - `src/assets/scene/ASSET_PIPELINE_CONTRACT.md`
 
 ## Exit Requirement
