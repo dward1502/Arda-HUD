@@ -76,7 +76,7 @@ export const DEFAULT_ARDA_HUD_SETTINGS: ArdaHudSettings = {
   config_walkthrough_profiles_path: 'core/state/config_walkthrough_profiles.json',
   governance_runtime_path: 'core/state/governance_runtime.json',
   operations_flow_path: 'core/state/operations_flow.json',
-  soterion_render_contract_path: 'core/state/soterion_render_contract.json',
+  soterion_render_contract_path: '/var/home/mythos/Annunimas/core/state/soterion_render_contract.json',
   paperclip_alignment_path: 'core/state/paperclip_alignment.json',
   escalation_runtime_path: 'core/state/escalation_runtime.json',
   operator_actions_path: 'core/state/operator_actions.json',

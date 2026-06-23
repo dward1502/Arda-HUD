@@ -1,5 +1,4 @@
 // sigil: REPAIR
-import bundledSoterionRenderContract from '../../core/state/soterion_render_contract.json'
 import type { JsonRecord } from './ardaSource'
 
 type ProtocolMarkerKey = 'REVIEW' | 'JOULE_WORK' | 'TRIAD_GATE' | string
@@ -13,8 +12,10 @@ function getString(value: unknown, fallback = ''): string {
   return typeof value === 'string' && value.length > 0 ? value : fallback
 }
 
+const EMPTY_CONTRACT: JsonRecord = {}
+
 function contractOrBundled(contract: JsonRecord | null): JsonRecord {
-  return contract ?? (bundledSoterionRenderContract as JsonRecord)
+  return contract ?? EMPTY_CONTRACT
 }
 
 function glyphFromGroup(contract: JsonRecord, group: string, key: string): string {
