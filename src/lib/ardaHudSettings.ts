@@ -56,6 +56,8 @@ export interface ArdaHudSettings {
   core_plan_root: string
   core_plan_index_path: string
   task_queue_path: string
+  charon_service_base_url: string
+  hermes_dashboard_service_base_url: string
 }
 
 export const ARDA_HUD_SETTINGS_RELATIVE_PATH = 'config/arda_hud.settings.json'

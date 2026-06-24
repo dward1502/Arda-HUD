@@ -22,8 +22,8 @@ use tauri_plugin_opener::OpenerExt;
 const IMAGE_PREVIEW_MAX_BYTES: u64 = 2 * 1024 * 1024;
 const VIDEO_PREVIEW_MAX_BYTES: u64 = 12 * 1024 * 1024;
 const PDF_PREVIEW_MAX_BYTES: u64 = 8 * 1024 * 1024;
-const DEFAULT_WINDOWED_WIDTH: f64 = 1280.0;
-const DEFAULT_WINDOWED_HEIGHT: f64 = 720.0;
+// const DEFAULT_WINDOWED_WIDTH: f64 = 1280.0;
+// const DEFAULT_WINDOWED_HEIGHT: f64 = 720.0;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FileReadResult {

@@ -828,28 +828,12 @@ function BoardroomScene({
           rotation={slot.rotation}
           size={slot.size}
           color={slot.color}
-          showLabel={debug}
+          showLabel={false}
           draggable={debug}
           onMovePosition={(position) => moveZone(slot.id, position)}
           onActivate={() => onOpenWorkstation(workstationZoneId)}
         >
-          <BoardroomMonitorModelSurface zone={slot} onActivate={() => onOpenWorkstation(workstationZoneId)} />
-          {surfaceLayout ? (
-            <BoardroomSurfacePreview
-              title={assignment?.title.replace(/\s+Workstation$/, '') ?? slot.label}
-              layout={surfaceLayout}
-              previewMode={slot.previewMode}
-              sourceProvenance={sourceProvenance}
-              onActivate={() => onOpenWorkstation(workstationZoneId)}
-            />
-          ) : (
-            <HudInstrumentSurface
-              zone={slot}
-              assignment={assignment}
-              instrument={instruments[slot.id] ?? (slot.assignmentSlotId ? instruments[slot.assignmentSlotId] : undefined)}
-              onActivate={() => onOpenWorkstation(workstationZoneId)}
-            />
-          )}
+          <ScreenSurface zone={slot} />
         </InteractionPad>
         )
       })}
@@ -876,24 +860,6 @@ function BoardroomScene({
           onActivate={() => onOpenWorkstation(workstationZoneId)}
         >
           <ScreenSurface zone={slot} />
-          {surfaceLayout ? (
-            <BoardroomSurfacePreview
-              title={assignment?.title.replace(/\s+Workstation$/, '') ?? slot.label}
-              layout={surfaceLayout}
-              previewMode={slot.previewMode}
-              sourceProvenance={sourceProvenance}
-              onActivate={isHermesSlot ? onOpenHermesDashboard : () => onOpenWorkstation(workstationZoneId)}
-            />
-          ) : isHermesSlot ? (
-            <HermesTerminalSurface onOpenHermesDashboard={onOpenHermesDashboard} />
-          ) : (
-            <HudInstrumentSurface
-              zone={slot}
-              assignment={assignment}
-              instrument={instruments[slot.id] ?? (slot.assignmentSlotId ? instruments[slot.assignmentSlotId] : undefined)}
-              onActivate={() => onOpenWorkstation(workstationZoneId)}
-            />
-          )}
         </InteractionPad>
         )
       })}
@@ -913,12 +879,6 @@ function BoardroomScene({
         onActivate={onOpenSettings}
       >
         <ScreenSurface zone={settingsButtonZone} />
-        <CommandCoreSurface
-          onOpenWorkstation={onOpenWorkstation}
-          onOpenHermesDashboard={onOpenHermesDashboard}
-          onOpenSettings={onOpenSettings}
-          onEnterWorld={() => onActivate('city_window')}
-        />
       </InteractionPad>
 
       <InteractionPad

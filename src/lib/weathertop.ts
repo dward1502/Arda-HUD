@@ -127,8 +127,19 @@ export interface HudPulseEvent {
 // ============ Tauri IPC Functions ============
 
 export async function getNumenorPath(): Promise<string> {
-  if (!IS_TAURI) return Promise.reject(new Error('Tauri not available'))
-  return invoke<string>('get_numenor_path')
+  if (IS_TAURI) return invoke<string>('get_numenor_path')
+  const envPath = import.meta.env?.VITE_NUMENOR_PATH
+  if (envPath) return envPath
+  const fallbackRoots = [
+    '/var/home/mythos/Annunimas',
+    '/home/user/Annunimas',
+    '/opt/annunimas',
+  ]
+  for (const root of fallbackRoots) {
+    const candidate = `${root}/core/state`
+    return candidate
+  }
+  return '/var/home/mythos/Annunimas/core/state'
 }
 
 export async function readFile(path: string): Promise<FileReadResult> {
