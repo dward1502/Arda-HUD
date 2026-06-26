@@ -7,6 +7,7 @@ import type { Group } from 'three'
 import type { BoardroomSurfaceLayout } from '../../lib/boardroomSlotSettings'
 import type { ArdaSourceProvenance } from '../../lib/ardaProvenance'
 import type { SceneAnchorDefinition, SceneZoneDefinition, WorkstationManifestDefinition } from '../systems/runtimeTypes'
+import type { FleetViewModel } from '../workstations/viewModels'
 import { getSurfaceAdapterManifest } from '../../lib/surfaceAdapterManifests'
 import SceneRuntimeCard from '../systems/SceneRuntimeCard'
 import { getSceneAssetByBinding, getWindowAssetUrl } from '../systems/sceneAssets'
@@ -26,9 +27,9 @@ import {
 } from './boardroomSpatialLayout'
 import { deriveBoardroomMonitorModelBinding } from './boardroomMonitorModels'
 import type { BoardroomHudInstrumentMap, HudInstrumentModel, HudTone } from './boardroomHudInstruments'
-import BoardroomSurfacePreview from './BoardroomSurfacePreview'
 import { deriveBoardroomScreenVisualRefinement } from './boardroomVisualRefinement'
 import PresenceAvatar from './PresenceAvatar'
+import { parseJsonOrNull } from '../../lib/jsonParse'
 
 interface BoardroomViewportProps {
   active: boolean
@@ -40,6 +41,7 @@ interface BoardroomViewportProps {
   surfaceLayouts?: Record<string, BoardroomSurfaceLayout>
   sourceProvenance?: ArdaSourceProvenance[]
   instruments?: BoardroomHudInstrumentMap
+  fleetViewModel?: FleetViewModel | null
   presenceState?: AgentPresenceState
   presenceStatus?: PresenceLedgerStatus
   sceneOverlay?: ReactNode
@@ -189,7 +191,7 @@ function readZonePositionOverrides(): BoardroomZonePositionOverrides {
   try {
     const raw = localStorageOrNull()?.getItem(BOARDROOM_ZONE_POSITION_OVERRIDES_STORAGE_KEY)
     if (!raw) return {}
-    return normalizeBoardroomZonePositionOverrides(JSON.parse(raw))
+    return normalizeBoardroomZonePositionOverrides(parseJsonOrNull<unknown>(raw))
   } catch {
     return {}
   }
@@ -425,6 +427,20 @@ function getSlotWorkstationZoneId(slot: BoardroomSpatialZone, assignment: Workst
   return assignment?.sourceZoneId ?? `scene_slot:${slot.assignmentSlotId ?? slot.id}`
 }
 
+function isFleetWorkstationAssignment(assignment: WorkstationManifestDefinition | null): boolean {
+  if (!assignment) return false
+  return assignment.sourceZoneId === 'systems_health'
+    || assignment.sourceZoneId === 'routing_health'
+    || assignment.sourceZoneId === 'sovereign_world'
+    || assignment.moduleIds.includes('systems')
+}
+
+function formatFleetValue(value: number | string | null | undefined, fallback = 'n/a'): string {
+  if (typeof value === 'number' && Number.isFinite(value)) return String(value)
+  if (typeof value === 'string' && value.length > 0) return value
+  return fallback
+}
+
 const BOARDROOM_WORKSTATION_ZONE_IDS = new Set(['sovereign_world', 'settings'])
 
 function getSceneWorkstations(workstations: WorkstationManifestDefinition[]): WorkstationManifestDefinition[] {
@@ -578,6 +594,58 @@ function HudInstrumentSurface({
   )
 }
 
+function FleetPreviewSurface({
+  zone,
+  assignment,
+  fleetViewModel,
+  onActivate,
+}: {
+  zone: BoardroomSpatialZone
+  assignment: WorkstationManifestDefinition | null
+  fleetViewModel: FleetViewModel
+  onActivate: () => void
+}) {
+  const provider = fleetViewModel.providers.find((candidate) => candidate.enabled && candidate.healthy)
+    ?? fleetViewModel.providers[0]
+    ?? null
+  const primaryRoute = fleetViewModel.laneOwnership.find((lane) => lane.route)?.route ?? null
+  const liveMetric = fleetViewModel.metrics.find((metric) => metric.id === 'live_targets')
+  const totalMetric = fleetViewModel.metrics.find((metric) => metric.id === 'total_targets')
+  const offlineMetric = fleetViewModel.metrics.find((metric) => metric.id === 'unexpected_offline')
+  const modelCount = fleetViewModel.providers.reduce((count, item) => count + item.models.length, 0)
+
+  return (
+    <Html
+      center
+      transform
+      distanceFactor={zone.previewMode === 'monitor_surface' ? 4.2 : 5.4}
+      position={[0, 0, zone.previewMode === 'monitor_surface' ? 0.14 : 0.3]}
+    >
+      <button
+        type="button"
+        className={`fleet-preview-surface fleet-preview-surface--${fleetViewModel.status}`}
+        onClick={onActivate}
+        aria-label={`Open ${assignment?.title ?? fleetViewModel.title} fleet workstation`}
+      >
+        <span className="fleet-preview-surface__header">
+          <b>FLEET</b>
+          <i>{fleetViewModel.status}</i>
+        </span>
+        <strong>{assignment?.title.replace(/\s+Workstation$/, '') ?? fleetViewModel.title}</strong>
+        <span className="fleet-preview-surface__metrics">
+          <span><b>{formatFleetValue(liveMetric?.value)}</b><small>live</small></span>
+          <span><b>{formatFleetValue(totalMetric?.value)}</b><small>total</small></span>
+          <span><b>{formatFleetValue(offlineMetric?.value, '0')}</b><small>offline</small></span>
+        </span>
+        <span className="fleet-preview-surface__route">
+          <span>{primaryRoute ? `${primaryRoute.providerId} / ${primaryRoute.modelId}` : 'routing unassigned'}</span>
+          <small>{provider ? `${provider.providerName} · ${modelCount} models` : 'no provider projection'}</small>
+        </span>
+      </button>
+    </Html>
+  )
+}
+
 function CommandCoreSurface({
   onOpenWorkstation,
   onOpenHermesDashboard,
@@ -700,6 +768,7 @@ function BoardroomScene({
   surfaceLayouts = {},
   sourceProvenance = [],
   instruments = {},
+  fleetViewModel = null,
   presenceState = DEFAULT_AGENT_PRESENCE_STATE,
   presenceStatus,
   debug = false,
@@ -833,7 +902,16 @@ function BoardroomScene({
           onMovePosition={(position) => moveZone(slot.id, position)}
           onActivate={() => onOpenWorkstation(workstationZoneId)}
         >
-          <ScreenSurface zone={slot} />
+          {fleetViewModel && isFleetWorkstationAssignment(assignment) ? (
+            <FleetPreviewSurface
+              zone={slot}
+              assignment={assignment}
+              fleetViewModel={fleetViewModel}
+              onActivate={() => onOpenWorkstation(workstationZoneId)}
+            />
+          ) : (
+            <ScreenSurface zone={slot} />
+          )}
         </InteractionPad>
         )
       })}
@@ -859,7 +937,16 @@ function BoardroomScene({
           onMovePosition={(position) => moveZone(slot.id, position)}
           onActivate={() => onOpenWorkstation(workstationZoneId)}
         >
-          <ScreenSurface zone={slot} />
+          {fleetViewModel && isFleetWorkstationAssignment(assignment) ? (
+            <FleetPreviewSurface
+              zone={slot}
+              assignment={assignment}
+              fleetViewModel={fleetViewModel}
+              onActivate={() => onOpenWorkstation(workstationZoneId)}
+            />
+          ) : (
+            <ScreenSurface zone={slot} />
+          )}
         </InteractionPad>
         )
       })}

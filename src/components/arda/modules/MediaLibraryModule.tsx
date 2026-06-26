@@ -18,6 +18,7 @@ import {
   readSourceVideoPreview,
   type InventoryTreeNode,
 } from '../../../lib/weathertop'
+import { parseJsonOrNull } from '../../../lib/jsonParse'
 
 interface MediaLibraryModuleProps {
   rootPath: string | null
@@ -67,7 +68,8 @@ export default function MediaLibraryModule({ rootPath }: MediaLibraryModuleProps
       for (const root of MEDIA_LIBRARY_ROOTS) {
         const result = await fetchInventoryTree(rootPath, root.relativePath, 4)
         if (result.success && result.content) {
-          trees.push(JSON.parse(result.content) as InventoryTreeNode)
+          const tree = parseJsonOrNull<InventoryTreeNode>(result.content)
+          if (tree) trees.push(tree)
         }
       }
       const nextEntries = buildMediaLibraryEntries(trees)

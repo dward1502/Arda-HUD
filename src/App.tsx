@@ -53,7 +53,6 @@ import type {
   ReviewGateItem,
   SourceCoverageBadgeState,
   RoutableProviderEntry,
-  RoutableProviderModel,
   CommandConsoleSurface,
   OperatingSurfaceLaneReport,
   OperatorCockpitSurface,
@@ -67,6 +66,11 @@ import {
   getSceneSlotWorkstationManifestById,
   getSceneSlotWorkstationManifestByZoneId,
 } from './scene/workstations/sceneSlotWorkstationTemplates'
+import {
+  createAnnunimasFleetHealth,
+  createAnnunimasFleetViewModel,
+  type AnnunimasFleetHealth,
+} from './scene/workstations/adapters/annunimasAdapter'
 import {
   createCoreStateSource,
   type ArdaBundle,
@@ -104,6 +108,7 @@ import { useWorldSurfaceAssignments } from './components/arda/hooks/useWorldSurf
 import {
   BOARDROOM_MONITOR_SLOT_IDS,
   BOARDROOM_SCENE_SLOT_IDS,
+  BOARDROOM_WORKSTATION_ROLE_PROFILES,
 } from './lib/boardroomSlotSettings'
 import {
   WORLD_SCENE_SURFACE_IDS,
@@ -111,6 +116,8 @@ import {
   type WorldSceneSurfaceId,
 } from './lib/worldSurfaceSettings'
 import type { SceneAnchorDefinition, SceneZoneDefinition, WorkstationManifestDefinition } from './scene/systems/runtimeTypes'
+import type { FleetViewModel } from './scene/workstations/viewModels'
+import { parseJsonOrNull } from './lib/jsonParse'
 
 const THEMES: ThemeOption[] = [
   { id: 'cyberpunk', label: 'Cyberpunk' },
@@ -821,14 +828,18 @@ function getGovernanceSummary(bundle: ArdaBundle): { ready: boolean; weights: Ar
 
   return {
     ready: getBoolean(asRecord(governance?.always_on)?.triad_influence, false),
-    weights: Object.entries(weights ?? {}).map(([label, value]) => ({
-      label,
-      value: getNumber(value, 0),
-    })),
-    thresholds: Object.entries(thresholds ?? {}).map(([label, value]) => ({
-      label,
-      value: getNumber(value, 0),
-    })),
+    weights: Object.entries(weights ?? {})
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([label, value]) => ({
+        label,
+        value: getNumber(value, 0),
+      })),
+    thresholds: Object.entries(thresholds ?? {})
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([label, value]) => ({
+        label,
+        value: getNumber(value, 0),
+      })),
   }
 }
 
@@ -860,20 +871,24 @@ function getAutonomyReadinessSummary(bundle: ArdaBundle): {
 
   return {
     posture: getString(checkpoint?.overall_posture, 'unknown'),
-    checkpoint: Object.entries(checkpoint ?? {}).map(([label, value]) => ({
-      label,
-      value: getString(value, `${value}`),
-    })),
+    checkpoint: Object.entries(checkpoint ?? {})
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([label, value]) => ({
+        label,
+        value: getString(value, `${value}`),
+      })),
     evidence,
     nextUnlocks,
   }
 }
 
 function getSnapshotSectionStats(bundle: ArdaBundle): Array<{ id: string; status: string }> {
-  return Object.entries(asRecord(bundle.snapshot?.sections) ?? {}).map(([id, section]) => ({
-    id,
-    status: getString(asRecord(section)?.schema_version, 'unknown'),
-  }))
+  return Object.entries(asRecord(bundle.snapshot?.sections) ?? {})
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([id, section]) => ({
+      id,
+      status: getString(asRecord(section)?.schema_version, 'unknown'),
+    }))
 }
 
 function getQueueSummary(bundle: ArdaBundle): { completed: number; priorities: Array<{ label: string; value: number }>; owners: Array<{ label: string; value: number }> } {
@@ -884,14 +899,19 @@ function getQueueSummary(bundle: ArdaBundle): { completed: number; priorities: A
 
   return {
     completed: getNumber(countsByStatus?.completed, 0),
-    priorities: Object.entries(countsByPriority ?? {}).map(([label, value]) => ({
-      label,
-      value: getNumber(value, 0),
-    })),
-    owners: Object.entries(countsByOwner ?? {}).slice(0, 8).map(([label, value]) => ({
-      label,
-      value: getNumber(value, 0),
-    })),
+    priorities: Object.entries(countsByPriority ?? {})
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([label, value]) => ({
+        label,
+        value: getNumber(value, 0),
+      })),
+    owners: Object.entries(countsByOwner ?? {})
+      .sort(([left], [right]) => left.localeCompare(right))
+      .slice(0, 8)
+      .map(([label, value]) => ({
+        label,
+        value: getNumber(value, 0),
+      })),
   }
 }
 
@@ -1662,179 +1682,6 @@ function getTaskLifecycleRuntime(bundle: ArdaBundle): {
   }
 }
 
-function getFleetHealth(bundle: ArdaBundle) {
-  const operator = getOperatorRuntimeSurface(bundle)
-  const summary = asRecord(operator?.summary)
-  const fleet = asRecord(operator?.fleet)
-  const intentionalOfflineTargets = asArray(operator?.intentional_offline_targets)
-    .map((target) => asRecord(target))
-    .filter((target): target is JsonRecord => target !== null)
-    .map((target) => ({
-      displayName: getString(target.display_name, getString(target.target_id, 'unknown')),
-      providerId: getString(target.provider_id, 'unknown'),
-    }))
-  const unexpectedOfflineTargets = asArray(operator?.unexpected_offline_targets)
-    .map((target) => asRecord(target))
-    .filter((target): target is JsonRecord => target !== null)
-    .map((target) => ({
-      displayName: getString(target.display_name, getString(target.target_id, 'unknown')),
-      providerId: getString(target.provider_id, 'unknown'),
-    }))
-
-  return {
-    totalTargets: getNumber(fleet?.targets_total, 0),
-    liveTargets: getNumber(summary?.fleet_live_llm_nodes_total, 0),
-    routableProviders: getNumber(summary?.fleet_routable_local_providers_total, 0),
-    intentionalOffline: intentionalOfflineTargets.length,
-    unexpectedOffline: getNumber(summary?.unexpected_offline_total, 0),
-    intentionalOfflineTargets,
-    unexpectedOfflineTargets,
-  }
-}
-
-function getLaneOwnership(bundle: ArdaBundle) {
-  const operator = getOperatorRuntimeSurface(bundle)
-  const laneRoutes = asRecord(operator?.lane_routes)
-  const labels: Record<string, string> = {
-    interactive: 'Normal Chat',
-    execution: 'High Code',
-    background: 'Low Background',
-  }
-  return ['interactive', 'execution', 'background'].map((lane) => {
-    const route = asRecord(laneRoutes?.[lane])
-    return {
-      lane,
-      priority: labels[lane] ?? lane,
-      route: route ? {
-        providerId: getString(route.provider_id, 'unknown'),
-        modelId: getString(route.model_id, 'unknown'),
-        routeClass: getString(route.route_class, 'unknown'),
-        reason: getString(route.reason, ''),
-      } : null,
-    }
-  })
-}
-
-function getLaneHeadroom(bundle: ArdaBundle) {
-  const operator = getOperatorRuntimeSurface(bundle)
-  const laneHeadroom = asRecord(operator?.lane_headroom)
-  const routableProviders = asArray(operator?.routable_providers)
-    .map((provider) => asRecord(provider))
-    .filter((provider): provider is JsonRecord => provider !== null)
-  return routableProviders.map((provider) => {
-    const providerId = getString(provider.provider_id, 'unknown')
-    const softCaps = asRecord(provider.soft_caps)
-    return {
-      providerId,
-      softCaps: {
-        interactive: getNumber(softCaps?.interactive, 0),
-        execution: getNumber(softCaps?.execution, 0),
-        background: getNumber(softCaps?.background, 0),
-      },
-      laneHeadroom: {
-        interactive: getNumber(asRecord(laneHeadroom?.interactive)?.[providerId], 0),
-        execution: getNumber(asRecord(laneHeadroom?.execution)?.[providerId], 0),
-        background: getNumber(asRecord(laneHeadroom?.background)?.[providerId], 0),
-      },
-    }
-  })
-}
-
-function getLaneFitness(bundle: ArdaBundle) {
-  const operator = getOperatorRuntimeSurface(bundle)
-  const laneFitness = asRecord(operator?.lane_fitness)
-  return Object.entries(laneFitness ?? {}).flatMap(([lane, providers]) => {
-    const providerMap = asRecord(providers)
-    return Object.entries(providerMap ?? {}).map(([providerId, state]) => {
-      const record = asRecord(state)
-      return {
-        lane,
-        providerId,
-        avgLatencyMs: record ? getNumber(record.avg_latency_ms, NaN) : NaN,
-        successCount: record ? getNumber(record.success_count, 0) : 0,
-        failureCount: record ? getNumber(record.failure_count, 0) : 0,
-      }
-    })
-  }).map((entry) => ({
-    ...entry,
-    avgLatencyMs: Number.isFinite(entry.avgLatencyMs) ? entry.avgLatencyMs : null,
-  }))
-}
-
-function getRoutableProviderModels(provider: JsonRecord): RoutableProviderModel[] {
-  return asArray(provider.models)
-    .map((model) => {
-      const modelRecord = asRecord(model)
-      if (!modelRecord) {
-        const id = getString(model)
-        return id ? {
-          id,
-          contextWindow: null,
-          healthy: true,
-          isDefault: false,
-          capableTasks: [],
-        } : null
-      }
-      const contextWindow = getNumber(modelRecord.context_window, NaN)
-      return {
-        id: getString(modelRecord.id, 'unknown'),
-        contextWindow: Number.isFinite(contextWindow) ? contextWindow : null,
-        healthy: getBoolean(modelRecord.healthy, true),
-        isDefault: getBoolean(modelRecord.is_default, false),
-        capableTasks: asArray(modelRecord.capable_tasks).map((task) => getString(task)).filter(Boolean),
-      }
-    })
-    .filter((model): model is RoutableProviderModel => model !== null)
-}
-
-function getProviderLatency(provider: JsonRecord): number | null {
-  const latency = getNumber(provider.avg_latency_ms, NaN)
-  return Number.isFinite(latency) ? latency : null
-}
-
-function getRoutableProviders(bundle: ArdaBundle): RoutableProviderEntry[] {
-  const pressure = asRecord(bundle.charonRouter?.provider_pressure)
-  const charonProviders = [
-    ...asArray(pressure?.providers),
-    ...(pressure?.local_fallback ? [pressure.local_fallback] : []),
-  ]
-    .map((provider) => asRecord(provider))
-    .filter((provider): provider is JsonRecord => provider !== null)
-
-  if (charonProviders.length > 0) {
-    return charonProviders.map((provider) => ({
-      providerId: getString(provider.id, 'unknown'),
-      providerName: getString(provider.name, getString(provider.id, 'unknown')),
-      accessTier: getString(provider.access_tier, 'unknown'),
-      qualityBand: getString(provider.quality_band, 'unknown'),
-      enabled: getBoolean(provider.enabled, false),
-      healthy: getBoolean(provider.healthy, false),
-      models: getRoutableProviderModels(provider),
-      avgLatencyMs: getProviderLatency(provider),
-      activeConnections: getNumber(provider.active_connections, 0),
-    }))
-  }
-
-  const operator = getOperatorRuntimeSurface(bundle)
-  return asArray(operator?.routable_providers)
-    .map((provider) => asRecord(provider))
-    .filter((provider): provider is JsonRecord => provider !== null)
-    .map((provider) => {
-      const providerId = getString(provider.provider_id, 'unknown')
-      return {
-        providerId,
-        providerName: providerId,
-        accessTier: 'operator_projection',
-        qualityBand: 'unknown',
-        enabled: true,
-        healthy: true,
-        models: getRoutableProviderModels(provider),
-        avgLatencyMs: getProviderLatency(provider),
-        activeConnections: getNumber(provider.active_connections, 0),
-      }
-    })
-}
-
 function getRuntimeDrift(bundle: ArdaBundle) {
   const runtimeDrift = asRecord(bundle.fleetRuntimeDrift)
   const items = asArray(runtimeDrift?.items)
@@ -2020,7 +1867,7 @@ function getKnowledgeMap(bundle: ArdaBundle): {
 function getOperatingSurfaceReports(
   bundle: ArdaBundle,
   reviewGateItems: ReviewGateItem[],
-  fleetHealth: ReturnType<typeof getFleetHealth>,
+  fleetHealth: AnnunimasFleetHealth,
   knowledgeMap: ReturnType<typeof getKnowledgeMap>,
 ): OperatingSurfaceLaneReport[] {
   const hadesNightly = asRecord(bundle.hadesNightlyOperations)
@@ -2108,11 +1955,19 @@ function getOperatingSurfaceReports(
   ]
 }
 
+function localStorageOrNull(): Storage | null {
+  try {
+    return typeof window === 'undefined' ? null : window.localStorage
+  } catch {
+    return null
+  }
+}
+
 function readStoredModuleOrder(): ModuleId[] {
   try {
-    const raw = window.localStorage.getItem(MODULE_STORAGE_KEY)
+    const raw = localStorageOrNull()?.getItem(MODULE_STORAGE_KEY)
     if (!raw) return DEFAULT_MODULE_ORDER
-    const parsed = JSON.parse(raw) as unknown
+    const parsed = parseJsonOrNull<unknown>(raw)
     if (!Array.isArray(parsed)) return DEFAULT_MODULE_ORDER
     const ordered = parsed.filter((item): item is ModuleId => DEFAULT_MODULE_ORDER.includes(item as ModuleId))
     return ordered.length === DEFAULT_MODULE_ORDER.length ? ordered : DEFAULT_MODULE_ORDER
@@ -2164,6 +2019,70 @@ function asModuleId(value: string | null | undefined): ModuleId | null {
 function titleForSectionOrPanel(sectionId: string | null, sections: ArdaSection[]): string {
   if (!sectionId) return 'Focused Panel'
   return sections.find((section) => section.id === sectionId)?.title ?? PANEL_TITLES[sectionId] ?? sectionId
+}
+
+function FleetFocusedWorkstationView({ fleetViewModel }: { fleetViewModel: FleetViewModel | null }) {
+  if (!fleetViewModel) {
+    return (
+      <div className="fleet-focused-view fleet-focused-view--empty">
+        <span className="fleet-focused-view__eyebrow">Fleet View Model</span>
+        <h3>Fleet projection unavailable</h3>
+        <p>Waiting for operator runtime and Charon router projections.</p>
+      </div>
+    )
+  }
+
+  const primaryProvider = fleetViewModel.providers.find((provider) => provider.enabled && provider.healthy)
+    ?? fleetViewModel.providers[0]
+    ?? null
+  const offlineMetric = fleetViewModel.metrics.find((metric) => metric.id === 'unexpected_offline')
+
+  return (
+    <div className={`fleet-focused-view fleet-focused-view--${fleetViewModel.status}`}>
+      <div className="fleet-focused-view__hero">
+        <div>
+          <span className="fleet-focused-view__eyebrow">Fleet View Model</span>
+          <h3>{fleetViewModel.title}</h3>
+          {fleetViewModel.summary.map((line) => <p key={line}>{line}</p>)}
+        </div>
+        <span className="fleet-focused-view__status">{fleetViewModel.status}</span>
+      </div>
+      <div className="fleet-focused-view__metrics">
+        {fleetViewModel.metrics.map((metric) => (
+          <span className={`fleet-focused-view__metric fleet-focused-view__metric--${metric.tone ?? 'neutral'}`} key={metric.id}>
+            <b>{metric.value}{metric.unit ?? ''}</b>
+            <small>{metric.label}</small>
+          </span>
+        ))}
+      </div>
+      <div className="fleet-focused-view__grid">
+        <section>
+          <h4>Lane Ownership</h4>
+          {fleetViewModel.laneOwnership.map((lane) => (
+            <div className="fleet-focused-view__row" key={lane.lane}>
+              <span>{lane.priority}</span>
+              <b>{lane.route ? `${lane.route.providerId} / ${lane.route.modelId}` : 'unassigned'}</b>
+            </div>
+          ))}
+        </section>
+        <section>
+          <h4>Providers</h4>
+          {fleetViewModel.providers.slice(0, 4).map((provider) => (
+            <div className="fleet-focused-view__row" key={provider.providerId}>
+              <span>{provider.providerName}</span>
+              <b>{provider.healthy ? 'healthy' : 'check'} · {provider.models.length} models</b>
+            </div>
+          ))}
+          {fleetViewModel.providers.length === 0 ? <p>No routable provider projection.</p> : null}
+        </section>
+      </div>
+      <div className="fleet-focused-view__footer">
+        <span>Primary: {primaryProvider?.providerName ?? 'none'}</span>
+        <span>Unexpected offline: {offlineMetric?.value ?? 0}</span>
+        <span>Sources: {fleetViewModel.sources.map((sourceRef) => sourceRef.freshness.status).join(' / ')}</span>
+      </div>
+    </div>
+  )
 }
 
 export default function App() {
@@ -2274,7 +2193,11 @@ export default function App() {
   }, [currentWindowId, initialWorkstationId])
 
   useEffect(() => {
-    window.localStorage.setItem(MODULE_STORAGE_KEY, JSON.stringify(moduleOrder))
+    try {
+      localStorageOrNull()?.setItem(MODULE_STORAGE_KEY, JSON.stringify(moduleOrder))
+    } catch {
+      // Module ordering is a convenience preference; restricted storage should not block the HUD.
+    }
   }, [moduleOrder])
 
   const workstationManifests = useMemo(
@@ -2457,7 +2380,7 @@ export default function App() {
     [bundle],
   )
   const fleetHealth = useMemo(
-    () => (bundle ? getFleetHealth(bundle) : {
+    () => (bundle ? createAnnunimasFleetHealth(bundle) : {
       totalTargets: 0,
       liveTargets: 0,
       routableProviders: 0,
@@ -2468,10 +2391,11 @@ export default function App() {
     }),
     [bundle],
   )
-  const laneOwnership = useMemo(() => (bundle ? getLaneOwnership(bundle) : []), [bundle])
-  const laneHeadroom = useMemo(() => (bundle ? getLaneHeadroom(bundle) : []), [bundle])
-  const laneFitness = useMemo(() => (bundle ? getLaneFitness(bundle) : []), [bundle])
-  const routableProviders = useMemo(() => (bundle ? getRoutableProviders(bundle) : []), [bundle])
+  const fleetViewModel = useMemo(() => (bundle ? createAnnunimasFleetViewModel(bundle) : null), [bundle])
+  const laneOwnership = fleetViewModel?.laneOwnership ?? []
+  const laneHeadroom = fleetViewModel?.laneHeadroom ?? []
+  const laneFitness = fleetViewModel?.laneFitness ?? []
+  const routableProviders = fleetViewModel?.providers ?? []
   const runtimeDrift = useMemo(() => (bundle ? getRuntimeDrift(bundle) : { totalNodes: 0, driftedNodes: 0, items: [] }), [bundle])
   const mostConstrainedLane = useMemo(() => {
     const flattened = laneHeadroom.flatMap((provider) =>
@@ -3493,6 +3417,7 @@ export default function App() {
               surfaceLayout,
             }
           })}
+          roleAssignmentProfiles={BOARDROOM_WORKSTATION_ROLE_PROFILES}
           worldSurfaceAssignments={WORLD_SCENE_SURFACE_IDS.map((surfaceId) => {
             const sourceZoneId = worldSceneSurfaceAssignments[surfaceId]
             const surfaceLayout = worldSurfaceLayouts[surfaceId]
@@ -3524,6 +3449,12 @@ export default function App() {
           configWalkthrough={bundle?.configWalkthroughProfiles ?? null}
           rootPath={bundle?.rootPath ?? null}
           onConfigApplied={() => void refreshBundle()}
+          onUpdateBoardroomAssignment={(slotId, sourceZoneId) => {
+            setBoardroomSceneSlotAssignments((current) => ({
+              ...current,
+              [slotId]: sourceZoneId,
+            }))
+          }}
           onUpdateSurfaceLayout={(slotId, updater) => updateBoardroomSurfaceLayout(slotId as typeof BOARDROOM_SCENE_SLOT_IDS[number], updater)}
           onUpdateWorldSurfaceLayout={(surfaceId, updater) => updateWorldSurfaceLayout(surfaceId as WorldSceneSurfaceId, updater)}
           onToggleEditMode={() => setEditMode((current) => !current)}
@@ -3549,6 +3480,23 @@ export default function App() {
 
   const buildWorkstationModules = (manifest: ArdaWorkstationManifest | null) => {
     const sourceZoneId = manifest?.source_zone_id ?? null
+    if (sourceZoneId === 'systems_health' || sourceZoneId === 'routing_health' || sourceZoneId === 'sovereign_world') {
+      const fleetModule = {
+        id: 'systems' as ModuleId,
+        title: 'Fleet',
+        node: <FleetFocusedWorkstationView fleetViewModel={fleetViewModel} />,
+      }
+      const supplementalLayout = (manifest?.module_ids.length ? manifest.module_ids : sectionToPanelLayout(sourceZoneId))
+        .filter((moduleId): moduleId is ModuleId => moduleId in moduleRegistry && moduleId !== 'systems')
+      return [
+        fleetModule,
+        ...supplementalLayout.map((moduleId) => ({
+          id: moduleId,
+          title: moduleRegistry[moduleId].title,
+          node: moduleRegistry[moduleId].node,
+        })),
+      ]
+    }
     if (sourceZoneId === 'settings') {
       return [{
         id: 'settings' as ModuleId,
@@ -4320,6 +4268,7 @@ export default function App() {
             surfaceLayouts={boardroomSurfaceLayouts}
             sourceProvenance={bundle?.sourceProvenance ?? []}
             instruments={boardroomHudInstruments}
+            fleetViewModel={fleetViewModel}
             presenceState={bundle?.agentPresenceState}
             presenceStatus={bundle?.agentPresenceStatus}
             sceneOverlay={floatingWorkstationSceneOverlay}

@@ -433,7 +433,7 @@ export async function ingest(request: IngestRequest): Promise<ParsedData> {
     : detectedFormat === 'markdown' ? parseMarkdown(content)
     : content
   
-  const componentType = preferredType || inferComponentType(parsed)
+  const componentType = preferredType && preferredType !== 'auto' ? preferredType : inferComponentType(parsed)
   const componentPayload = transformData(parsed, componentType)
   
   return {

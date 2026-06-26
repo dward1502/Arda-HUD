@@ -1,5 +1,7 @@
 // sigil: REPAIR
 import { getNumenorPath, readFile, writeScopedFile } from './weathertop'
+import { loopbackUrl } from './endpointConfig'
+import { parseJsonOrDefault } from './jsonParse'
 
 export interface ArdaHudSettings {
   schema_version: string
@@ -117,6 +119,8 @@ export const DEFAULT_ARDA_HUD_SETTINGS: ArdaHudSettings = {
   core_plan_root: 'core/projects/Plans',
   core_plan_index_path: 'core/state/plan_map.json',
   task_queue_path: 'core/projects/tasks/queue.jsonl',
+  charon_service_base_url: loopbackUrl({ port: 7200 }),
+  hermes_dashboard_service_base_url: loopbackUrl({ port: 1421 }),
 }
 
 function asSettings(value: unknown): Partial<ArdaHudSettings> {
@@ -135,18 +139,14 @@ export async function loadArdaHudSettings(): Promise<{ rootPath: string; setting
     return { rootPath, settingsPath, settings: DEFAULT_ARDA_HUD_SETTINGS }
   }
 
-  try {
-    const parsed = JSON.parse(result.content)
-    return {
-      rootPath,
-      settingsPath,
-      settings: {
-        ...DEFAULT_ARDA_HUD_SETTINGS,
-        ...asSettings(parsed),
-      },
-    }
-  } catch {
-    return { rootPath, settingsPath, settings: DEFAULT_ARDA_HUD_SETTINGS }
+  const parsed = parseJsonOrDefault<unknown>(result.content, {})
+  return {
+    rootPath,
+    settingsPath,
+    settings: {
+      ...DEFAULT_ARDA_HUD_SETTINGS,
+      ...asSettings(parsed),
+    },
   }
 }
 

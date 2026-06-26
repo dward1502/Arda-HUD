@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import ModuleCard from '../ModuleCard'
 import LineList from '../primitives/LineList'
 import type { ArdaSourceProvenance } from '../../../lib/ardaProvenance'
+import { envEndpointUrl, envString } from '../../../lib/endpointConfig'
 import {
   describeHermesDashboardLaunch,
   ensureHermesDashboardSurface,
@@ -36,9 +37,9 @@ interface HermesDashboardModuleProps {
   tag?: string
 }
 
-const DEFAULT_HERMES_DASHBOARD_HOST = import.meta.env.VITE_ARDA_HERMES_DASHBOARD_HOST?.trim() || '127.0.0.1'
-const DEFAULT_HERMES_DASHBOARD_PORT = import.meta.env.VITE_ARDA_HERMES_DASHBOARD_PORT?.trim() || '9119'
-const DEFAULT_HERMES_DASHBOARD_URL = `http://${DEFAULT_HERMES_DASHBOARD_HOST}:${DEFAULT_HERMES_DASHBOARD_PORT}`
+const DEFAULT_HERMES_DASHBOARD_HOST = envString(import.meta.env.VITE_ARDA_HERMES_DASHBOARD_HOST, '127.0.0.1')
+const DEFAULT_HERMES_DASHBOARD_PORT = envString(import.meta.env.VITE_ARDA_HERMES_DASHBOARD_PORT, '9119')
+const DEFAULT_HERMES_DASHBOARD_URL = envEndpointUrl({ host: DEFAULT_HERMES_DASHBOARD_HOST, port: DEFAULT_HERMES_DASHBOARD_PORT })
 
 const HERMES_DASHBOARD_PRINCIPLES = [
   { label: 'Mode', value: 'live embedded harness' },

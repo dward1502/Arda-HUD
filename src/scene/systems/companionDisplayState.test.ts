@@ -78,6 +78,24 @@ describe('CITADEL companion display projection', () => {
     expect(payload.banner?.endsWith('…')).toBe(true)
   })
 
+  it('adds deterministic companion text when non-idle text fields collapse empty', () => {
+    expect(toCitadelCompanionPayload({
+      scenario: 'briefing',
+      phase: 'agent_arrival',
+      primaryAgent: 'hermes',
+      supportAgents: [],
+      urgency: 'normal',
+      banner: '   ',
+      inquiry: '',
+      source: 'arda',
+      timestamp: FIXED_NOW,
+    }, FIXED_NOW)).toMatchObject({
+      event: 'inquiry',
+      banner: 'HERMES inquiry active',
+      inquiry: 'Review the active request',
+    })
+  })
+
   it('projects the latest ledger-derived multi-agent presence into both HUD orbit and CITADEL payload', () => {
     const ledger = [
       JSON.stringify({

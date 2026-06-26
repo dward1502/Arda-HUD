@@ -5,6 +5,7 @@ import {
   type ArdaPresenceEventV1,
   normalizeArdaPresenceEvent,
 } from '../../lib/ardaPresenceSchema'
+import { parseJsonOrNull } from '../../lib/jsonParse'
 import type {
   AgentPresenceState,
   PresenceLedgerFreshness,
@@ -322,7 +323,8 @@ export function derivePresenceLedgerProjection(
       const trimmed = line.trim()
       if (!trimmed) return latest
       try {
-        const parsed = JSON.parse(trimmed) as ArdaPresenceEventLedgerRecord
+        const parsed = parseJsonOrNull<ArdaPresenceEventLedgerRecord>(trimmed)
+        if (!parsed) return { ...latest, malformedLineCount: latest.malformedLineCount + 1 }
         const state = derivePresenceStateFromEventLedgerRecord(parsed, fallbackTimestamp)
         if (!state) {
           return { ...latest, ignoredLineCount: latest.ignoredLineCount + 1 }

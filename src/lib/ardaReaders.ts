@@ -1,6 +1,7 @@
 // sigil: REPAIR
 import { fetchInventoryTree, readFile, type FileReadResult, type InventoryTreeNode } from './weathertop'
 import type { ArdaLedgerState, JsonRecord } from './ardaBundleTypes'
+import { parseJsonOrNull } from './jsonParse'
 
 function asRecord(value: unknown): JsonRecord | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
@@ -15,11 +16,7 @@ export async function readJson(rootPath: string, relativePath: string): Promise<
     return null
   }
 
-  try {
-    return asRecord(JSON.parse(result.content))
-  } catch {
-    return null
-  }
+  return asRecord(parseJsonOrNull<unknown>(result.content))
 }
 
 export async function readJsonLines(rootPath: string, relativePath: string): Promise<JsonRecord[]> {
@@ -32,13 +29,7 @@ export async function readJsonLines(rootPath: string, relativePath: string): Pro
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean)
-    .map((line) => {
-      try {
-        return asRecord(JSON.parse(line))
-      } catch {
-        return null
-      }
-    })
+    .map((line) => asRecord(parseJsonOrNull<unknown>(line)))
     .filter((entry): entry is JsonRecord => entry !== null)
 }
 
@@ -116,7 +107,7 @@ export async function readInventoryTree(rootPath: string, relativePath: string, 
   try {
     const result: FileReadResult = await fetchInventoryTree(rootPath, relativePath, maxDepth)
     if (!result.success || !result.content) return null
-    const parsed = JSON.parse(result.content)
+    const parsed = parseJsonOrNull<unknown>(result.content)
     return parsed as InventoryTreeNode
   } catch {
     return null

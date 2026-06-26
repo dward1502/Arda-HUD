@@ -10,6 +10,7 @@ import type {
   BoardroomSurfaceLayout,
   BoardroomSurfaceWidget,
   BoardroomSurfaceWidgetKind,
+  BoardroomRoleAssignmentProfile,
 } from '../../../lib/boardroomSlotSettings'
 import {
   applyConfigProfile,
@@ -42,11 +43,13 @@ interface SettingsModuleProps {
   viewMode: ViewMode
   themeOptions: Array<{ id: ThemeId; label: string }>
   monitorAssignments: MonitorAssignment[]
+  roleAssignmentProfiles?: BoardroomRoleAssignmentProfile[]
   worldSurfaceAssignments?: MonitorAssignment[]
   futureDomains: Array<{ title: string; status: string }>
   configWalkthrough: JsonRecord | null
   rootPath: string | null
   onConfigApplied?: () => void
+  onUpdateBoardroomAssignment?: (slotId: string, sourceZoneId: string) => void
   onUpdateSurfaceLayout?: (slotId: string, updater: BoardroomSurfaceLayout | ((current: BoardroomSurfaceLayout) => BoardroomSurfaceLayout)) => void
   onUpdateWorldSurfaceLayout?: (surfaceId: string, updater: BoardroomSurfaceLayout | ((current: BoardroomSurfaceLayout) => BoardroomSurfaceLayout)) => void
   onToggleEditMode: () => void
@@ -245,11 +248,13 @@ export default function SettingsModule({
   viewMode,
   themeOptions,
   monitorAssignments,
+  roleAssignmentProfiles = [],
   worldSurfaceAssignments = [],
   futureDomains,
   configWalkthrough,
   rootPath,
   onConfigApplied,
+  onUpdateBoardroomAssignment,
   onUpdateSurfaceLayout,
   onUpdateWorldSurfaceLayout,
   onToggleEditMode,
@@ -427,6 +432,21 @@ export default function SettingsModule({
                   <strong>{assignment.slot}</strong>
                   <p>{assignment.label}</p>
                   <span>{assignment.sourceZoneId ?? 'unassigned'}</span>
+                  <label>
+                    Role Assignment
+                    <select
+                      value={assignment.sourceZoneId ?? ''}
+                      disabled={!onUpdateBoardroomAssignment}
+                      onChange={(event) => onUpdateBoardroomAssignment?.(assignment.slot, event.target.value)}
+                    >
+                      {assignment.sourceZoneId && !roleAssignmentProfiles.some((profile) => profile.source_zone_id === assignment.sourceZoneId) ? (
+                        <option value={assignment.sourceZoneId}>{assignment.label}</option>
+                      ) : null}
+                      {roleAssignmentProfiles.map((profile) => (
+                        <option key={profile.role_id} value={profile.source_zone_id}>{profile.label}</option>
+                      ))}
+                    </select>
+                  </label>
                   <span>{assignment.role ?? 'surface'} / {assignment.adapterType ?? 'adapter'} / {assignment.previewMode ?? 'preview'} / {assignment.focusMode ?? 'focus'}</span>
                   <span>{assignment.widgetCount ?? 0} widgets / {assignment.refreshMs ?? 0}ms preview</span>
                   {assignment.embedUrl ? <span>{assignment.embedUrl}</span> : null}

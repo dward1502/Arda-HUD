@@ -3,6 +3,7 @@
 
 import { fetchInventoryTree, readFile } from './weathertop'
 import type { JsonRecord } from './ardaSource'
+import { parseJsonOrNull } from './jsonParse'
 
 export interface QueueHealthProjection {
   countsByStatus: Record<string, number>
@@ -56,13 +57,7 @@ export async function projectQueueHealth(
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean)
-    .map((line) => {
-      try {
-        return asRecord(JSON.parse(line))
-      } catch {
-        return null
-      }
-    })
+    .map((line) => asRecord(parseJsonOrNull<unknown>(line)))
     .filter((entry): entry is JsonRecord => entry !== null)
 
   const countsByStatus: Record<string, number> = {}
@@ -106,7 +101,7 @@ export async function projectQueueSummary(
     return { ...DEFAULT_PROJECTION, loadedAt: new Date().toISOString() }
   }
 
-  const summary = asRecord(JSON.parse(summaryResult.content))
+  const summary = asRecord(parseJsonOrNull<unknown>(summaryResult.content))
   if (!summary) {
     return { ...DEFAULT_PROJECTION, loadedAt: new Date().toISOString() }
   }
@@ -154,12 +149,6 @@ export async function readQueueRecords(rootPath: string, queuePath = 'core/proje
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean)
-    .map((line) => {
-      try {
-        return asRecord(JSON.parse(line))
-      } catch {
-        return null
-      }
-    })
+    .map((line) => asRecord(parseJsonOrNull<unknown>(line)))
     .filter((entry): entry is JsonRecord => entry !== null)
 }

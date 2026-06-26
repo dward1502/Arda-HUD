@@ -640,4 +640,51 @@ describe('local CLI operator actions', () => {
       failureReason: 'none observed',
     })
   })
+
+  it('preserves command, path, and ENOENT details from local CLI failures', async () => {
+    setSystemActionAdapterPreset('local_cli')
+    const error = new Error('spawn annunimas ENOENT') as Error & { code: string; path: string; command: string }
+    error.code = 'ENOENT'
+    error.path = '/var/home/mythos/Annunimas/scripts/missing.py'
+    error.command = 'run_chronos_provider_checks'
+    mockedSafeTauriInvoke.mockRejectedValueOnce(error)
+
+    const result = await executeSystemAction('chronos.run_provider_checks', actionContext)
+
+    expect(result).toMatchObject({
+      ok: false,
+      provider: 'none',
+    })
+    expect(result.message).toContain('CHRONOS provider checks failed')
+    expect(result.message).toContain('Error: spawn annunimas ENOENT')
+    expect(result.message).toContain('code=ENOENT')
+    expect(result.message).toContain('path=/var/home/mythos/Annunimas/scripts/missing.py')
+    expect(result.message).toContain('command=run_chronos_provider_checks')
+  })
+
+  it('preserves structured JSON/access failure details from local file actions', async () => {
+    setSystemActionAdapterPreset('local_cli')
+    mockedSafeTauriInvoke.mockRejectedValueOnce({
+      name: 'ActionReceiptParseError',
+      message: 'invalid JSON in receipt',
+      code: 'JSON_PARSE',
+      path: 'core/state/human_augmentation_runtime.json',
+      stderr: 'Unexpected token }',
+    })
+
+    const result = await executeSystemAction('approve_human_augmentation', {
+      ...actionContext,
+      payload: {
+        numenor_path: '/var/home/mythos/Annunimas',
+        decision_class: 'audit_batch_c',
+      },
+    })
+
+    expect(result.ok).toBe(false)
+    expect(result.message).toContain('ActionReceiptParseError')
+    expect(result.message).toContain('invalid JSON in receipt')
+    expect(result.message).toContain('code=JSON_PARSE')
+    expect(result.message).toContain('path=core/state/human_augmentation_runtime.json')
+    expect(result.message).toContain('stderr=Unexpected token }')
+  })
 })

@@ -1,5 +1,6 @@
 import { invoke } from '@tauri-apps/api/core'
-import { IngestRequest, ParsedData, ingest } from './parser'
+import { ingest } from './parser'
+import type { ComponentType, ParsedData } from './types'
 
 export type DataSourceType = 'file' | 'api' | 'tauri-command' | 'websocket'
 
@@ -11,6 +12,24 @@ export interface DataSourceConfig {
 
 export interface TauriDataSource extends DataSourceConfig {
   type: 'tauri-command'
+}
+
+const COMPONENT_TYPES: ComponentType[] = [
+  'kanban',
+  'grid',
+  'metric',
+  'timeline',
+  'graph3d',
+  'document',
+  'status-matrix',
+  'stream-log',
+  'chart',
+  'list',
+]
+
+export function normalizeComponentType(value: string | null | undefined): ComponentType | 'auto' {
+  if (!value) return 'auto'
+  return COMPONENT_TYPES.includes(value as ComponentType) ? value as ComponentType : 'auto'
 }
 
 async function fetchFromTauriCommand(command: string, args?: Record<string, unknown>): Promise<string> {
@@ -41,7 +60,7 @@ export async function loadFromTauri(command: string, componentType?: string): Pr
   return ingest({
     source: content,
     format: 'auto',
-    componentType: (componentType as any) || 'auto',
+    componentType: normalizeComponentType(componentType),
   })
 }
 
@@ -49,7 +68,7 @@ export async function loadFromUrl(url: string, componentType?: string): Promise<
   return ingest({
     source: url,
     format: 'auto',
-    componentType: (componentType as any) || 'auto',
+    componentType: normalizeComponentType(componentType),
   })
 }
 

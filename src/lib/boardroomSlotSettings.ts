@@ -1,5 +1,7 @@
 // sigil: REPAIR
 import { readFile, writeScopedFile, type FileReadResult } from './weathertop'
+import { loopbackUrl } from './endpointConfig'
+import { parseJsonOrDefault, parseJsonOrNull } from './jsonParse'
 
 export const ARDA_BOARDROOM_SLOT_SETTINGS_RELATIVE_PATH = 'core/state/arda_boardroom_slots.json'
 export const ARDA_BOARDROOM_SLOT_STORAGE_KEY = 'arda.boardroom.scene_slots.v1'
@@ -10,6 +12,7 @@ export const BOARDROOM_SCENE_SLOT_IDS = [...BOARDROOM_MONITOR_SLOT_IDS, ...BOARD
 
 export type BoardroomSceneSlotId = typeof BOARDROOM_SCENE_SLOT_IDS[number]
 export type BoardroomSceneSlotAssignments = Record<BoardroomSceneSlotId, string>
+export type BoardroomWorkstationRoleId = 'fleet' | 'work' | 'decisions' | 'knowledge' | 'evidence' | 'settings'
 export type BoardroomSurfaceAdapterType = 'component_grid' | 'external_url' | 'service_embed' | 'media_viewer' | 'streaming_text' | 'remote_desktop' | 'agent_activity'
 export type BoardroomSurfacePreviewMode = 'component_grid' | 'service_status' | 'inline_embed' | 'media_thumbnail' | 'stream_feed' | 'remote_preview' | 'agent_activity'
 export type BoardroomSurfaceFocusMode = 'in_scene_workstation' | 'native_window' | 'external_browser' | 'inline_embed'
@@ -58,6 +61,7 @@ export interface BoardroomSurfaceLayout {
 
 export interface BoardroomSlotAssignmentRecord {
   slot_id: BoardroomSceneSlotId
+  role_id?: BoardroomWorkstationRoleId
   component_id: string
   source_zone_id: string
   title: string
@@ -65,6 +69,16 @@ export interface BoardroomSlotAssignmentRecord {
   presentation_modes: string[]
   surface_layout: BoardroomSurfaceLayout
   updated_at_utc: string
+}
+
+export interface BoardroomRoleAssignmentProfile {
+  role_id: BoardroomWorkstationRoleId
+  label: string
+  source_zone_id: string
+  component_id: string
+  title: string
+  module_ids: string[]
+  presentation_modes: string[]
 }
 
 export interface BoardroomSlotSettingsDocument {
@@ -94,6 +108,63 @@ export const DEFAULT_BOARDROOM_SCENE_SLOT_ASSIGNMENTS: BoardroomSceneSlotAssignm
   view_desk_r: 'human_realm',
   view_desk_aux: 'hermes_dashboard',
 }
+
+export const BOARDROOM_WORKSTATION_ROLE_PROFILES: BoardroomRoleAssignmentProfile[] = [
+  {
+    role_id: 'fleet',
+    label: 'Fleet',
+    source_zone_id: 'systems_health',
+    component_id: 'fleet-workstation',
+    title: 'Fleet',
+    module_ids: ['systems', 'operations_and_packages'],
+    presentation_modes: ['in_scene', 'native_window'],
+  },
+  {
+    role_id: 'work',
+    label: 'Work',
+    source_zone_id: 'planning_and_queue',
+    component_id: 'work-queue-workstation',
+    title: 'Work Queue',
+    module_ids: ['planning', 'learning_loop', 'operations_and_packages'],
+    presentation_modes: ['in_scene', 'native_window'],
+  },
+  {
+    role_id: 'decisions',
+    label: 'Decisions',
+    source_zone_id: 'decisions',
+    component_id: 'decisions-workstation',
+    title: 'Decisions',
+    module_ids: ['governance_controls', 'operating_surface'],
+    presentation_modes: ['in_scene', 'native_window'],
+  },
+  {
+    role_id: 'knowledge',
+    label: 'Knowledge',
+    source_zone_id: 'memory_and_continuity',
+    component_id: 'knowledge-workstation',
+    title: 'Knowledge + Memory',
+    module_ids: ['section_focus', 'human_realm'],
+    presentation_modes: ['in_scene', 'native_window'],
+  },
+  {
+    role_id: 'evidence',
+    label: 'Evidence',
+    source_zone_id: 'evidence_trust',
+    component_id: 'evidence-workstation',
+    title: 'Evidence + Trust',
+    module_ids: ['operating_surface', 'systems', 'human_realm'],
+    presentation_modes: ['in_scene', 'native_window'],
+  },
+  {
+    role_id: 'settings',
+    label: 'Settings',
+    source_zone_id: 'settings',
+    component_id: 'settings-workstation',
+    title: 'Settings',
+    module_ids: ['settings'],
+    presentation_modes: ['in_scene'],
+  },
+]
 
 const DEFAULT_ASSIGNMENT_METADATA: Record<BoardroomSceneSlotId, Omit<BoardroomSlotAssignmentRecord, 'slot_id' | 'surface_layout' | 'updated_at_utc'>> = {
   monitor_left_1: {
@@ -167,6 +238,26 @@ function stringArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((entry): entry is string => typeof entry === 'string' && entry.trim().length > 0) : []
 }
 
+function isBoardroomWorkstationRoleId(value: unknown): value is BoardroomWorkstationRoleId {
+  return typeof value === 'string' && BOARDROOM_WORKSTATION_ROLE_PROFILES.some((profile) => profile.role_id === value)
+}
+
+export function getBoardroomRoleProfileByRoleId(roleId: string | null | undefined): BoardroomRoleAssignmentProfile | null {
+  if (!roleId) return null
+  return BOARDROOM_WORKSTATION_ROLE_PROFILES.find((profile) => profile.role_id === roleId) ?? null
+}
+
+export function inferBoardroomRoleId(sourceZoneId: string | null | undefined): BoardroomWorkstationRoleId | null {
+  if (!sourceZoneId) return null
+  if (sourceZoneId === 'systems_health' || sourceZoneId === 'routing_health' || sourceZoneId === 'sovereign_world') return 'fleet'
+  return BOARDROOM_WORKSTATION_ROLE_PROFILES.find((profile) => profile.source_zone_id === sourceZoneId)?.role_id ?? null
+}
+
+function resolveAssignmentProfile(sourceZoneId: string): BoardroomRoleAssignmentProfile | null {
+  const roleId = inferBoardroomRoleId(sourceZoneId)
+  return roleId ? getBoardroomRoleProfileByRoleId(roleId) : null
+}
+
 function createDefaultSurfaceLayout(slotId: BoardroomSceneSlotId, sourceZoneId: string, componentId: string): BoardroomSurfaceLayout {
   if (sourceZoneId === 'hermes_dashboard') {
     return {
@@ -180,7 +271,7 @@ function createDefaultSurfaceLayout(slotId: BoardroomSceneSlotId, sourceZoneId: 
         ],
       },
       focus: { mode: 'native_window', target: sourceZoneId, refresh_ms: 1000 },
-      embed: { url: 'http://127.0.0.1:9119', allow_inline: false },
+      embed: { url: loopbackUrl({ port: 9119 }), allow_inline: false },
     }
   }
 
@@ -307,15 +398,22 @@ export function parseBoardroomSlotSettings(value: unknown): BoardroomSlotSetting
     const slotId = assignment.slot_id
     const fallback = defaults.assignments.find((candidate) => candidate.slot_id === slotId)
     if (!fallback) continue
-    const sourceZoneId = typeof assignment.source_zone_id === 'string' ? assignment.source_zone_id : fallback.source_zone_id
-    const componentId = typeof assignment.component_id === 'string' ? assignment.component_id : fallback.component_id
+    const explicitRoleId = isBoardroomWorkstationRoleId(assignment.role_id) ? assignment.role_id : null
+    const roleProfile = explicitRoleId ? getBoardroomRoleProfileByRoleId(explicitRoleId) : null
+    const sourceZoneId = typeof assignment.source_zone_id === 'string'
+      ? assignment.source_zone_id
+      : roleProfile?.source_zone_id ?? fallback.source_zone_id
+    const inferredRoleId = explicitRoleId ?? inferBoardroomRoleId(sourceZoneId) ?? undefined
+    const profile = roleProfile ?? resolveAssignmentProfile(sourceZoneId)
+    const componentId = typeof assignment.component_id === 'string' ? assignment.component_id : profile?.component_id ?? fallback.component_id
     bySlot.set(slotId, {
       slot_id: slotId,
+      ...(inferredRoleId ? { role_id: inferredRoleId } : {}),
       component_id: componentId,
       source_zone_id: sourceZoneId,
-      title: typeof assignment.title === 'string' ? assignment.title : fallback.title,
-      module_ids: stringArray(assignment.module_ids).length > 0 ? stringArray(assignment.module_ids) : fallback.module_ids,
-      presentation_modes: stringArray(assignment.presentation_modes).length > 0 ? stringArray(assignment.presentation_modes) : fallback.presentation_modes,
+      title: typeof assignment.title === 'string' ? assignment.title : profile?.title ?? fallback.title,
+      module_ids: stringArray(assignment.module_ids).length > 0 ? stringArray(assignment.module_ids) : profile?.module_ids ?? fallback.module_ids,
+      presentation_modes: stringArray(assignment.presentation_modes).length > 0 ? stringArray(assignment.presentation_modes) : profile?.presentation_modes ?? fallback.presentation_modes,
       surface_layout: parseSurfaceLayout(assignment.surface_layout, createDefaultSurfaceLayout(slotId, sourceZoneId, componentId)),
       updated_at_utc: typeof assignment.updated_at_utc === 'string' ? assignment.updated_at_utc : fallback.updated_at_utc,
     })
@@ -349,21 +447,25 @@ export function documentFromAssignments(
     assignments: BOARDROOM_SCENE_SLOT_IDS.map((slotId) => {
       const fallback = DEFAULT_ASSIGNMENT_METADATA[slotId]
       const sourceZoneId = assignments[slotId] || fallback.source_zone_id
+      const roleId = inferBoardroomRoleId(sourceZoneId) ?? undefined
+      const profile = resolveAssignmentProfile(sourceZoneId)
       const existing = baseDocument?.assignments.find((assignment) => assignment.slot_id === slotId)
       if (existing && existing.source_zone_id === sourceZoneId) {
         return {
           ...existing,
+          ...(roleId ? { role_id: roleId } : {}),
           updated_at_utc: updatedAtUtc,
         }
       }
       return {
         slot_id: slotId,
-        component_id: fallback.component_id,
+        ...(roleId ? { role_id: roleId } : {}),
+        component_id: profile?.component_id ?? fallback.component_id,
         source_zone_id: sourceZoneId,
-        title: fallback.title,
-        module_ids: fallback.module_ids,
-        presentation_modes: fallback.presentation_modes,
-        surface_layout: createDefaultSurfaceLayout(slotId, sourceZoneId, fallback.component_id),
+        title: profile?.title ?? fallback.title,
+        module_ids: profile?.module_ids ?? fallback.module_ids,
+        presentation_modes: profile?.presentation_modes ?? fallback.presentation_modes,
+        surface_layout: createDefaultSurfaceLayout(slotId, sourceZoneId, profile?.component_id ?? fallback.component_id),
         updated_at_utc: updatedAtUtc,
       }
     }),
@@ -391,7 +493,7 @@ export function readLocalBoardroomSlotAssignments(storage: Pick<Storage, 'getIte
   try {
     const raw = storage?.getItem(ARDA_BOARDROOM_SLOT_STORAGE_KEY)
     if (!raw) return { ...DEFAULT_BOARDROOM_SCENE_SLOT_ASSIGNMENTS }
-    const parsed = JSON.parse(raw) as unknown
+    const parsed = parseJsonOrNull<unknown>(raw)
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return { ...DEFAULT_BOARDROOM_SCENE_SLOT_ASSIGNMENTS }
     const stored = parsed as Record<string, unknown>
     return BOARDROOM_SCENE_SLOT_IDS.reduce<BoardroomSceneSlotAssignments>((assignments, slotId) => {
@@ -418,7 +520,7 @@ export async function loadBoardroomSlotSettings(rootPath: string): Promise<Board
   }
 
   try {
-    const parsed = parseBoardroomSlotSettings(JSON.parse(result.content))
+    const parsed = parseBoardroomSlotSettings(parseJsonOrDefault<unknown>(result.content, null))
     if (!parsed) throw new Error('invalid boardroom slot settings schema')
     return {
       mode: 'workspace',

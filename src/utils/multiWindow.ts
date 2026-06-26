@@ -8,6 +8,7 @@
 
 import { listen, type UnlistenFn } from '@tauri-apps/api/event'
 import { safeTauriInvoke } from '../lib/tauriGuard'
+import { parseJsonOrNull } from '../lib/jsonParse'
 
 interface BridgeAgent {
   id: string
@@ -39,11 +40,19 @@ export interface WorkstationBridgeState {
 
 const WORKSTATION_STATE_STORAGE_KEY = 'arda.workstation.state.v1'
 
+function localStorageOrNull(): Storage | null {
+  try {
+    return typeof window === 'undefined' ? null : window.localStorage
+  } catch {
+    return null
+  }
+}
+
 function readStoredWorkstationStateMap(): Record<string, WorkstationBridgeState> {
   try {
-    const raw = window.localStorage.getItem(WORKSTATION_STATE_STORAGE_KEY)
+    const raw = localStorageOrNull()?.getItem(WORKSTATION_STATE_STORAGE_KEY)
     if (!raw) return {}
-    const parsed = JSON.parse(raw) as unknown
+    const parsed = parseJsonOrNull<unknown>(raw)
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {}
     return parsed as Record<string, WorkstationBridgeState>
   } catch {
@@ -60,7 +69,11 @@ function persistWorkstationState(state: WorkstationBridgeState): WorkstationBrid
     ...readStoredWorkstationStateMap(),
     [normalized.workstationId]: normalized,
   }
-  window.localStorage.setItem(WORKSTATION_STATE_STORAGE_KEY, JSON.stringify(next))
+  try {
+    localStorageOrNull()?.setItem(WORKSTATION_STATE_STORAGE_KEY, JSON.stringify(next))
+  } catch {
+    // Cross-window persistence is best-effort; still emit the in-memory sync event.
+  }
   return normalized
 }
 
@@ -434,7 +447,8 @@ export function initWindowBridge(): void {
   window.addEventListener('storage', (event) => {
     if (event.key !== WORKSTATION_STATE_STORAGE_KEY || !event.newValue) return
     try {
-      const parsed = JSON.parse(event.newValue) as Record<string, WorkstationBridgeState>
+      const parsed = parseJsonOrNull<Record<string, WorkstationBridgeState>>(event.newValue)
+      if (!parsed) return
       Object.values(parsed).forEach((state) => {
         if (state?.workstationId) {
           emitWorkstationSync(state)

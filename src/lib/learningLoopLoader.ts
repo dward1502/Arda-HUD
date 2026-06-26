@@ -1,4 +1,5 @@
 import { readFile } from './weathertop'
+import { jsonParseFailureMessage, parseJsonResult, type JsonParseErr } from './jsonParse'
 
 export interface KnowledgeDelta {
   id: string
@@ -55,8 +56,9 @@ export async function loadLearningLoopData(): Promise<LearningLoopState> {
     if (!result.success || !result.content) {
       return emptyLearningLoopState()
     }
-    const data: LearningLoopState = JSON.parse(result.content)
-    return data
+    const parsed = parseJsonResult<LearningLoopState>(result.content)
+    if (parsed.ok) return parsed.value
+    throw new Error(jsonParseFailureMessage(LEARNING_LOOP_PATH, parsed as JsonParseErr))
   } catch (error) {
     console.error('Error loading learning loop data:', error)
     throw new Error('Failed to load learning loop data')

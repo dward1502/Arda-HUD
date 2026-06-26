@@ -1,6 +1,7 @@
 // sigil: REPAIR
 import { postAction } from './weathertop'
 import { safeTauriInvoke } from './tauriGuard'
+import { parseJsonOrNull } from './jsonParse'
 import type { AvatarMood, AvatarPersona } from './avatarPersona'
 
 export type SystemActionId =
@@ -404,7 +405,7 @@ function readPersistedExecutionLedger(): Partial<Record<SystemActionId, Persiste
   try {
     const raw = window.localStorage.getItem(ACTION_EXECUTION_LEDGER_KEY)
     if (!raw) return {}
-    const parsed = JSON.parse(raw) as unknown
+    const parsed = parseJsonOrNull<unknown>(raw)
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {}
     return parsed as Partial<Record<SystemActionId, PersistedSystemActionExecution>>
   } catch {
@@ -788,6 +789,32 @@ function normalizeFileActionResult(
   }
 }
 
+function formatActionError(error: unknown): string {
+  if (error instanceof Error) {
+    const typed = error as Error & { code?: unknown; path?: unknown; command?: unknown }
+    const code = typeof typed.code === 'string' ? ` code=${typed.code}` : ''
+    const path = typeof typed.path === 'string' ? ` path=${typed.path}` : ''
+    const command = typeof typed.command === 'string' ? ` command=${typed.command}` : ''
+    return `${error.name}: ${error.message}${code}${path}${command}`
+  }
+
+  if (error && typeof error === 'object') {
+    const record = error as Record<string, unknown>
+    const parts = [
+      typeof record.name === 'string' ? record.name : null,
+      typeof record.message === 'string' ? record.message : null,
+      typeof record.code === 'string' ? `code=${record.code}` : null,
+      typeof record.path === 'string' ? `path=${record.path}` : null,
+      typeof record.command === 'string' ? `command=${record.command}` : null,
+      typeof record.stderr === 'string' ? `stderr=${record.stderr}` : null,
+      typeof record.stdout === 'string' ? `stdout=${record.stdout}` : null,
+    ].filter((part): part is string => Boolean(part))
+    return parts.length > 0 ? parts.join(' ') : JSON.stringify(record)
+  }
+
+  return String(error)
+}
+
 function localActionDefaults(action: SystemActionId): { command: string; receiptPath: string; successMessage: string; failureMessage: string } | null {
   switch (action) {
     case 'chronos.run_provider_checks':
@@ -900,7 +927,7 @@ const tauriLocalCliAdapter: SystemActionAdapter = {
         })
         return normalizeFileActionResult(action, result, 'Human augmentation approval recorded', 'Human augmentation approval failed')
       } catch (error) {
-        return { ok: false, provider: 'tauri-local-cli', message: `Human augmentation approval failed: ${String(error)}` }
+        return { ok: false, provider: 'tauri-local-cli', message: `Human augmentation approval failed: ${formatActionError(error)}` }
       }
     }
 
@@ -932,7 +959,7 @@ const tauriLocalCliAdapter: SystemActionAdapter = {
         })
         return normalizeFileActionResult(action, result, 'CEO council session recorded', 'CEO council session failed')
       } catch (error) {
-        return { ok: false, provider: 'tauri-local-cli', message: `CEO council session failed: ${String(error)}` }
+        return { ok: false, provider: 'tauri-local-cli', message: `CEO council session failed: ${formatActionError(error)}` }
       }
     }
 
@@ -976,7 +1003,7 @@ const tauriLocalCliAdapter: SystemActionAdapter = {
       return {
         ok: false,
         provider: 'tauri-local-cli',
-        message: `${defaults.failureMessage}: ${String(error)}`,
+        message: `${defaults.failureMessage}: ${formatActionError(error)}`,
       }
     }
   },
@@ -1050,7 +1077,7 @@ export async function executeSystemAction(
       }
       errors.push(`${adapter.id}: ${result.message}`)
     } catch (error) {
-      errors.push(`${adapter.id}: ${String(error)}`)
+      errors.push(`${adapter.id}: ${formatActionError(error)}`)
     }
   }
 

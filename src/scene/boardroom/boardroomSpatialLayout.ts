@@ -99,6 +99,7 @@ export const BOARDROOM_SPATIAL_ZONES: BoardroomSpatialZone[] = [
   },
   {
     id: 'boardroom.lower.left_wrap',
+    label: 'Governance Console',
     kind: 'desk_surface',
     interaction: 'open_workstation',
     binding: 'governance_control',
@@ -112,6 +113,7 @@ export const BOARDROOM_SPATIAL_ZONES: BoardroomSpatialZone[] = [
   },
   {
     id: 'boardroom.lower.left_inner',
+    label: 'Systems Console',
     kind: 'desk_surface',
     interaction: 'open_workstation',
     binding: 'systems_control',
@@ -125,6 +127,7 @@ export const BOARDROOM_SPATIAL_ZONES: BoardroomSpatialZone[] = [
   },
   {
     id: 'boardroom.lower.right_inner',
+    label: 'Network Console',
     kind: 'desk_surface',
     interaction: 'open_workstation',
     binding: 'network_control',
@@ -138,6 +141,7 @@ export const BOARDROOM_SPATIAL_ZONES: BoardroomSpatialZone[] = [
   },
   {
     id: 'boardroom.lower.right_wrap',
+    label: 'Human Console',
     kind: 'desk_surface',
     interaction: 'open_workstation',
     binding: 'human_control',

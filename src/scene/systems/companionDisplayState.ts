@@ -66,6 +66,23 @@ function compactText(value: string | undefined, limit: number): string | undefin
   return `${trimmed.slice(0, Math.max(0, limit - 1)).trimEnd()}…`
 }
 
+function fallbackCompanionText(state: AgentPresenceState): { banner: string; inquiry: string } {
+  const agent = state.primaryAgent.toUpperCase()
+  switch (companionEventForPhase(state)) {
+    case 'alert':
+      return { banner: `${agent} alert active`, inquiry: 'Operator review required' }
+    case 'awaiting_user':
+      return { banner: `${agent} awaiting input`, inquiry: 'Operator response pending' }
+    case 'action':
+      return { banner: `${agent} action confirmed`, inquiry: 'Action receipt pending' }
+    case 'inquiry':
+      return { banner: `${agent} inquiry active`, inquiry: 'Review the active request' }
+    case 'resolved':
+    default:
+      return { banner: `${agent} update resolved`, inquiry: 'No operator action required' }
+  }
+}
+
 function copyAgents(agents: SovereignAgentId[]): SovereignAgentId[] {
   return [...agents]
 }
@@ -90,8 +107,9 @@ export function toCitadelCompanionPayload(
   }
 
   if (!idle) {
-    const banner = compactText(normalized.banner, TEXT_LIMITS.banner)
-    const inquiry = compactText(normalized.inquiry ?? normalized.banner, TEXT_LIMITS.inquiry)
+    const fallbackText = fallbackCompanionText(normalized)
+    const banner = compactText(normalized.banner, TEXT_LIMITS.banner) ?? compactText(fallbackText.banner, TEXT_LIMITS.banner)
+    const inquiry = compactText(normalized.inquiry ?? normalized.banner, TEXT_LIMITS.inquiry) ?? compactText(fallbackText.inquiry, TEXT_LIMITS.inquiry)
     const action = compactText(normalized.action, TEXT_LIMITS.action)
     const response = compactText(normalized.response, TEXT_LIMITS.response)
     if (banner) payload.banner = banner

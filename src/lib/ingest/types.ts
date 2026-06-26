@@ -16,7 +16,7 @@ export type ComponentType =
 export interface IngestRequest {
   source: string
   format: DataFormat
-  componentType: ComponentType
+  componentType?: ComponentType | 'auto'
   options?: RenderOptions
 }
 

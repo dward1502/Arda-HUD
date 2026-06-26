@@ -1,11 +1,12 @@
 // sigil: REPAIR
 import { invoke } from '@tauri-apps/api/core'
 import { listen, type UnlistenFn } from '@tauri-apps/api/event'
+import { envEndpointUrl, envString } from './endpointConfig'
 
-const WEATHERTOP_SCHEME = import.meta.env.VITE_WEATHERTOP_SCHEME || 'http'
-const WEATHERTOP_HOST = import.meta.env.VITE_WEATHERTOP_HOST || 'localhost'
-const WEATHERTOP_PORT = import.meta.env.VITE_WEATHERTOP_PORT || '8000'
-const WEATHERTOP_BASE_URL = (import.meta.env.VITE_WEATHERTOP_URL || `${WEATHERTOP_SCHEME}://${WEATHERTOP_HOST}:${WEATHERTOP_PORT}`).replace(/\/+$/, '')
+const WEATHERTOP_SCHEME = envString(import.meta.env.VITE_WEATHERTOP_SCHEME, 'http')
+const WEATHERTOP_HOST = envString(import.meta.env.VITE_WEATHERTOP_HOST, '127.0.0.1')
+const WEATHERTOP_PORT = envString(import.meta.env.VITE_WEATHERTOP_PORT, '8000')
+const WEATHERTOP_BASE_URL = envEndpointUrl({ url: import.meta.env.VITE_WEATHERTOP_URL, scheme: WEATHERTOP_SCHEME, host: WEATHERTOP_HOST, port: WEATHERTOP_PORT })
 const IS_TAURI = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window
 
 export function getWeathertopBaseUrl(): string {

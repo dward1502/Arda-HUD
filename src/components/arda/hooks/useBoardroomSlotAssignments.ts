@@ -16,6 +16,7 @@ import {
   surfaceLayoutsFromDocument,
   type BoardroomSurfaceLayout,
 } from '../../../lib/boardroomSlotSettings'
+import { parseJsonOrNull } from '../../../lib/jsonParse'
 
 interface UseBoardroomSlotAssignmentsResult {
   assignments: BoardroomSceneSlotAssignments
@@ -80,8 +81,8 @@ export function useBoardroomSlotAssignments(rootPath: string | null | undefined)
       if (result.success) {
         dirtyRef.current = false
         try {
-          const parsed = JSON.parse(result.content ?? '{}') as BoardroomSlotSettingsDocument
-          setDocument(parsed)
+          const parsed = parseJsonOrNull<BoardroomSlotSettingsDocument>(result.content)
+          if (parsed) setDocument(parsed)
         } catch {
           // The saved assignment state remains authoritative for this session.
         }

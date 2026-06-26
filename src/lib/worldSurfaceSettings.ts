@@ -1,5 +1,6 @@
 // sigil: REPAIR
 import { readFile, writeScopedFile, type FileReadResult } from './weathertop'
+import { parseJsonOrDefault, parseJsonOrNull } from './jsonParse'
 import type {
   BoardroomSurfaceAdapterType,
   BoardroomSurfaceFocusMode,
@@ -347,7 +348,7 @@ export function readLocalWorldSurfaceAssignments(storage: Pick<Storage, 'getItem
   try {
     const raw = storage?.getItem(ARDA_WORLD_SURFACE_STORAGE_KEY)
     if (!raw) return { ...DEFAULT_WORLD_SURFACE_ASSIGNMENTS }
-    const parsed = JSON.parse(raw) as unknown
+    const parsed = parseJsonOrNull<unknown>(raw)
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return { ...DEFAULT_WORLD_SURFACE_ASSIGNMENTS }
     const stored = parsed as Record<string, unknown>
     return WORLD_SCENE_SURFACE_IDS.reduce<WorldSceneSurfaceAssignments>((assignments, surfaceId) => {
@@ -374,7 +375,7 @@ export async function loadWorldSurfaceSettings(rootPath: string): Promise<WorldS
   }
 
   try {
-    const parsed = parseWorldSurfaceSettings(JSON.parse(result.content))
+    const parsed = parseWorldSurfaceSettings(parseJsonOrDefault<unknown>(result.content, null))
     if (!parsed) throw new Error('invalid world surface settings schema')
     return {
       mode: 'workspace',

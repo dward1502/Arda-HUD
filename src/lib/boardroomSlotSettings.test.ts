@@ -2,6 +2,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   ARDA_BOARDROOM_SLOT_SETTINGS_RELATIVE_PATH,
+  BOARDROOM_WORKSTATION_ROLE_PROFILES,
   BOARDROOM_SCENE_SLOT_IDS,
   DEFAULT_BOARDROOM_SCENE_SLOT_ASSIGNMENTS,
   assignmentsFromDocument,
@@ -130,6 +131,7 @@ describe('boardroom slot settings', () => {
         monitor_left_1: 'governance_guardhouse',
       }, '2026-05-22T02:00:00.000Z')),
       error: null,
+      path: ARDA_BOARDROOM_SLOT_SETTINGS_RELATIVE_PATH,
     })
 
     const result = await loadBoardroomSlotSettings('/annunimas')
@@ -140,7 +142,7 @@ describe('boardroom slot settings', () => {
   })
 
   it('saves assignments through the scoped write IPC contract only', async () => {
-    mockedWriteScopedFile.mockResolvedValueOnce({ success: true, content: 'ok', error: null })
+    mockedWriteScopedFile.mockResolvedValueOnce({ success: true, content: 'ok', error: null, path: ARDA_BOARDROOM_SLOT_SETTINGS_RELATIVE_PATH })
 
     const result = await saveBoardroomSlotSettings('/annunimas', {
       ...DEFAULT_BOARDROOM_SCENE_SLOT_ASSIGNMENTS,
@@ -156,7 +158,7 @@ describe('boardroom slot settings', () => {
   })
 
   it('updates and saves a surface layout without dropping the slot contract document', async () => {
-    mockedWriteScopedFile.mockResolvedValueOnce({ success: true, content: 'ok', error: null })
+    mockedWriteScopedFile.mockResolvedValueOnce({ success: true, content: 'ok', error: null, path: ARDA_BOARDROOM_SLOT_SETTINGS_RELATIVE_PATH })
     const document = createDefaultBoardroomSlotSettings('2026-06-01T00:00:00.000Z')
     const current = document.assignments.find((assignment) => assignment.slot_id === 'monitor_left_2')!.surface_layout
     const updated = documentWithSurfaceLayout(document, 'monitor_left_2', {
@@ -207,6 +209,47 @@ describe('boardroom slot settings', () => {
     expect(document.assignments.find((assignment) => assignment.slot_id === 'monitor_left_2')?.surface_layout.embed).toMatchObject({
       url: 'http://100.103.125.88:8080',
       allow_inline: false,
+    })
+  })
+
+  it('derives Fleet assignment metadata from the role profile for any physical slot', () => {
+    const fleetProfile = BOARDROOM_WORKSTATION_ROLE_PROFILES.find((profile) => profile.role_id === 'fleet')!
+    const document = documentFromAssignments({
+      ...DEFAULT_BOARDROOM_SCENE_SLOT_ASSIGNMENTS,
+      monitor_left_1: fleetProfile.source_zone_id,
+    }, '2026-06-01T03:00:00.000Z')
+    const assignment = document.assignments.find((candidate) => candidate.slot_id === 'monitor_left_1')!
+
+    expect(assignment).toMatchObject({
+      slot_id: 'monitor_left_1',
+      role_id: 'fleet',
+      source_zone_id: 'systems_health',
+      component_id: 'fleet-workstation',
+      title: 'Fleet',
+      module_ids: ['systems', 'operations_and_packages'],
+    })
+    expect(assignment.surface_layout.focus.target).toBe('systems_health')
+  })
+
+  it('normalizes role-only assignment documents for backward-compatible saves', () => {
+    const parsed = parseBoardroomSlotSettings({
+      schema_version: 'annunimas.arda_boardroom_slots.v1',
+      updated_at_utc: '2026-06-01T04:00:00.000Z',
+      assignments: [
+        {
+          slot_id: 'monitor_left_1',
+          role_id: 'fleet',
+          updated_at_utc: '2026-06-01T04:00:00.000Z',
+        },
+      ],
+    })
+
+    const assignment = parsed?.assignments.find((candidate) => candidate.slot_id === 'monitor_left_1')
+    expect(assignment).toMatchObject({
+      role_id: 'fleet',
+      source_zone_id: 'systems_health',
+      component_id: 'fleet-workstation',
+      module_ids: ['systems', 'operations_and_packages'],
     })
   })
 })

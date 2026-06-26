@@ -1,8 +1,9 @@
 // sigil: REPAIR
 import { invoke } from '@tauri-apps/api/core'
+import { envEndpointUrl } from './endpointConfig'
 
 const IS_TAURI = typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window
-const CHARON_BASE_URL = (import.meta.env.VITE_CHARON_BASE_URL || 'http://127.0.0.1:5110').replace(/\/+$/, '')
+const CHARON_BASE_URL = envEndpointUrl({ url: import.meta.env.VITE_CHARON_BASE_URL, port: 5110 })
 
 export type CharonCapabilityState = 'passed' | 'failed' | 'expired' | 'unknown'
 

@@ -2,6 +2,7 @@
 import { readFile, writeScopedFile } from './weathertop'
 import { primarySigilForSource } from './soterionRender'
 import type { JsonRecord } from './ardaSource'
+import { parseJsonOrNull } from './jsonParse'
 
 export interface ConfigWalkthroughProfile {
   id: string
@@ -50,11 +51,7 @@ function getNumber(value: unknown, fallback = 0): number {
 
 function parseJson(content: string | null): JsonRecord {
   if (!content) return {}
-  try {
-    return asRecord(JSON.parse(content)) ?? {}
-  } catch {
-    return {}
-  }
+  return asRecord(parseJsonOrNull<unknown>(content)) ?? {}
 }
 
 function stableJson(value: unknown): string {

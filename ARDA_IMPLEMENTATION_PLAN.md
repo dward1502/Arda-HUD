@@ -569,6 +569,9 @@ Purpose:
 - keep native Tauri/WebKit as the canonical proof path
 - make boardroom monitors and desk terminals configurable without hardcoding
   every visual or service directly into `BoardroomViewport`
+ - ARDA target is universal agentic control surface.
+ -Annunimas is first-class adapter/profile.
+ - Workstation recovery must preserve scene-slot configurability.
 
 ### 8.1 Runtime Parity And App Structure
 

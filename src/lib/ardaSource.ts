@@ -4,6 +4,7 @@ import { loadArdaHudSettings } from './ardaHudSettings'
 import { derivePresenceLedgerProjection } from '../scene/systems/presenceState'
 import { classifyFreshness, getOperatorLabel, getSafeRefreshCommand, normalizeTimestamp, type ArdaSourceProvenance } from './ardaProvenance'
 import { deriveAutomationStatusSurface } from './automationStatus'
+import { parseJsonOrNull } from './jsonParse'
 import {
   collectInventoryPaths,
   filenameFromPath,
@@ -707,17 +708,13 @@ function sourceKindForPath(sourcePath: string): ArdaSourceProvenance['sourceKind
 
 function generatedAtFromContent(sourcePath: string, content: string): string | null {
   if (!sourcePath.endsWith('.json')) return null
-  try {
-    const parsed = asRecord(JSON.parse(content))
-    return normalizeTimestamp(
-      toStringValue(
-        parsed?.generated_at_utc ?? parsed?.generated_at ?? parsed?.timestamp_utc ?? parsed?.timestamp ?? parsed?.updated_at_utc,
-        '',
-      ),
-    )
-  } catch {
-    return null
-  }
+  const parsed = asRecord(parseJsonOrNull(content))
+  return normalizeTimestamp(
+    toStringValue(
+      parsed?.generated_at_utc ?? parsed?.generated_at ?? parsed?.timestamp_utc ?? parsed?.timestamp ?? parsed?.updated_at_utc,
+      '',
+    ),
+  )
 }
 
 async function deriveProvenanceRecords(rootPath: string, sections: ArdaSection[]): Promise<ArdaSourceProvenance[]> {
