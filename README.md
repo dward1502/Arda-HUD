@@ -26,6 +26,22 @@ visual environment where a human can inspect, approve, redirect, or stop agentic
 work. Its job is not to hide autonomy behind dashboards; it makes the
 inspect-act-verify loop visible and governable.
 
+## Getting Started
+
+From the repository root, inspect `INDEX.md` and
+`ARDA_CONTRACTS_MANIFEST.md` first, then run the app-specific commands from
+`apps/arda-hud/`:
+
+```bash
+cd apps/arda-hud
+npm install
+npm run build
+npm test
+```
+
+Use host Vite for fast iteration only. Native proof should use the stable Tauri
+commands or the `lothlorien` distrobox path below.
+
 ## Architecture Overview
 
 ```mermaid
@@ -41,6 +57,18 @@ flowchart TB
     Operator --> Actions[operator_actions.json]
     Actions --> Annunimas[Annunimas Runtime]
 ```
+
+## Relationship to ARDA
+
+ARDA HUD is the operator-facing visibility and control surface for the ARDA repo
+family. It consumes state projections, provenance records, task/council surfaces,
+and runtime health so a human can inspect, approve, redirect, or stop agentic
+work without reading raw logs first.
+
+## Status
+
+Active Tauri/React operator surface. Host Vite is useful for fast UI iteration,
+but native proof should use the stable Tauri/WebKit path documented below.
 
 ## Current Reality
 
@@ -160,22 +188,6 @@ From `apps/arda-hud/`:
 npm run build
 npm test
 ```
-
-## Getting Started
-
-From the repository root, inspect `INDEX.md` and
-`ARDA_CONTRACTS_MANIFEST.md` first, then run the app-specific commands from
-`apps/arda-hud/`:
-
-```bash
-cd apps/arda-hud
-npm install
-npm run build
-npm test
-```
-
-Use host Vite for fast iteration only. Native proof should use the stable Tauri
-commands or the `lothlorien` distrobox path below.
 
 For local frontend development:
 
