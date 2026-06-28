@@ -56,7 +56,7 @@ import type {
   CommandConsoleSurface,
   OperatingSurfaceLaneReport
 } from './components/arda/types'
-import {getArandurQueueWriteRequests,getHumanAugmentationRuntime,getPlanShelf,getReviewGateItems, getRuntimeDrift, getOperatorRuntimeSurface} from './lib/reviewGateDerivation'
+import { getArandurQueueWriteRequests, getHumanAugmentationRuntime, getPlanShelf, getReviewGateItems, getRuntimeDrift, getOperatorRuntimeSurface } from './lib/reviewGateDerivation'
 import { deriveBoardroomHudInstruments } from './scene/boardroom/boardroomHudInstruments'
 import BoardroomViewport from './scene/boardroom/BoardroomViewport'
 import WorldRuntimeViewport from './scene/world/WorldViewport'
@@ -111,12 +111,12 @@ import {
   WORLD_TERMINAL_SURFACE_IDS,
   type WorldSceneSurfaceId,
 } from './lib/worldSurfaceSettings'
-import {getString,getNumber, getBoolean, getSectionById, getTimestamp, getSceneZoneById, getWorkstationManifestById, getWorkstationManifestByZoneId,formatMetric, formatBytes, formatPercent, asRecord, asArray, getAgents,getGovernanceRuntimeSignals,getHumanDocs,getHumanNotes,getOperationsFlowSummary,getOutputAccounting,getOutputTopology,getPackageEnablement,getPackageRuntimeActivation,getPaperclipAlignment,getPackageTools,getStoragePressureSummary,getStorageStores, getAutonomyReadinessSummary, getEscalationRuntime, getGovernanceSummary, getOperatorCockpitSurface,getQueueSummary } from "./lib/ardaSurfaces"
+import { getString, getNumber, getBoolean, getSectionById, getTimestamp, getSceneZoneById, getWorkstationManifestById, getWorkstationManifestByZoneId, formatMetric, formatBytes, formatPercent, asRecord, asArray, getAgents, getGovernanceRuntimeSignals, getHumanDocs, getHumanNotes, getOperationsFlowSummary, getOutputAccounting, getOutputTopology, getPackageEnablement, getPackageRuntimeActivation, getPaperclipAlignment, getPackageTools, getStoragePressureSummary, getStorageStores, getAutonomyReadinessSummary, getEscalationRuntime, getGovernanceSummary, getOperatorCockpitSurface, getQueueSummary } from "./lib/ardaSurfaces"
 import type { SceneAnchorDefinition, SceneZoneDefinition, WorkstationManifestDefinition } from './scene/systems/runtimeTypes'
 import type { FleetViewModel } from './scene/workstations/viewModels'
-import {getCommandConsoleSurface, getCeoCouncilRuntime, getTaskLifecycleRuntime} from "./lib/reviewGateDerivation"
-import {getKnowledgeMap, getOperatingSurfaceReports} from "./lib/operatingSurfaceDerivation"
-import {sectionToPanelLayout,formatProviderLabel, formatSectionStatus,formatPanelStatus,titleForSectionOrPanel, asModuleId, localStorageOrNull, MODULE_STORAGE_KEY,readStoredModuleOrder} from './lib/settingsLayout'
+import { getCommandConsoleSurface, getCeoCouncilRuntime, getTaskLifecycleRuntime } from "./lib/reviewGateDerivation"
+import { getKnowledgeMap, getOperatingSurfaceReports } from "./lib/operatingSurfaceDerivation"
+import { sectionToPanelLayout, formatProviderLabel, formatSectionStatus, formatPanelStatus, titleForSectionOrPanel, asModuleId, localStorageOrNull, MODULE_STORAGE_KEY, readStoredModuleOrder } from './lib/settingsLayout'
 const THEMES: ThemeOption[] = [
   { id: 'cyberpunk', label: 'Cyberpunk' },
   { id: 'gibson2', label: 'Gibson 2.0' },
@@ -133,15 +133,15 @@ const OPERATING_SURFACE_NAV: Array<{
   panelModeKey: string
   subtitle: string
 }> = [
-  { lane: 'Now', panelModeKey: 'now_command', subtitle: 'mode, attention, active work' },
-  { lane: 'Work', panelModeKey: 'planning_and_queue', subtitle: 'queues, jobs, receipts' },
-  { lane: 'Decisions', panelModeKey: 'decisions', subtitle: 'human gates and approvals' },
-  { lane: 'Knowledge', panelModeKey: 'knowledge_and_reasoning', subtitle: 'research, memory, citations' },
-  { lane: 'Health', panelModeKey: 'systems_health', subtitle: 'fleet, providers, drift' },
-  { lane: 'Business', panelModeKey: 'business_ops', subtitle: 'clients, projects, readiness' },
-  { lane: 'Evidence', panelModeKey: 'evidence_trust', subtitle: 'sources, audits, provenance' },
-  { lane: 'Settings', panelModeKey: 'settings', subtitle: 'setup and configuration' },
-]
+    { lane: 'Now', panelModeKey: 'now_command', subtitle: 'mode, attention, active work' },
+    { lane: 'Work', panelModeKey: 'planning_and_queue', subtitle: 'queues, jobs, receipts' },
+    { lane: 'Decisions', panelModeKey: 'decisions', subtitle: 'human gates and approvals' },
+    { lane: 'Knowledge', panelModeKey: 'knowledge_and_reasoning', subtitle: 'research, memory, citations' },
+    { lane: 'Health', panelModeKey: 'systems_health', subtitle: 'fleet, providers, drift' },
+    { lane: 'Business', panelModeKey: 'business_ops', subtitle: 'clients, projects, readiness' },
+    { lane: 'Evidence', panelModeKey: 'evidence_trust', subtitle: 'sources, audits, provenance' },
+    { lane: 'Settings', panelModeKey: 'settings', subtitle: 'setup and configuration' },
+  ]
 interface FloatingWorkstationState {
   id: string
   manifestId: string
@@ -559,9 +559,9 @@ export default function App() {
         const currentIndex = views.indexOf(viewMode)
         const nextIndex = (currentIndex + 1) % views.length
         const nextView = views[nextIndex]
-        const label = nextView === 'boardroom' ? 'Entering Boardroom' 
+        const label = nextView === 'boardroom' ? 'Entering Boardroom'
           : nextView === 'world' ? 'Entering World Mode'
-          : 'Opening Focused Panel'
+            : 'Opening Focused Panel'
         if (nextView === 'panel' && !activeSectionId) {
           return
         }
@@ -949,36 +949,36 @@ export default function App() {
     },
     executive_overview: {
       title: 'Executive Overview',
-        node: (
-          <ExecutiveOverviewModule
-            authority={getString(bundle?.snapshot?.authority, 'arda_snapshot_projection')}
-            loveEquation={formatMetric(getNumber(worldMetrics?.love_equation, 0))}
-            activeTasks={formatMetric(getNumber(worldMetrics?.active_tasks, 0))}
-            schemaVersion={getString(bundle?.snapshot?.schema_version, 'annunimas.core.state.v1')}
-            sourceCoverage={executiveOverviewCoverage}
-            tag={snapshotTag}
-          />
-        ),
+      node: (
+        <ExecutiveOverviewModule
+          authority={getString(bundle?.snapshot?.authority, 'arda_snapshot_projection')}
+          loveEquation={formatMetric(getNumber(worldMetrics?.love_equation, 0))}
+          activeTasks={formatMetric(getNumber(worldMetrics?.active_tasks, 0))}
+          schemaVersion={getString(bundle?.snapshot?.schema_version, 'annunimas.core.state.v1')}
+          sourceCoverage={executiveOverviewCoverage}
+          tag={snapshotTag}
+        />
+      ),
     },
     section_focus: {
       title: activeSection?.title ?? 'Section Focus',
-        node: (
-          activeSection ? (
-            <SectionFocusModule
-              title={activeSection.title}
-              eyebrow={activeSection.owner}
-              accent={statusTone(activeSection.status)}
-              status={activeSection.status}
-              owner={activeSection.owner}
-              panelCount={activeWorkstationManifest?.module_ids.length ?? activeSection.arda_panels.length}
-              sourceCount={activeSceneZone?.source_ids.length ?? activeSection.primary_sources.length}
-              panels={activeSection.arda_panels}
-              primarySources={activeSection.primary_sources}
-              sourceCoverage={activeSectionCoverage}
-              sourceProvenance={bundle?.sourceProvenance ?? []}
-              tag={sourceMapTag}
-            />
-          ) : (
+      node: (
+        activeSection ? (
+          <SectionFocusModule
+            title={activeSection.title}
+            eyebrow={activeSection.owner}
+            accent={statusTone(activeSection.status)}
+            status={activeSection.status}
+            owner={activeSection.owner}
+            panelCount={activeWorkstationManifest?.module_ids.length ?? activeSection.arda_panels.length}
+            sourceCount={activeSceneZone?.source_ids.length ?? activeSection.primary_sources.length}
+            panels={activeSection.arda_panels}
+            primarySources={activeSection.primary_sources}
+            sourceCoverage={activeSectionCoverage}
+            sourceProvenance={bundle?.sourceProvenance ?? []}
+            tag={sourceMapTag}
+          />
+        ) : (
           <ModuleCard title="Section Focus" eyebrow="No active section" accent="cyan">
             <div className="empty-state">No section available.</div>
           </ModuleCard>
@@ -987,59 +987,59 @@ export default function App() {
     },
     human_realm: {
       title: 'Human Realm',
-        node: (
-          <HumanRealmModule
-            docs={docs}
-            notes={notes}
-            planShelf={planShelf}
-            counts={{
-              docs: getNumber(humanCounts?.docs_total, 0),
-              notes: getNumber(humanCounts?.notes_total, 0),
-              summaries: getNumber(humanCounts?.summaries_total, 0),
-              arandur: getNumber(humanCounts?.arandur_docs_total, 0),
-            }}
-            sourceCoverage={humanRealmCoverage}
-            sourceProvenance={bundle?.sourceProvenance ?? []}
-            tag={humanTag}
-          />
-        ),
+      node: (
+        <HumanRealmModule
+          docs={docs}
+          notes={notes}
+          planShelf={planShelf}
+          counts={{
+            docs: getNumber(humanCounts?.docs_total, 0),
+            notes: getNumber(humanCounts?.notes_total, 0),
+            summaries: getNumber(humanCounts?.summaries_total, 0),
+            arandur: getNumber(humanCounts?.arandur_docs_total, 0),
+          }}
+          sourceCoverage={humanRealmCoverage}
+          sourceProvenance={bundle?.sourceProvenance ?? []}
+          tag={humanTag}
+        />
+      ),
     },
     systems: {
       title: 'Systems',
-        node: (
-          <SystemsModule
-            agents={agents.map((agent) => ({
-              ...agent,
-              trustScore: formatPercent(agent.trustScore),
-            }))}
-            fleetHealth={fleetHealth}
-            laneOwnership={laneOwnership}
-            laneHeadroom={laneHeadroom}
-            laneFitness={laneFitness}
-            routableProviders={routableProviders}
-            charonLiveSnapshot={charonLiveSnapshot}
-            charonLiveError={charonLiveError}
-            charonLiveLoading={charonLiveLoading}
-            storagePressure={bundle?.storagePressure ?? null}
-            automationStatus={bundle?.automationStatus ?? null}
-            setupConsoleReadiness={bundle?.setupConsoleReadiness ?? null}
-            onboardingGuidedSession={bundle?.onboardingGuidedSession ?? null}
-            onboardingPrivateConfigStage={bundle?.onboardingPrivateConfigStage ?? null}
-            onboardingServicePlan={bundle?.onboardingServicePlan ?? null}
-            auditReadiness={bundle?.auditReadiness ?? null}
-            operatorCockpit={operatorCockpit}
-            runtimeDrift={runtimeDrift}
-            knowledgeMap={knowledgeMap}
-            sourceCoverage={sourceCoverageForPanel(sourceMapSections, 'systems')}
-            sourceProvenance={bundle?.sourceProvenance ?? []}
-            actionDescriptors={actionDescriptors}
-            capabilityStatuses={actionCapabilityStatuses}
-            actionBusyId={refreshActionBusyId}
-            actionMessage={refreshActionMessage}
-            onRunAction={(actionId) => void submitRefreshAction(actionId)}
-            tag={operatorTag}
-          />
-        ),
+      node: (
+        <SystemsModule
+          agents={agents.map((agent) => ({
+            ...agent,
+            trustScore: formatPercent(agent.trustScore),
+          }))}
+          fleetHealth={fleetHealth}
+          laneOwnership={laneOwnership}
+          laneHeadroom={laneHeadroom}
+          laneFitness={laneFitness}
+          routableProviders={routableProviders}
+          charonLiveSnapshot={charonLiveSnapshot}
+          charonLiveError={charonLiveError}
+          charonLiveLoading={charonLiveLoading}
+          storagePressure={bundle?.storagePressure ?? null}
+          automationStatus={bundle?.automationStatus ?? null}
+          setupConsoleReadiness={bundle?.setupConsoleReadiness ?? null}
+          onboardingGuidedSession={bundle?.onboardingGuidedSession ?? null}
+          onboardingPrivateConfigStage={bundle?.onboardingPrivateConfigStage ?? null}
+          onboardingServicePlan={bundle?.onboardingServicePlan ?? null}
+          auditReadiness={bundle?.auditReadiness ?? null}
+          operatorCockpit={operatorCockpit}
+          runtimeDrift={runtimeDrift}
+          knowledgeMap={knowledgeMap}
+          sourceCoverage={sourceCoverageForPanel(sourceMapSections, 'systems')}
+          sourceProvenance={bundle?.sourceProvenance ?? []}
+          actionDescriptors={actionDescriptors}
+          capabilityStatuses={actionCapabilityStatuses}
+          actionBusyId={refreshActionBusyId}
+          actionMessage={refreshActionMessage}
+          onRunAction={(actionId) => void submitRefreshAction(actionId)}
+          tag={operatorTag}
+        />
+      ),
     },
     service_embed: {
       title: activeServiceSurfaceManifest?.title ?? 'Service Surface',
@@ -1055,14 +1055,14 @@ export default function App() {
     },
     governance_controls: {
       title: 'Governance Controls',
-        node: (
-          <ModuleCard
-            title="Governance Controls"
-            eyebrow="Adjustable weights"
-            accent="ember"
-            tag={governanceTag}
-            actions={<SourceCoverageBadge coverage={governanceControlsCoverage} />}
-          >
+      node: (
+        <ModuleCard
+          title="Governance Controls"
+          eyebrow="Adjustable weights"
+          accent="ember"
+          tag={governanceTag}
+          actions={<SourceCoverageBadge coverage={governanceControlsCoverage} />}
+        >
           <div className="split-stack">
             <div>
               <div className="module-subtitle"><Shield size={14} /> Weights</div>
@@ -1321,14 +1321,14 @@ export default function App() {
     },
     operations_and_packages: {
       title: 'Operations And Packages',
-        node: (
-          <ModuleCard
-            title="Operations And Packages"
-            eyebrow="Dependency observation"
-            accent="cyan"
-            tag={operationsTag}
-            actions={<SourceCoverageBadge coverage={operationsAndPackagesCoverage} />}
-          >
+      node: (
+        <ModuleCard
+          title="Operations And Packages"
+          eyebrow="Dependency observation"
+          accent="cyan"
+          tag={operationsTag}
+          actions={<SourceCoverageBadge coverage={operationsAndPackagesCoverage} />}
+        >
           <div className="split-stack">
             <div>
               <div className="module-subtitle"><Bot size={14} /> Critical Tools</div>
@@ -1550,14 +1550,14 @@ export default function App() {
     },
     planning: {
       title: 'Planning',
-        node: (
-          <ModuleCard
-            title="Planning"
-            eyebrow="Task ledger"
-            accent="gold"
-            tag={queueTag}
-            actions={<SourceCoverageBadge coverage={planningCoverage} />}
-          >
+      node: (
+        <ModuleCard
+          title="Planning"
+          eyebrow="Task ledger"
+          accent="gold"
+          tag={queueTag}
+          actions={<SourceCoverageBadge coverage={planningCoverage} />}
+        >
           <div className="split-stack">
             <div>
               <div className="module-subtitle"><FolderKanban size={14} /> Priority Load</div>
@@ -1645,39 +1645,39 @@ export default function App() {
     },
     business: {
       title: 'Business',
-        node: (
-          <BusinessModule
-            mode={getString(businessRuntime?.mode, 'unknown')}
-            clientCount={getNumber(asRecord(businessRuntime?.counts)?.client_records_total, 0)}
-            stateKeyCount={getNumber(asRecord(businessRuntime?.counts)?.state_keys_total, 0)}
-            companyViewTitle={getString(asRecord(businessRuntime?.company_view)?.title, 'Company View')}
-            companyViewPreview={getString(asRecord(businessRuntime?.company_view)?.body_preview, 'Business readable context will appear here as the business layer matures.')}
-            clientPaths={asArray(asRecord(businessRuntime?.highlights)?.client_paths).map((value) => getString(value)).filter(Boolean)}
-            stateKeys={asArray(asRecord(businessRuntime?.highlights)?.state_keys).map((value) => getString(value)).filter(Boolean)}
-            sourceCoverage={businessCoverage}
-            sourceProvenance={bundle?.sourceProvenance ?? []}
-            tag={businessTag}
-          />
-        ),
+      node: (
+        <BusinessModule
+          mode={getString(businessRuntime?.mode, 'unknown')}
+          clientCount={getNumber(asRecord(businessRuntime?.counts)?.client_records_total, 0)}
+          stateKeyCount={getNumber(asRecord(businessRuntime?.counts)?.state_keys_total, 0)}
+          companyViewTitle={getString(asRecord(businessRuntime?.company_view)?.title, 'Company View')}
+          companyViewPreview={getString(asRecord(businessRuntime?.company_view)?.body_preview, 'Business readable context will appear here as the business layer matures.')}
+          clientPaths={asArray(asRecord(businessRuntime?.highlights)?.client_paths).map((value) => getString(value)).filter(Boolean)}
+          stateKeys={asArray(asRecord(businessRuntime?.highlights)?.state_keys).map((value) => getString(value)).filter(Boolean)}
+          sourceCoverage={businessCoverage}
+          sourceProvenance={bundle?.sourceProvenance ?? []}
+          tag={businessTag}
+        />
+      ),
     },
     personal_growth: {
       title: 'Personal Growth',
-        node: (
-          <PersonalGrowthModule
-            name={getString(asRecord(personalRuntime?.identity)?.name, 'Daniel')}
-            role={getString(asRecord(personalRuntime?.identity)?.role, 'Founder / Principal')}
-            location={getString(asRecord(personalRuntime?.identity)?.location, 'Unknown')}
-            priorities={asArray(asRecord(personalRuntime?.highlights)?.priorities).map((value) => getString(value)).filter(Boolean)}
-            values={asArray(asRecord(personalRuntime?.highlights)?.values).map((value) => getString(value)).filter(Boolean)}
-            researchDomains={asArray(personalRuntime?.research_domains).map((value) => getString(value)).filter(Boolean)}
-            creativeDomains={asArray(personalRuntime?.creative_domains).map((value) => getString(value)).filter(Boolean)}
-            personalDocsTotal={getNumber(asRecord(personalRuntime?.counts)?.personal_docs_total, 0)}
-            onboardPreview={getString(asRecord(personalRuntime?.onboard)?.body_preview, 'Personal and sovereign human context will appear here as the personal layer matures.')}
-            sourceCoverage={personalGrowthCoverage}
-            sourceProvenance={bundle?.sourceProvenance ?? []}
-            tag={personalTag}
-          />
-        ),
+      node: (
+        <PersonalGrowthModule
+          name={getString(asRecord(personalRuntime?.identity)?.name, 'Daniel')}
+          role={getString(asRecord(personalRuntime?.identity)?.role, 'Founder / Principal')}
+          location={getString(asRecord(personalRuntime?.identity)?.location, 'Unknown')}
+          priorities={asArray(asRecord(personalRuntime?.highlights)?.priorities).map((value) => getString(value)).filter(Boolean)}
+          values={asArray(asRecord(personalRuntime?.highlights)?.values).map((value) => getString(value)).filter(Boolean)}
+          researchDomains={asArray(personalRuntime?.research_domains).map((value) => getString(value)).filter(Boolean)}
+          creativeDomains={asArray(personalRuntime?.creative_domains).map((value) => getString(value)).filter(Boolean)}
+          personalDocsTotal={getNumber(asRecord(personalRuntime?.counts)?.personal_docs_total, 0)}
+          onboardPreview={getString(asRecord(personalRuntime?.onboard)?.body_preview, 'Personal and sovereign human context will appear here as the personal layer matures.')}
+          sourceCoverage={personalGrowthCoverage}
+          sourceProvenance={bundle?.sourceProvenance ?? []}
+          tag={personalTag}
+        />
+      ),
     },
     culture_and_art: {
       title: 'Culture And Art',
@@ -1884,9 +1884,9 @@ export default function App() {
   const boardroomUpperMonitors = [
     ...boardroomMonitors.map((sectionId, index) => {
       if (sectionId === 'systems_health') {
-      return {
-        label: `Slot ${String.fromCharCode(65 + index)}`,
-        title: 'Fleet Systems',
+        return {
+          label: `Slot ${String.fromCharCode(65 + index)}`,
+          title: 'Fleet Systems',
           detail: `${fleetHealth.liveTargets}/${fleetHealth.totalTargets} live / ${fleetHealth.routableProviders} routable`,
           status: fleetHealth.unexpectedOffline > 0 ? 'attention' : 'live',
           metrics: [
@@ -1894,17 +1894,17 @@ export default function App() {
             { label: 'Route', value: `${fleetHealth.routableProviders}` },
             { label: 'Off', value: `${fleetHealth.unexpectedOffline}` },
           ],
-        trace: [
-          `PLANNED :: ${fleetHealth.intentionalOffline}`,
-          `RECOVERY :: ${fleetHealth.unexpectedOfflineTargets[0]?.displayName ?? 'CLEAR'}`,
-        ],
-        tag: operatorTag,
-      }
+          trace: [
+            `PLANNED :: ${fleetHealth.intentionalOffline}`,
+            `RECOVERY :: ${fleetHealth.unexpectedOfflineTargets[0]?.displayName ?? 'CLEAR'}`,
+          ],
+          tag: operatorTag,
+        }
       }
       if (sectionId === 'routing_health') {
-      return {
-        label: `Slot ${String.fromCharCode(65 + index)}`,
-        title: 'Charon Routing',
+        return {
+          label: `Slot ${String.fromCharCode(65 + index)}`,
+          title: 'Charon Routing',
           detail: `${laneOwnership[0]?.route?.providerId ?? 'unassigned'} / ${laneOwnership[1]?.route?.providerId ?? 'unassigned'}`,
           status: getBoolean(asRecord(operatorRuntime?.summary)?.charon_http_ok, false) ? 'live' : 'check',
           metrics: [
@@ -1912,17 +1912,17 @@ export default function App() {
             { label: 'Code', value: formatProviderLabel(laneOwnership[1]?.route?.providerId) },
             { label: 'Bg', value: formatProviderLabel(laneOwnership[2]?.route?.providerId) },
           ],
-        trace: [
-          `PRESSURE :: ${mostConstrainedLane ? `${mostConstrainedLane.lane} ${Math.round(mostConstrainedLane.headroom * 100)}%` : 'n/a'}`,
-          `FITNESS :: ${dominantLaneFitness ? `${dominantLaneFitness.lane} -> ${dominantLaneFitness.providerId}` : 'learning'}`,
-        ],
-        tag: sourceMapTag,
-      }
+          trace: [
+            `PRESSURE :: ${mostConstrainedLane ? `${mostConstrainedLane.lane} ${Math.round(mostConstrainedLane.headroom * 100)}%` : 'n/a'}`,
+            `FITNESS :: ${dominantLaneFitness ? `${dominantLaneFitness.lane} -> ${dominantLaneFitness.providerId}` : 'learning'}`,
+          ],
+          tag: sourceMapTag,
+        }
       }
       if (sectionId === 'human_realm') {
-      return {
-        label: `Slot ${String.fromCharCode(65 + index)}`,
-        title: 'Human Realm',
+        return {
+          label: `Slot ${String.fromCharCode(65 + index)}`,
+          title: 'Human Realm',
           detail: `${getNumber(humanCounts?.docs_total, 0)} docs / ${getNumber(humanCounts?.notes_total, 0)} notes`,
           status: 'live',
           metrics: [
@@ -1930,14 +1930,14 @@ export default function App() {
             { label: 'Notes', value: `${getNumber(humanCounts?.notes_total, 0)}` },
             { label: 'Arandur', value: `${getNumber(humanCounts?.arandur_docs_total, 0)}` },
           ],
-        trace: docs.slice(0, 2).map((doc) => doc.title),
-        tag: humanTag,
-      }
+          trace: docs.slice(0, 2).map((doc) => doc.title),
+          tag: humanTag,
+        }
       }
       if (sectionId === 'planning_and_queue') {
-      return {
-        label: `Slot ${String.fromCharCode(65 + index)}`,
-        title: 'Planning',
+        return {
+          label: `Slot ${String.fromCharCode(65 + index)}`,
+          title: 'Planning',
           detail: `${queueSummary.completed} completed / ${queueSummary.priorities.length} priorities`,
           status: 'live',
           metrics: [
@@ -1945,14 +1945,14 @@ export default function App() {
             { label: 'Priorities', value: `${queueSummary.priorities.length}` },
             { label: 'Owners', value: `${queueSummary.owners.length}` },
           ],
-        trace: queueSummary.owners.slice(0, 2).map((owner) => `${owner.label}:${owner.value}`),
-        tag: queueTag,
-      }
+          trace: queueSummary.owners.slice(0, 2).map((owner) => `${owner.label}:${owner.value}`),
+          tag: queueTag,
+        }
       }
       if (sectionId === 'business_ops') {
-      return {
-        label: `Slot ${String.fromCharCode(65 + index)}`,
-        title: 'Business',
+        return {
+          label: `Slot ${String.fromCharCode(65 + index)}`,
+          title: 'Business',
           detail: `${getString(businessRuntime?.mode, 'unknown')} / ${getNumber(asRecord(businessRuntime?.counts)?.client_records_total, 0)} client records`,
           status: 'ready',
           metrics: [
@@ -1960,17 +1960,17 @@ export default function App() {
             { label: 'Keys', value: `${getNumber(asRecord(businessRuntime?.counts)?.state_keys_total, 0)}` },
             { label: 'Mode', value: getString(businessRuntime?.mode, 'unknown') },
           ],
-        trace: asArray(asRecord(businessRuntime?.highlights)?.client_paths)
-          .map((value) => getString(value))
-          .filter(Boolean)
-          .slice(0, 2),
-        tag: businessTag,
-      }
+          trace: asArray(asRecord(businessRuntime?.highlights)?.client_paths)
+            .map((value) => getString(value))
+            .filter(Boolean)
+            .slice(0, 2),
+          tag: businessTag,
+        }
       }
       if (sectionId === 'personal_growth') {
-      return {
-        label: `Slot ${String.fromCharCode(65 + index)}`,
-        title: 'Personal',
+        return {
+          label: `Slot ${String.fromCharCode(65 + index)}`,
+          title: 'Personal',
           detail: `${getString(asRecord(personalRuntime?.identity)?.name, 'Daniel')} / ${getNumber(asRecord(personalRuntime?.counts)?.personal_docs_total, 0)} docs`,
           status: 'ready',
           metrics: [
@@ -1978,12 +1978,12 @@ export default function App() {
             { label: 'Research', value: `${getNumber(asRecord(personalRuntime?.counts)?.research_domains_total, 0)}` },
             { label: 'Creative', value: `${getNumber(asRecord(personalRuntime?.counts)?.creative_domains_total, 0)}` },
           ],
-        trace: asArray(asRecord(personalRuntime?.highlights)?.priorities)
-          .map((value) => getString(value))
-          .filter(Boolean)
-          .slice(0, 2),
-        tag: personalTag,
-      }
+          trace: asArray(asRecord(personalRuntime?.highlights)?.priorities)
+            .map((value) => getString(value))
+            .filter(Boolean)
+            .slice(0, 2),
+          tag: personalTag,
+        }
       }
 
       const section = bundle?.sections.find((candidate) => candidate.id === sectionId) ?? null
