@@ -386,6 +386,33 @@ export function getOperationsFlowSummary(bundle: ArdaBundle): Array<{ label: str
   ]
 }
 
+function getOperatorActions(bundle: ArdaBundle): {
+  summary: Array<{ label: string; value: string }>
+  actions: Array<{ title: string; owner: string; status: string; note: string }>
+} {
+  const actions = asRecord(bundle.operatorActions)
+  const summary = asRecord(actions?.summary)
+  return {
+    summary: [
+      { label: 'Human Needed', value: `${getNumber(summary?.human_needed_total, 0)}` },
+      { label: 'External Blockers', value: `${getNumber(summary?.external_blockers_total, 0)}` },
+      { label: 'Auth Required', value: `${getNumber(summary?.auth_required_total, 0)}` },
+      { label: 'Config Required', value: `${getNumber(summary?.configuration_required_total, 0)}` },
+    ],
+    actions: asArray(actions?.actions)
+      .map((item) => asRecord(item))
+      .filter((item): item is JsonRecord => item !== null)
+      .slice(0, 8)
+      .map((item) => ({
+        title: getString(item.title, 'Untitled action'),
+        owner: getString(item.owner, 'unknown'),
+        status: getString(item.status, 'unknown'),
+        note: getString(item.note, 'n/a'),
+      })),
+  }
+}
+
+
 export function getPaperclipAlignment(bundle: ArdaBundle): {
   summary: Array<{ label: string; value: string }>
   domains: Array<{ label: string; value: string }>
