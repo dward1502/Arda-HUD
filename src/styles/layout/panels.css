@@ -1,0 +1,119 @@
+.panel-workspace__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.panel-workspace__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 0.0625rem solid color-mix(in srgb, var(--accent-soft) 28%, transparent);
+  background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+  color: var(--text);
+}
+
+.panel-workspace__tab--active {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 20%, transparent), color-mix(in srgb, var(--surface-strong) 90%, transparent));
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 0 1.4rem color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.panel-workspace__focus {
+  margin-top: 1rem;
+}
+
+.panel-workspace__frame {
+  position: relative;
+  padding: 0.95rem;
+  border-radius: 1.2rem;
+  border: 0.0625rem solid rgba(121, 231, 255, 0.14);
+  background:
+    linear-gradient(180deg, rgba(8, 14, 23, 0.82), rgba(5, 8, 14, 0.96)),
+    radial-gradient(circle at top, rgba(255, 132, 101, 0.1), transparent 28%);
+  overflow: hidden;
+}
+
+.panel-workspace__frame-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(transparent 96%, rgba(123, 241, 255, 0.06) 96%, transparent 100%),
+    linear-gradient(90deg, transparent 96%, rgba(123, 241, 255, 0.04) 96%, transparent 100%);
+  background-size: 100% 0.82rem, 0.9rem 100%;
+  opacity: 0.32;
+}
+
+.panel-workspace__frame-corners {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  pointer-events: none;
+}
+
+.panel-workspace__frame-corners--tl {
+  top: -0.0625rem;
+  left: -0.0625rem;
+  border-top: 0.125rem solid rgba(255, 132, 101, 0.92);
+  border-left: 0.125rem solid rgba(255, 132, 101, 0.92);
+}
+
+.panel-workspace__frame-corners--br {
+  right: -0.0625rem;
+  bottom: -0.0625rem;
+  border-right: 0.125rem solid rgba(123, 241, 255, 0.92);
+  border-bottom: 0.125rem solid rgba(123, 241, 255, 0.92);
+}
+
+.panel-workspace__frame-topbar {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.8rem;
+  align-items: center;
+  margin-bottom: 0.9rem;
+  padding: 0.42rem 0.62rem;
+  border: 0.0625rem solid rgba(123, 241, 255, 0.14);
+  background: rgba(8, 17, 26, 0.66);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(214, 236, 255, 0.62);
+}
+
+.panel-workspace__frame-topbar strong {
+  font-family: var(--title-font);
+  font-size: 0.92rem;
+  color: rgba(246, 251, 255, 0.92);
+}
+
+.panel-workspace__frame-body {
+  position: relative;
+  z-index: 1;
+}
+
+.panel-workspace__focus .module-card {
+  min-height: 100%;
+}
+
+.panel-workspace__stack {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.panel-workspace__stack > div {
+  grid-column: span 6;
+}
+
+.panel-workspace__stack .module-card {
+  min-height: 100%;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 86%, transparent), color-mix(in srgb, var(--surface) 92%, transparent));
+}

@@ -386,7 +386,7 @@ export function getOperationsFlowSummary(bundle: ArdaBundle): Array<{ label: str
   ]
 }
 
-function getOperatorActions(bundle: ArdaBundle): {
+export function getOperatorActions(bundle: ArdaBundle): {
   summary: Array<{ label: string; value: string }>
   actions: Array<{ title: string; owner: string; status: string; note: string }>
 } {

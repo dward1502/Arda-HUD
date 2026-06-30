@@ -1,0 +1,1063 @@
+# ARDA HUD CSS Selector Index Before Split
+
+File: `src/index.css`
+Lines: 6557
+
+- line 5: `:root {`
+- line 43: `@keyframes pulse-glow {`
+- line 48: `@keyframes scanline {`
+- line 53: `@keyframes flicker {`
+- line 62: `@keyframes ambient-float {`
+- line 67: `@keyframes ring-spin {`
+- line 72: `@keyframes ripple {`
+- line 77: `@keyframes breathe {`
+- line 86: `@keyframes shimmer {`
+- line 91: `@keyframes data-stream {`
+- line 96: `@keyframes neon-flicker {`
+- line 107: `@keyframes orb-pulse {`
+- line 122: `@keyframes gradient-shift {`
+- line 127: `@keyframes scan-crt {`
+- line 132: `@keyframes glow-ring {`
+- line 141: `.pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }`
+- line 142: `.scanline { animation: scanline 8s linear infinite; }`
+- line 143: `.flicker { animation: flicker 4s ease-in-out infinite; }`
+- line 144: `.ambient-float { animation: ambient-float 6s ease-in-out infinite; }`
+- line 145: `.breathe { animation: breathe 4s ease-in-out infinite; }`
+- line 146: `.shimmer {`
+- line 151: `.data-stream { animation: data-stream 2s linear infinite; }`
+- line 152: `.neon-flicker { animation: neon-flicker 5s infinite; }`
+- line 153: `.orb-pulse { animation: orb-pulse 4s ease-in-out infinite; }`
+- line 154: `.gradient-shift { animation: gradient-shift 8s ease infinite; background-size: 200% 200%; }`
+- line 155: `.scan-crt { animation: scan-crt 6s linear infinite; }`
+- line 156: `.glow-ring { animation: glow-ring 3s ease-in-out infinite; }`
+- line 158: `:root[data-theme="cyberpunk"] {`
+- line 176: `:root[data-theme="gibson2"] {`
+- line 194: `:root[data-theme="eva"] {`
+- line 220: `#root {`
+- line 300: `.glow-accent {`
+- line 304: `.glow-text {`
+- line 308: `.glow-border {`
+- line 313: `.window-controls {`
+- line 328: `.window-control-btn {`
+- line 343: `.window-control-btn:hover {`
+- line 348: `.window-control-btn:active {`
+- line 353: `.window-control-btn--close:hover {`
+- line 358: `.keyboard-hints {`
+- line 377: `.keyboard-hints:hover {`
+- line 381: `.keyboard-hints .kbd {`
+- line 413: `.arda-app {`
+- line 421: `.arda-app--boardroom {`
+- line 426: `.arda-app--world {`
+- line 431: `.arda-background {`
+- line 444: `.arda-header,`
+- line 445: `.arda-layout {`
+- line 450: `.arda-header {`
+- line 466: `.arda-header__identity,`
+- line 467: `.arda-header__controls,`
+- line 468: `.arda-header__instrument-grid {`
+- line 472: `.arda-header__identity {`
+- line 478: `.arda-header__eyebrow,`
+- line 479: `.module-card__eyebrow,`
+- line 480: `.hero-strip__label,`
+- line 481: `.module-subtitle,`
+- line 482: `.metric-pill__label,`
+- line 483: `.section-rail__meta {`
+- line 490: `.arda-header__title,`
+- line 491: `.module-card__title {`
+- line 497: `.arda-header__title {`
+- line 502: `.arda-header__subtitle {`
+- line 509: `.arda-header__controls {`
+- line 517: `.arda-header__control-row {`
+- line 524: `.arda-header__instrument-grid {`
+- line 530: `.arda-instrument {`
+- line 544: `.arda-instrument--power {`
+- line 548: `.arda-instrument--time {`
+- line 552: `.arda-instrument--routing {`
+- line 556: `.arda-instrument__label {`
+- line 566: `.arda-instrument__value {`
+- line 572: `.arda-instrument__value--path {`
+- line 577: `.arda-instrument__meta {`
+- line 582: `.theme-switcher {`
+- line 592: `.theme-switcher__button,`
+- line 593: `.refresh-button,`
+- line 594: `.section-rail__item {`
+- line 599: `.theme-switcher__button {`
+- line 606: `.theme-switcher__button.is-active {`
+- line 611: `.refresh-button {`
+- line 623: `.refresh-button--active {`
+- line 628: `.arda-layout {`
+- line 634: `.arda-layout--single {`
+- line 638: `.arda-layout--boardroom {`
+- line 642: `.arda-layout--boardroom .arda-layout__main {`
+- line 646: `.arda-layout__rail,`
+- line 647: `.arda-layout__main {`
+- line 653: `.scene-transition {`
+- line 667: `.scene-transition__beam {`
+- line 674: `.scene-transition__frame {`
+- line 690: `.scene-transition__eyebrow {`
+- line 697: `.scene-transition__label {`
+- line 703: `.scene-transition__hint {`
+- line 708: `.hero-strip {`
+- line 722: `.hero-strip__status,`
+- line 723: `.hero-strip__metrics,`
+- line 724: `.presence-block,`
+- line 725: `.overview-grid,`
+- line 726: `.overview-callout,`
+- line 727: `.split-stack,`
+- line 728: `.module-card__header,`
+- line 729: `.agent-card,`
+- line 730: `.line-list__row,`
+- line 731: `.document-list__item,`
+- line 732: `.metric-pill {`
+- line 736: `.hero-strip__status {`
+- line 741: `.hero-strip__value {`
+- line 746: `.hero-strip__metrics {`
+- line 752: `.metric-pill {`
+- line 761: `.metric-pill__value {`
+- line 766: `.module-card {`
+- line 779: `.module-card::before,`
+- line 780: `.module-card::after {`
+- line 788: `.module-card::before {`
+- line 795: `.module-card::after {`
+- line 802: `.module-card__body::after {`
+- line 817: `.module-card__header {`
+- line 826: `.module-card__title {`
+- line 830: `.module-card__tag {`
+- line 844: `.module-card__actions {`
+- line 851: `.source-coverage-badge {`
+- line 867: `.source-coverage-badge strong {`
+- line 873: `.source-coverage-badge--backed {`
+- line 877: `.source-coverage-badge--partial {`
+- line 881: `.source-coverage-badge--unmapped {`
+- line 885: `.module-card__body {`
+- line 893: `.module-card--gold {`
+- line 897: `.module-card--cyan {`
+- line 901: `.module-card--ember {`
+- line 905: `.module-card--mint {`
+- line 909: `.module-card--violet {`
+- line 913: `.module-card--gold::before,`
+- line 914: `.module-card--gold::after {`
+- line 918: `.module-card--ember::before,`
+- line 919: `.module-card--ember::after {`
+- line 923: `.module-card--violet::before,`
+- line 924: `.module-card--violet::after {`
+- line 928: `.section-rail {`
+- line 934: `.section-rail__item {`
+- line 943: `.section-rail__item:hover,`
+- line 944: `.section-rail__item.is-active {`
+- line 948: `.section-rail__title {`
+- line 953: `.presence-block {`
+- line 958: `.dashboard-grid {`
+- line 964: `.dashboard-grid > .module-card:nth-child(1),`
+- line 965: `.dashboard-grid > .module-card:nth-child(2) {`
+- line 969: `.dashboard-grid > .module-card:nth-child(n+3) {`
+- line 973: `.boardroom-support-deck {`
+- line 986: `.boardroom-support-deck__header {`
+- line 994: `.boardroom-support-deck__title {`
+- line 1001: `.boardroom-support-deck__hint {`
+- line 1008: `.boardroom-support-grid {`
+- line 1014: `.boardroom-support-grid > div:nth-child(1),`
+- line 1015: `.boardroom-support-grid > div:nth-child(2) {`
+- line 1019: `.boardroom-support-grid > div:nth-child(n+3) {`
+- line 1023: `.boardroom-support-grid .module-card {`
+- line 1032: `.boardroom-support-grid .module-card__title {`
+- line 1036: `.overview-grid {`
+- line 1041: `.overview-callout {`
+- line 1051: `.overview-callout__label {`
+- line 1056: `.section-focus,`
+- line 1057: `.split-stack {`
+- line 1062: `.token-cloud {`
+- line 1068: `.token-chip {`
+- line 1076: `.path-list {`
+- line 1081: `.source-provenance-list {`
+- line 1086: `.queue-provenance-panel {`
+- line 1092: `.source-provenance-list__item {`
+- line 1103: `.source-provenance-list__item div {`
+- line 1109: `.source-provenance-list__item strong,`
+- line 1110: `.source-provenance-list__item span {`
+- line 1116: `.source-provenance-list__item span {`
+- line 1121: `.source-provenance-list__item .source-provenance-list__actions,`
+- line 1122: `.source-provenance-list__actions {`
+- line 1130: `.source-refresh-affordance {`
+- line 1145: `.source-refresh-affordance--read_only {`
+- line 1151: `.source-refresh-affordance--projection_refresh_only {`
+- line 1157: `.source-refresh-affordance--approval_required {`
+- line 1163: `.source-refresh-affordance-card {`
+- line 1172: `.source-refresh-affordance-card__header {`
+- line 1179: `.source-refresh-affordance-card__header > div {`
+- line 1184: `.source-refresh-affordance-card__header strong {`
+- line 1189: `.source-refresh-affordance-card__header span,`
+- line 1190: `.source-refresh-affordance-card small {`
+- line 1195: `.source-refresh-affordance-card__header code,`
+- line 1196: `.source-refresh-affordance-card__command {`
+- line 1205: `.source-refresh-affordance-card__command {`
+- line 1211: `.source-refresh-affordance-card p {`
+- line 1217: `.planning-action-contract {`
+- line 1223: `.planning-action-contract .refresh-button {`
+- line 1230: `.planning-action-contract .refresh-button:disabled {`
+- line 1235: `.planning-action-contract__preview {`
+- line 1240: `.planning-action-contract__command {`
+- line 1253: `.planning-action-contract__command code {`
+- line 1260: `.planning-action-contract__message {`
+- line 1266: `.world-terminal-action-contract {`
+- line 1270: `.world-terminal-action-contract__actions {`
+- line 1277: `.world-terminal-action-contract__governed {`
+- line 1283: `.source-provenance-mini-list {`
+- line 1289: `.source-provenance-mini-list > span {`
+- line 1298: `.review-gate-steps {`
+- line 1304: `.review-gate-steps__item {`
+- line 1317: `.review-gate-steps__item--active {`
+- line 1323: `.review-gate-steps__item--done {`
+- line 1329: `.review-gate-record-preview {`
+- line 1333: `.review-gate-record-preview dl {`
+- line 1339: `.review-gate-record-preview dl > div {`
+- line 1346: `.review-gate-record-preview dt {`
+- line 1352: `.review-gate-record-preview dd {`
+- line 1361: `.path-list__item,`
+- line 1362: `.document-list__item {`
+- line 1369: `.document-list {`
+- line 1374: `.document-list.compact {`
+- line 1378: `.document-list__item {`
+- line 1383: `.document-list__item span,`
+- line 1384: `.document-list__item p {`
+- line 1390: `.module-subtitle {`
+- line 1398: `.agent-grid {`
+- line 1403: `.systems-module-grid {`
+- line 1409: `.operating-surface-summary {`
+- line 1416: `.operating-surface-first-screen {`
+- line 1423: `.operating-surface-first-screen__item {`
+- line 1433: `.operating-surface-first-screen__item p {`
+- line 1440: `.operating-surface-first-screen__label {`
+- line 1448: `.operating-surface-capability-contract {`
+- line 1459: `.operating-surface-capability-contract div {`
+- line 1463: `.operating-surface-capability-contract dt {`
+- line 1471: `.operating-surface-capability-contract dd {`
+- line 1479: `.operating-surface-rail {`
+- line 1501: `.operating-surface-rail__brief {`
+- line 1507: `.operating-surface-rail__brief strong {`
+- line 1513: `.operating-surface-rail__brief span:last-child {`
+- line 1521: `.operating-surface-rail__eyebrow {`
+- line 1529: `.operating-surface-rail__attention {`
+- line 1536: `.operating-surface-rail__attention span {`
+- line 1552: `.runtime-mode-badge {`
+- line 1557: `.runtime-mode-badge--tauri-native {`
+- line 1562: `.runtime-mode-badge--browser-dev,`
+- line 1563: `.runtime-mode-badge--static-preview {`
+- line 1568: `.operating-surface-rail__pulse {`
+- line 1573: `.operating-surface-rail__pulse::before {`
+- line 1584: `.operating-surface-rail__pulse--healthy {`
+- line 1589: `.operating-surface-rail__pulse--healthy::before {`
+- line 1594: `.operating-surface-rail__pulse--warning {`
+- line 1599: `.operating-surface-rail__pulse--warning::before {`
+- line 1604: `.operating-surface-rail__lanes {`
+- line 1610: `.operating-surface-rail__lane {`
+- line 1623: `.operating-surface-rail__lane:hover,`
+- line 1624: `.operating-surface-rail__lane:focus-visible,`
+- line 1625: `.operating-surface-rail__lane[aria-current='page'] {`
+- line 1631: `.operating-surface-rail__lane:focus-visible {`
+- line 1640: `.operating-surface-rail__lane[aria-current='page'] {`
+- line 1644: `.operating-surface-rail__lane::after {`
+- line 1658: `.operating-surface-rail__lane span {`
+- line 1665: `.operating-surface-rail__lane small {`
+- line 1673: `.operating-surface-rail__lane--ready {`
+- line 1677: `.operating-surface-rail__lane--gap {`
+- line 1681: `.operating-surface-rail__lane--partial {`
+- line 1685: `.operating-surface-grid {`
+- line 1691: `.operating-surface-lane {`
+- line 1700: `.operating-surface-lane--gap {`
+- line 1704: `.operating-surface-lane--partial {`
+- line 1708: `.operating-surface-lane--ready {`
+- line 1712: `.operating-surface-lane__header {`
+- line 1719: `.operating-surface-lane p {`
+- line 1726: `.operating-surface-lane strong {`
+- line 1730: `.arda-command-console {`
+- line 1740: `.arda-command-console__header {`
+- line 1747: `.arda-command-console__header span {`
+- line 1756: `.arda-command-console__header strong {`
+- line 1765: `.arda-command-console__metrics,`
+- line 1766: `.arda-command-console__lane-grid {`
+- line 1772: `.arda-command-console__lane-grid {`
+- line 1777: `.arda-command-console__lane {`
+- line 1787: `.arda-command-console__lane--partial {`
+- line 1791: `.arda-command-console__lane--ready {`
+- line 1795: `.arda-command-console__lane--gap {`
+- line 1799: `.arda-command-console__lane span {`
+- line 1810: `.arda-command-console__lane strong {`
+- line 1815: `.arda-command-console__lane p {`
+- line 1822: `.arda-command-console__body {`
+- line 1828: `.arda-command-console__panel {`
+- line 1832: `.operating-surface-actions {`
+- line 1836: `.systems-module-grid > .systems-panel:nth-child(1),`
+- line 1837: `.systems-module-grid > .systems-panel:nth-child(2) {`
+- line 1841: `.systems-module-grid > .systems-panel:nth-child(3),`
+- line 1842: `.systems-module-grid > .systems-panel:nth-child(4),`
+- line 1843: `.systems-module-grid > .systems-panel:nth-child(5),`
+- line 1844: `.systems-module-grid > .systems-panel:nth-child(6) {`
+- line 1848: `.systems-panel {`
+- line 1862: `.systems-panel::before {`
+- line 1873: `.systems-panel__header {`
+- line 1881: `.systems-panel__eyebrow {`
+- line 1888: `.systems-panel__title {`
+- line 1896: `.systems-kpi-grid {`
+- line 1904: `.systems-kpi {`
+- line 1914: `.systems-kpi--good {`
+- line 1919: `.systems-kpi--warn {`
+- line 1924: `.systems-kpi--accent {`
+- line 1928: `.systems-kpi--idle {`
+- line 1932: `.systems-kpi__label {`
+- line 1939: `.systems-kpi__value {`
+- line 1944: `.task-list-viewer {`
+- line 1948: `.task-list-viewer__layout {`
+- line 1957: `.task-list-viewer__items {`
+- line 1966: `.task-list-viewer__item {`
+- line 1980: `.task-list-viewer__item:hover,`
+- line 1981: `.task-list-viewer__item.is-active {`
+- line 1986: `.task-list-viewer__item-title {`
+- line 1992: `.task-list-viewer__item-meta,`
+- line 1993: `.task-list-viewer__source {`
+- line 1998: `.task-list-viewer__detail {`
+- line 2002: `.task-list-viewer__actions {`
+- line 2009: `.task-list-viewer__actions .refresh-button {`
+- line 2015: `.task-list-viewer__discard {`
+- line 2020: `.config-walkthrough {`
+- line 2025: `.config-walkthrough__header {`
+- line 2032: `.config-walkthrough__header p {`
+- line 2039: `.config-walkthrough__schema {`
+- line 2048: `.config-profile-tabs {`
+- line 2054: `.config-profile-tab {`
+- line 2068: `.config-profile-tab--active {`
+- line 2074: `.config-profile-panel {`
+- line 2083: `.config-profile-panel__summary {`
+- line 2088: `.config-profile-panel__summary strong {`
+- line 2095: `.config-profile-panel__summary p {`
+- line 2100: `.config-dimension-grid {`
+- line 2106: `.config-dimension {`
+- line 2117: `.config-dimension svg {`
+- line 2122: `.config-dimension strong,`
+- line 2123: `.config-dimension p,`
+- line 2124: `.config-dimension span {`
+- line 2130: `.config-dimension strong {`
+- line 2134: `.config-dimension p {`
+- line 2141: `.config-dimension span {`
+- line 2146: `.config-write-list {`
+- line 2153: `.config-write-list .module-subtitle {`
+- line 2158: `.config-write-list span {`
+- line 2167: `.config-action-row {`
+- line 2174: `.config-action-row span {`
+- line 2179: `.boardroom-surface-editor__controls {`
+- line 2186: `.boardroom-surface-editor__controls label {`
+- line 2195: `.boardroom-surface-editor__controls select,`
+- line 2196: `.boardroom-surface-editor__controls input[type='url'],`
+- line 2197: `.boardroom-surface-editor__controls input[type='number'],`
+- line 2198: `.boardroom-surface-editor__controls input[type='text'] {`
+- line 2209: `.boardroom-surface-editor__check {`
+- line 2216: `.boardroom-surface-editor__check input {`
+- line 2222: `.boardroom-surface-editor__widgets {`
+- line 2229: `.boardroom-surface-editor__widgets-header {`
+- line 2237: `.boardroom-surface-editor__widgets-header span {`
+- line 2244: `.boardroom-surface-editor__widget {`
+- line 2255: `@media (max-width: 880px) {`
+- line 2256: `.boardroom-surface-editor__widget {`
+- line 2261: `.config-preview-list {`
+- line 2266: `.config-preview-list__item {`
+- line 2275: `.config-preview-list__item strong,`
+- line 2276: `.config-preview-list__item span,`
+- line 2277: `.config-preview-list__item p {`
+- line 2282: `.config-preview-list__item strong {`
+- line 2287: `.config-preview-list__item span {`
+- line 2294: `.config-preview-list__item p {`
+- line 2300: `.systems-detail-grid,`
+- line 2301: `.headroom-provider-list,`
+- line 2302: `.fitness-list,`
+- line 2303: `.provider-grid,`
+- line 2304: `.lane-route-list {`
+- line 2311: `.systems-detail-grid {`
+- line 2315: `.systems-detail-block,`
+- line 2316: `.headroom-provider-card,`
+- line 2317: `.fitness-card,`
+- line 2318: `.provider-card,`
+- line 2319: `.lane-route-card {`
+- line 2326: `.systems-detail-block__label,`
+- line 2327: `.lane-route-card__priority,`
+- line 2328: `.headroom-row__cap,`
+- line 2329: `.provider-card__latency,`
+- line 2330: `.fitness-card__metrics span {`
+- line 2335: `.systems-chip-cloud {`
+- line 2341: `.systems-chip {`
+- line 2352: `.systems-chip--idle {`
+- line 2357: `.systems-chip--warn {`
+- line 2362: `.systems-chip--accent {`
+- line 2367: `.lane-route-card__topline,`
+- line 2368: `.fitness-card__topline,`
+- line 2369: `.provider-card__header,`
+- line 2370: `.headroom-row {`
+- line 2377: `.lane-route-card__lane,`
+- line 2378: `.fitness-card__lane {`
+- line 2386: `.lane-route-card__provider,`
+- line 2387: `.fitness-card__provider,`
+- line 2388: `.headroom-provider-card__title {`
+- line 2393: `.lane-route-card__model,`
+- line 2394: `.lane-route-card__reason {`
+- line 2399: `.lane-route-card__model {`
+- line 2404: `.lane-route-card__reason {`
+- line 2410: `.headroom-provider-card__rows {`
+- line 2416: `.headroom-row {`
+- line 2421: `.headroom-row__label {`
+- line 2427: `.headroom-row__bar {`
+- line 2436: `.headroom-row__fill {`
+- line 2443: `.headroom-row__value {`
+- line 2448: `.fitness-card__metrics {`
+- line 2454: `.fitness-card__metrics strong {`
+- line 2458: `.provider-grid {`
+- line 2462: `.provider-card__header strong {`
+- line 2466: `.provider-card__latency {`
+- line 2470: `.systems-empty {`
+- line 2475: `.agent-card {`
+- line 2485: `.agent-card__sigil {`
+- line 2490: `.agent-card__name {`
+- line 2494: `.agent-card__realm,`
+- line 2495: `.agent-card__meta span {`
+- line 2499: `.agent-card__meta {`
+- line 2506: `.scene-stage {`
+- line 2514: `.boardroom-stage {`
+- line 2523: `.boardroom-edit-overlay {`
+- line 2532: `.boardroom-edit-console {`
+- line 2541: `.boardroom-edit-console__header {`
+- line 2548: `.boardroom-edit-console__eyebrow {`
+- line 2555: `.boardroom-edit-console__title {`
+- line 2562: `.boardroom-edit-console__lists {`
+- line 2567: `.scene-stage__header {`
+- line 2575: `.scene-stage__eyebrow {`
+- line 2582: `.scene-stage__title {`
+- line 2588: `.scene-stage__hint,`
+- line 2589: `.panel-workspace__subtitle {`
+- line 2594: `.scene-stage__hint,`
+- line 2595: `.world-stage__actions {`
+- line 2601: `.scene-backdrop {`
+- line 2607: `.scene-backdrop__veil {`
+- line 2613: `.scene-backdrop--boardroom .scene-backdrop__veil {`
+- line 2617: `.scene-backdrop--world .scene-backdrop__veil {`
+- line 2621: `.signal-field {`
+- line 2627: `.signal-field__mesh {`
+- line 2635: `.signal-field__point {`
+- line 2642: `.signal-field__point--small {`
+- line 2647: `.signal-field__point--medium {`
+- line 2652: `.signal-field__point--large {`
+- line 2657: `.boardroom-scene {`
+- line 2669: `.boardroom-scene::before {`
+- line 2680: `.boardroom-scene__room-shell {`
+- line 2690: `.boardroom-scene__parallax {`
+- line 2698: `.boardroom-scene__parallax--far {`
+- line 2711: `.boardroom-scene__parallax--mid {`
+- line 2718: `.arda-app--boardroom .boardroom-scene {`
+- line 2726: `.boardroom-scene__canopy {`
+- line 2742: `.boardroom-scene__canopy span {`
+- line 2749: `.boardroom-scene__canopy strong {`
+- line 2759: `.boardroom-scene__canopy--left {`
+- line 2763: `.boardroom-scene__canopy--right {`
+- line 2769: `.boardroom-scene__pillars {`
+- line 2781: `.boardroom-scene__pillars--left {`
+- line 2786: `.boardroom-scene__pillars--right {`
+- line 2791: `.boardroom-scene__ceiling-grid {`
+- line 2803: `.boardroom-scene__desk {`
+- line 2809: `.boardroom-scene__desk-surface {`
+- line 2822: `.boardroom-scene__desk-lip {`
+- line 2832: `.boardroom-scene__desk-well {`
+- line 2848: `.boardroom-scene__desk-well--left {`
+- line 2852: `.boardroom-scene__desk-well--right {`
+- line 2856: `.boardroom-scene__cityglow {`
+- line 2863: `.boardroom-scene__window {`
+- line 2877: `.boardroom-scene__window-grid,`
+- line 2878: `.boardroom-scene__window-fog {`
+- line 2884: `.boardroom-scene__window-grid {`
+- line 2892: `.boardroom-scene__window-fog {`
+- line 2897: `.boardroom-scene__window-gate {`
+- line 2913: `.boardroom-scene__window-gate-code {`
+- line 2918: `.boardroom-scene__window-gate-title {`
+- line 2924: `.boardroom-scene__window-gate-detail {`
+- line 2932: `.boardroom-scene__window-gate-state {`
+- line 2941: `.boardroom-scene__monitor {`
+- line 2967: `.boardroom-scene__monitor::before {`
+- line 2981: `.boardroom-scene__monitor:hover {`
+- line 2989: `.boardroom-scene__monitor-scan,`
+- line 2990: `.boardroom-scene__monitor-grid {`
+- line 2996: `.boardroom-scene__monitor-scan {`
+- line 3008: `.boardroom-scene__monitor-scan::after {`
+- line 3019: `.boardroom-scene__monitor-grid {`
+- line 3027: `.boardroom-scene__monitor-corners {`
+- line 3034: `.boardroom-scene__monitor-corners--tl {`
+- line 3041: `.boardroom-scene__monitor-corners--br {`
+- line 3048: `.boardroom-scene__monitor--wide {`
+- line 3053: `.boardroom-scene__monitor::before {`
+- line 3065: `.boardroom-scene__monitor::after {`
+- line 3074: `.boardroom-scene__monitor-header {`
+- line 3083: `.boardroom-scene__monitor-tagline {`
+- line 3090: `.boardroom-scene__monitor-ribbon,`
+- line 3091: `.boardroom-scene__monitor-band,`
+- line 3092: `.boardroom-scene__monitor-footer {`
+- line 3104: `.boardroom-scene__monitor-ribbon {`
+- line 3111: `.boardroom-scene__monitor-band {`
+- line 3118: `.boardroom-scene__monitor-band strong,`
+- line 3119: `.boardroom-scene__monitor-footer {`
+- line 3123: `.boardroom-scene__monitor-footer {`
+- line 3128: `.boardroom-scene__monitor--wide {`
+- line 3134: `.boardroom-scene__monitor--wide-left {`
+- line 3139: `.boardroom-scene__monitor--wide-right {`
+- line 3144: `.boardroom-scene__monitor--upper-left,`
+- line 3145: `.boardroom-scene__monitor--upper-left-inner,`
+- line 3146: `.boardroom-scene__monitor--upper-right,`
+- line 3147: `.boardroom-scene__monitor--upper-right-inner {`
+- line 3153: `.boardroom-scene__monitor--upper-left {`
+- line 3158: `.boardroom-scene__monitor--upper-left-inner {`
+- line 3163: `.boardroom-scene__monitor--upper-right-inner {`
+- line 3168: `.boardroom-scene__monitor--upper-right {`
+- line 3173: `.boardroom-scene__monitor-tag {`
+- line 3180: `.boardroom-scene__monitor-status {`
+- line 3191: `.boardroom-scene__monitor-copy {`
+- line 3199: `.boardroom-scene__monitor-detail {`
+- line 3206: `.boardroom-scene__monitor-rows {`
+- line 3214: `.boardroom-scene__monitor-row {`
+- line 3223: `.boardroom-scene__monitor-row-key {`
+- line 3232: `.boardroom-scene__monitor-row-line {`
+- line 3238: `.boardroom-scene__monitor-row-value {`
+- line 3245: `.boardroom-scene__monitor-terminal {`
+- line 3253: `.boardroom-scene__monitor-terminal-lines {`
+- line 3258: `.boardroom-scene__monitor-terminal-line {`
+- line 3264: `.boardroom-scene__monitor-terminal-prompt {`
+- line 3271: `.boardroom-scene__monitor-terminal-text {`
+- line 3282: `.boardroom-scene__console {`
+- line 3299: `.boardroom-scene__console-cap {`
+- line 3309: `.boardroom-scene__console-cap::after {`
+- line 3320: `.boardroom-scene__console-cap-label {`
+- line 3327: `.boardroom-scene__console-cap-value {`
+- line 3334: `.boardroom-scene__console-grid {`
+- line 3340: `.boardroom-console__button {`
+- line 3362: `.boardroom-console__button::after {`
+- line 3373: `.boardroom-console__button:hover {`
+- line 3382: `.boardroom-console__button:active {`
+- line 3389: `.boardroom-console__button--danger {`
+- line 3394: `.boardroom-console__button--danger:hover {`
+- line 3402: `.boardroom-scene__console-widgets {`
+- line 3408: `.boardroom-scene__console-switches {`
+- line 3414: `.boardroom-scene__console-dials {`
+- line 3420: `.boardroom-console__switch {`
+- line 3431: `.boardroom-console__switch span {`
+- line 3438: `.boardroom-console__switch strong {`
+- line 3444: `.boardroom-console__dial {`
+- line 3459: `.boardroom-console__dial--hermes {`
+- line 3469: `.boardroom-console__dial--hermes .boardroom-console__dial-value {`
+- line 3473: `.boardroom-console__dial-label {`
+- line 3480: `.boardroom-console__dial-value {`
+- line 3487: `.boardroom-console__widget {`
+- line 3501: `.boardroom-console__widget::after {`
+- line 3512: `.boardroom-console__widget span {`
+- line 3519: `.boardroom-console__widget strong {`
+- line 3526: `.workstation-dock {`
+- line 3548: `.workstation-dock__header {`
+- line 3555: `.workstation-dock__label {`
+- line 3562: `.workstation-dock__items {`
+- line 3571: `.workstation-dock__item {`
+- line 3577: `.workstation-dock__focus,`
+- line 3578: `.workstation-dock__close,`
+- line 3579: `.workstation-dock__tile,`
+- line 3580: `.workstation-dock__clear {`
+- line 3593: `.workstation-dock__focus:hover,`
+- line 3594: `.workstation-dock__close:hover,`
+- line 3595: `.workstation-dock__tile:hover,`
+- line 3596: `.workstation-dock__clear:hover {`
+- line 3602: `.workstation-dock__focus {`
+- line 3611: `.workstation-dock__close {`
+- line 3619: `.workstation-dock__tile {`
+- line 3627: `.workstation-dock__clear {`
+- line 3636: `.boardroom-scene__avatar {`
+- line 3650: `.boardroom-scene__avatar-halo {`
+- line 3661: `.boardroom-scene__avatar-beam {`
+- line 3672: `.boardroom-scene__avatar-orb {`
+- line 3687: `.boardroom-scene__avatar-figure {`
+- line 3699: `.boardroom-scene__avatar-head {`
+- line 3710: `.boardroom-scene__avatar-torso {`
+- line 3723: `.boardroom-scene__avatar-core {`
+- line 3731: `.boardroom-scene__avatar-ring {`
+- line 3738: `.boardroom-scene__avatar-ring--one {`
+- line 3742: `.boardroom-scene__avatar-ring--two {`
+- line 3746: `.boardroom-scene__avatar-ring--three {`
+- line 3752: `.boardroom-scene__avatar-label {`
+- line 3764: `.boardroom-scene__skyline {`
+- line 3780: `.scene-runtime-workstation-layer {`
+- line 3789: `.scene-runtime-workstation-layer *:not(iframe):not(input):not(textarea):not(select):not([contenteditable="true"]):not([d`
+- line 3794: `.scene-runtime-workstation-layer ::selection {`
+- line 3799: `.scene-runtime-workstation-layer .scene-workstation {`
+- line 3803: `.scene-runtime-workstation-layer iframe {`
+- line 3808: `.scene-workstation {`
+- line 3824: `.scene-workstation--dragging,`
+- line 3825: `.scene-workstation--resizing {`
+- line 3829: `.scene-workstation--dragging *,`
+- line 3830: `.scene-workstation--resizing * {`
+- line 3834: `.scene-workstation--dragging .scene-workstation__body,`
+- line 3835: `.scene-workstation--resizing .scene-workstation__body {`
+- line 3839: `.scene-workstation::before,`
+- line 3840: `.scene-workstation::after {`
+- line 3848: `.scene-workstation::before {`
+- line 3855: `.scene-workstation::after {`
+- line 3862: `.scene-workstation__titlebar {`
+- line 3873: `.scene-workstation__identity {`
+- line 3880: `.scene-workstation__eyebrow {`
+- line 3887: `.scene-workstation__title {`
+- line 3893: `.scene-workstation__subtitle {`
+- line 3898: `.scene-workstation__actions {`
+- line 3903: `.scene-workstation__icon {`
+- line 3915: `.scene-workstation__icon--danger {`
+- line 3920: `.scene-workstation__tabs {`
+- line 3928: `.scene-workstation__terminal-strip {`
+- line 3938: `.scene-workstation__terminal-code {`
+- line 3946: `.scene-workstation__terminal-hint {`
+- line 3951: `.scene-workstation__tab {`
+- line 3963: `.scene-workstation__tab--active {`
+- line 3969: `.scene-workstation__body {`
+- line 3975: `.scene-workstation__resize {`
+- line 3992: `.scene-workstation:hover .scene-workstation__resize {`
+- line 3996: `.scene-workstation__resize:hover {`
+- line 4002: `.scene-workstation .module-card {`
+- line 4006: `.hermes-dashboard-embed {`
+- line 4017: `.hermes-dashboard-embed__status {`
+- line 4027: `.hermes-dashboard-embed__status strong {`
+- line 4035: `.hermes-dashboard-embed__status p {`
+- line 4041: `.hermes-dashboard-embed__chips {`
+- line 4048: `.hermes-dashboard-embed__chips span {`
+- line 4060: `.hermes-dashboard-embed__status[data-state="ready"] strong {`
+- line 4064: `.hermes-dashboard-embed__status[data-state="error"] strong {`
+- line 4068: `.hermes-dashboard-embed__actions {`
+- line 4074: `.hermes-dashboard-embed__frame {`
+- line 4082: `.hermes-dashboard-embed__overlay {`
+- line 4094: `.hermes-dashboard-embed__overlay p {`
+- line 4100: `.hermes-dashboard-embed__details {`
+- line 4105: `.hermes-dashboard-embed__details summary {`
+- line 4113: `.world-grid {`
+- line 4119: `.world-hero--full {`
+- line 4124: `.world-hero__topbar-actions {`
+- line 4131: `.world-hero__action {`
+- line 4145: `.world-hero__action--active {`
+- line 4150: `.world-hero {`
+- line 4160: `.world-hero__sync-ribbon {`
+- line 4178: `.world-hero__topbar,`
+- line 4179: `.world-hero__bottombar {`
+- line 4199: `.world-hero__topbar {`
+- line 4203: `.world-hero__bottombar {`
+- line 4209: `.world-hero__topbar strong {`
+- line 4216: `.world-hero__skyline {`
+- line 4231: `.world-hero__grid {`
+- line 4241: `.world-hero__hud {`
+- line 4249: `.world-hero__cluster {`
+- line 4255: `.world-hero__cluster--top {`
+- line 4259: `.world-hero__cluster--bottom {`
+- line 4263: `.world-hero__reticle {`
+- line 4276: `.world-hero__targeting {`
+- line 4285: `.world-hero__targeting::before,`
+- line 4286: `.world-hero__targeting::after {`
+- line 4293: `.world-hero__targeting::before {`
+- line 4297: `.world-hero__targeting::after {`
+- line 4301: `.world-hero__targeting--left {`
+- line 4306: `.world-hero__targeting--left::before,`
+- line 4307: `.world-hero__targeting--left::after {`
+- line 4312: `.world-hero__targeting--left::before {`
+- line 4316: `.world-hero__targeting--left::after {`
+- line 4320: `.world-hero__targeting--right {`
+- line 4325: `.world-hero__targeting--right::before,`
+- line 4326: `.world-hero__targeting--right::after {`
+- line 4331: `.world-hero__targeting--right::before {`
+- line 4335: `.world-hero__targeting--right::after {`
+- line 4339: `.world-city {`
+- line 4349: `.world-city__district {`
+- line 4362: `.world-city__district-label,`
+- line 4363: `.world-city__district-owner,`
+- line 4364: `.world-city__district-status {`
+- line 4370: `.world-city__district-label {`
+- line 4378: `.world-city__district-owner {`
+- line 4383: `.world-city__district-status {`
+- line 4390: `.world-city__flow {`
+- line 4399: `.world-terminals {`
+- line 4408: `.world-terminal {`
+- line 4419: `.world-terminal__code {`
+- line 4427: `.world-terminal__title {`
+- line 4434: `.world-terminal__detail {`
+- line 4439: `.world-avatar {`
+- line 4449: `.world-avatar__orb {`
+- line 4460: `.world-avatar__core {`
+- line 4468: `.world-avatar__ring {`
+- line 4475: `.world-avatar__ring--one {`
+- line 4479: `.world-avatar__ring--two {`
+- line 4483: `.world-avatar__card {`
+- line 4496: `.world-avatar__label {`
+- line 4503: `.world-avatar__title {`
+- line 4508: `.world-avatar__detail {`
+- line 4513: `.world-sidebar {`
+- line 4519: `.panel-workspace__tabs {`
+- line 4525: `.panel-workspace__tab {`
+- line 4536: `.panel-workspace__tab--active {`
+- line 4543: `.panel-workspace__focus {`
+- line 4547: `.panel-workspace__frame {`
+- line 4558: `.panel-workspace__frame-grid {`
+- line 4569: `.panel-workspace__frame-corners {`
+- line 4576: `.panel-workspace__frame-corners--tl {`
+- line 4583: `.panel-workspace__frame-corners--br {`
+- line 4590: `.panel-workspace__frame-topbar {`
+- line 4607: `.panel-workspace__frame-topbar strong {`
+- line 4613: `.panel-workspace__frame-body {`
+- line 4618: `.panel-workspace__focus .module-card {`
+- line 4622: `.panel-workspace__stack {`
+- line 4629: `.panel-workspace__stack > div {`
+- line 4633: `.panel-workspace__stack .module-card {`
+- line 4639: `.layout-manager {`
+- line 4644: `.layout-manager__row {`
+- line 4655: `.layout-manager__actions {`
+- line 4660: `.layout-manager__button {`
+- line 4672: `.layout-manager__button:disabled {`
+- line 4677: `.monitor-config {`
+- line 4682: `.monitor-config__row {`
+- line 4688: `.monitor-config__label {`
+- line 4695: `.monitor-config__select {`
+- line 4704: `.refresh-button--active {`
+- line 4708: `.line-list {`
+- line 4713: `.line-list__row {`
+- line 4720: `.line-list__row:last-child {`
+- line 4724: `.arda-error,`
+- line 4725: `.arda-loading,`
+- line 4726: `.empty-state {`
+- line 4734: `@media (max-width: 1180px) {`
+- line 4735: `.arda-layout {`
+- line 4739: `.systems-module-grid > .systems-panel:nth-child(1),`
+- line 4740: `.systems-module-grid > .systems-panel:nth-child(2),`
+- line 4741: `.systems-module-grid > .systems-panel:nth-child(3),`
+- line 4742: `.systems-module-grid > .systems-panel:nth-child(4),`
+- line 4743: `.systems-module-grid > .systems-panel:nth-child(5),`
+- line 4744: `.systems-module-grid > .systems-panel:nth-child(6) {`
+- line 4748: `.task-list-viewer {`
+- line 4752: `.provider-grid,`
+- line 4753: `.systems-detail-grid,`
+- line 4754: `.operating-surface-grid,`
+- line 4755: `.arda-command-console__body,`
+- line 4756: `.config-dimension-grid {`
+- line 4760: `.arda-command-console__lane-grid {`
+- line 4764: `.world-grid {`
+- line 4768: `.boardroom-scene__featured {`
+- line 4773: `.operating-surface-rail {`
+- line 4780: `.operating-surface-rail__lanes {`
+- line 4784: `.arda-layout__rail {`
+- line 4788: `.dashboard-grid > .module-card:nth-child(1),`
+- line 4789: `.dashboard-grid > .module-card:nth-child(2),`
+- line 4790: `.dashboard-grid > .module-card:nth-child(n+3) {`
+- line 4795: `@media (max-width: 760px) {`
+- line 4796: `.arda-app {`
+- line 4800: `.systems-kpi-grid,`
+- line 4801: `.operating-surface-summary,`
+- line 4802: `.operating-surface-first-screen,`
+- line 4803: `.task-list-viewer__layout,`
+- line 4804: `.arda-command-console__lane-grid,`
+- line 4805: `.systems-module-grid,`
+- line 4806: `.config-dimension-grid {`
+- line 4810: `.arda-command-console__header {`
+- line 4814: `.config-walkthrough__header {`
+- line 4818: `.headroom-row {`
+- line 4823: `.arda-header,`
+- line 4824: `.hero-strip,`
+- line 4825: `.scene-stage__header {`
+- line 4830: `.arda-header__controls {`
+- line 4834: `.hero-strip__metrics {`
+- line 4838: `.theme-switcher {`
+- line 4843: `.metric-pill {`
+- line 4848: `.boardroom-hotspot {`
+- line 4852: `.boardroom-scene__console {`
+- line 4858: `.boardroom-scene__console-grid,`
+- line 4859: `.boardroom-scene__console-widgets {`
+- line 4863: `.boardroom-scene__console-switches,`
+- line 4864: `.boardroom-scene__console-dials {`
+- line 4868: `.operating-surface-rail {`
+- line 4875: `.operating-surface-rail__attention,`
+- line 4876: `.operating-surface-rail__lanes {`
+- line 4880: `.operating-surface-rail__lane small {`
+- line 4884: `.workstation-dock {`
+- line 4891: `.boardroom-scene__avatar {`
+- line 4896: `.boardroom-support-deck__header {`
+- line 4901: `.boardroom-support-deck__hint {`
+- line 4906: `.boardroom-support-grid > div:nth-child(1),`
+- line 4907: `.boardroom-support-grid > div:nth-child(2),`
+- line 4908: `.boardroom-support-grid > div:nth-child(n+3) {`
+- line 4912: `.panel-workspace__stack > div {`
+- line 4916: `.world-terminals {`
+- line 4922: `.world-terminal {`
+- line 4926: `.world-city {`
+- line 4932: `.arda-failsafe {`
+- line 4944: `.arda-failsafe__eyebrow {`
+- line 4951: `.arda-failsafe__button {`
+- line 4962: `.control-panel-icons {`
+- line 4974: `.control-icon {`
+- line 4990: `.control-icon--derived {`
+- line 4994: `.control-icon--derived.control-icon--loading {`
+- line 4998: `.control-icon--hermes {`
+- line 5007: `.control-icon--hermes:hover {`
+- line 5015: `.control-icon:hover {`
+- line 5026: `.control-icon:active {`
+- line 5033: `.control-icon--danger:hover {`
+- line 5042: `.scene-runtime-canvas {`
+- line 5051: `.scene-runtime-canvas canvas {`
+- line 5057: `.scene-anchor-label {`
+- line 5070: `.scene-anchor-label span {`
+- line 5079: `.scene-anchor-label:disabled {`
+- line 5084: `.scene-anchor-label--small {`
+- line 5089: `.scene-anchor-label--primary {`
+- line 5095: `.hud-instrument {`
+- line 5116: `.hud-instrument--desk_surface {`
+- line 5121: `.hud-instrument--cyan {`
+- line 5125: `.hud-instrument--violet {`
+- line 5129: `.hud-instrument--gold {`
+- line 5133: `.hud-instrument--mint {`
+- line 5137: `.hud-instrument--rose {`
+- line 5141: `.hud-instrument__header,`
+- line 5142: `.hud-instrument__footer {`
+- line 5149: `.hud-instrument__header span,`
+- line 5150: `.hud-instrument__header b,`
+- line 5151: `.hud-instrument__header strong {`
+- line 5155: `.hud-instrument__header b {`
+- line 5162: `.hud-instrument__header strong {`
+- line 5173: `.hud-instrument__header i {`
+- line 5187: `.hud-instrument__scope {`
+- line 5194: `.hud-instrument__ring,`
+- line 5195: `.hud-instrument__axis,`
+- line 5196: `.hud-instrument__link,`
+- line 5197: `.hud-instrument__sweep {`
+- line 5203: `.hud-instrument__ring {`
+- line 5208: `.hud-instrument__ring--1 {`
+- line 5213: `.hud-instrument__ring--2 {`
+- line 5218: `.hud-instrument__axis {`
+- line 5223: `.hud-instrument__link {`
+- line 5228: `.hud-instrument__sweep {`
+- line 5233: `.hud-instrument__node circle {`
+- line 5238: `.hud-instrument__node circle + circle {`
+- line 5245: `.hud-instrument__node--warn {`
+- line 5249: `.hud-instrument__node--alert {`
+- line 5253: `.hud-instrument__node--dim {`
+- line 5257: `.hud-instrument__status {`
+- line 5267: `.hud-instrument__status--watch {`
+- line 5271: `.hud-instrument__status--external {`
+- line 5275: `.hud-instrument__status--offline {`
+- line 5279: `.hud-instrument__pips {`
+- line 5284: `.hud-instrument__pips i {`
+- line 5293: `.hud-instrument__pips i:nth-child(-n+3) {`
+- line 5297: `.boardroom-surface-preview {`
+- line 5318: `.boardroom-surface-preview--desk_surface {`
+- line 5323: `.boardroom-surface-preview--cyan {`
+- line 5327: `.boardroom-surface-preview--violet {`
+- line 5331: `.boardroom-surface-preview--gold {`
+- line 5335: `.boardroom-surface-preview--mint {`
+- line 5339: `.boardroom-surface-preview--rose {`
+- line 5343: `.boardroom-surface-preview--attention {`
+- line 5347: `.boardroom-surface-preview__header,`
+- line 5348: `.boardroom-surface-preview__footer {`
+- line 5355: `.boardroom-surface-preview__header span,`
+- line 5356: `.boardroom-surface-preview__header b,`
+- line 5357: `.boardroom-surface-preview__header strong {`
+- line 5362: `.boardroom-surface-preview__header b {`
+- line 5368: `.boardroom-surface-preview__header strong {`
+- line 5378: `.boardroom-surface-preview__header i {`
+- line 5391: `.boardroom-surface-preview__widgets {`
+- line 5398: `.surface-preview-widget {`
+- line 5410: `.surface-preview-widget b {`
+- line 5418: `.surface-preview-widget--metric span {`
+- line 5425: `.surface-preview-widget--metric i {`
+- line 5434: `.surface-preview-widget--particles span {`
+- line 5440: `.surface-preview-widget--particles i {`
+- line 5452: `.surface-preview-widget--status span {`
+- line 5459: `.surface-preview-widget--status i {`
+- line 5467: `.surface-preview-widget--status i.is-watch {`
+- line 5471: `.surface-preview-widget--status i.is-hot {`
+- line 5475: `.surface-preview-widget--sparkline svg {`
+- line 5480: `.surface-preview-widget--sparkline polyline {`
+- line 5488: `.surface-preview-widget--text span {`
+- line 5496: `.surface-preview-widget--media span,`
+- line 5497: `.surface-preview-widget--session span {`
+- line 5505: `.surface-preview-widget--media i,`
+- line 5506: `.surface-preview-widget--session i {`
+- line 5521: `.surface-preview-widget--media small,`
+- line 5522: `.surface-preview-widget--session small {`
+- line 5532: `.surface-preview-widget--data-stream span {`
+- line 5540: `.surface-preview-widget--data-stream i {`
+- line 5549: `.boardroom-surface-preview__footer {`
+- line 5555: `.boardroom-surface-preview__footer span {`
+- line 5561: `.boardroom-surface-preview__footer small {`
+- line 5566: `.boardroom-surface-preview__provenance {`
+- line 5578: `.boardroom-surface-preview__provenance span,`
+- line 5579: `.boardroom-surface-preview__provenance small {`
+- line 5588: `.boardroom-surface-preview__provenance small {`
+- line 5592: `.boardroom-surface-preview__provenance--approval_required {`
+- line 5596: `.world-terminal-preview {`
+- line 5616: `.world-terminal-preview--cyan {`
+- line 5620: `.world-terminal-preview--violet {`
+- line 5624: `.world-terminal-preview--gold {`
+- line 5628: `.world-terminal-preview--mint {`
+- line 5632: `.world-terminal-preview--rose,`
+- line 5633: `.world-terminal-preview--disabled {`
+- line 5637: `.world-terminal-preview--attention {`
+- line 5641: `.world-terminal-preview__header,`
+- line 5642: `.world-terminal-preview__footer {`
+- line 5650: `.world-terminal-preview__header b,`
+- line 5651: `.world-terminal-preview__header i,`
+- line 5652: `.world-terminal-preview > strong,`
+- line 5653: `.world-terminal-preview__footer span,`
+- line 5654: `.world-terminal-preview__footer small {`
+- line 5660: `.world-terminal-preview__header b {`
+- line 5666: `.world-terminal-preview__header i {`
+- line 5677: `.world-terminal-preview > strong {`
+- line 5682: `.world-terminal-preview__widgets {`
+- line 5689: `.world-terminal-preview__status-grid {`
+- line 5696: `.world-terminal-preview__status-grid i {`
+- line 5702: `.world-terminal-preview__status-grid i.is-watch {`
+- line 5706: `.world-terminal-preview__status-grid i.is-hot {`
+- line 5710: `.world-terminal-preview__feed {`
+- line 5716: `.world-terminal-preview__feed b,`
+- line 5717: `.world-terminal-preview__feed i {`
+- line 5724: `.world-terminal-preview__feed b {`
+- line 5729: `.world-terminal-preview__feed i {`
+- line 5739: `.world-terminal-preview__footer {`
+- line 5745: `.command-core-terminal {`
+- line 5763: `.command-core-terminal__screen,`
+- line 5764: `.command-core-terminal__button,`
+- line 5765: `.hermes-desk-terminal {`
+- line 5771: `.command-core-terminal__screen {`
+- line 5786: `.command-core-terminal__screen strong,`
+- line 5787: `.command-core-terminal__screen small,`
+- line 5788: `.command-core-terminal__eyebrow {`
+- line 5795: `.command-core-terminal__eyebrow {`
+- line 5803: `.command-core-terminal__screen strong {`
+- line 5810: `.command-core-terminal__screen small {`
+- line 5818: `.command-core-terminal__scope {`
+- line 5829: `.command-core-terminal__scope i {`
+- line 5839: `.command-core-terminal__scope i:nth-child(1) { left: 18%; top: 38%; }`
+- line 5840: `.command-core-terminal__scope i:nth-child(2) { left: 46%; top: 22%; }`
+- line 5841: `.command-core-terminal__scope i:nth-child(3) { left: 68%; top: 58%; background: #ffd37a; }`
+- line 5842: `.command-core-terminal__scope i:nth-child(4) { left: 82%; top: 34%; background: #ffa6d9; }`
+- line 5844: `.command-core-terminal__buttons {`
+- line 5850: `.command-core-terminal__button {`
+- line 5863: `.command-core-terminal__button--go {`
+- line 5868: `.command-core-terminal__button--stop {`
+- line 5873: `.command-core-terminal__button:hover,`
+- line 5874: `.command-core-terminal__screen:hover,`
+- line 5875: `.hermes-desk-terminal:hover {`
+- line 5879: `.hermes-desk-terminal {`
+- line 5896: `.hermes-desk-terminal__bar {`
+- line 5905: `.hermes-desk-terminal__bar i {`
+- line 5910: `.hermes-desk-terminal__lines {`
+- line 5916: `.hermes-desk-terminal__lines i {`
+- line 5924: `.hermes-desk-terminal__lines i:nth-child(2) { width: 74%; opacity: 0.42; }`
+- line 5925: `.hermes-desk-terminal__lines i:nth-child(3) { width: 88%; color: #8ef5ff; }`
+- line 5926: `.hermes-desk-terminal__lines i:nth-child(4) { width: 58%; opacity: 0.5; }`
+- line 5928: `.hermes-desk-terminal strong {`
+- line 5938: `.service-surface-hero {`
+- line 5950: `.service-surface-hero span,`
+- line 5951: `.service-surface-hero strong,`
+- line 5952: `.service-surface-hero p {`
+- line 5956: `.service-surface-hero span {`
+- line 5964: `.service-surface-hero strong {`
+- line 5971: `.service-surface-hero p {`
+- line 5979: `.service-surface-hero__status {`
+- line 5992: `.service-surface-capabilities {`
+- line 5999: `.service-surface-capabilities span {`
+- line 6008: `.service-surface-readiness {`
+- line 6015: `.service-surface-readiness__item {`
+- line 6022: `.service-surface-readiness__item strong,`
+- line 6023: `.service-surface-readiness__item span,`
+- line 6024: `.service-surface-readiness__item p {`
+- line 6028: `.service-surface-readiness__item strong {`
+- line 6033: `.service-surface-readiness__item span {`
+- line 6042: `.service-surface-readiness__item p {`
+- line 6049: `.service-surface-readiness__item--ready span {`
+- line 6053: `.service-surface-readiness__item--blocked span {`
+- line 6057: `.service-embed-placeholder {`
+- line 6068: `.service-embed-placeholder strong {`
+- line 6075: `.service-embed-placeholder span {`
+- line 6080: `.service-embed-frame {`
+- line 6089: `.media-library-layout {`
+- line 6096: `.media-library-layout__summary,`
+- line 6097: `.media-library-layout__entries,`
+- line 6098: `.media-library-preview {`
+- line 6102: `.media-library-layout__entries {`
+- line 6110: `.media-library-entry {`
+- line 6124: `.media-library-entry.is-active {`
+- line 6130: `.media-library-entry span {`
+- line 6136: `.media-library-entry strong,`
+- line 6137: `.media-library-entry small {`
+- line 6143: `.media-library-entry strong {`
+- line 6147: `.media-library-entry small {`
+- line 6153: `.media-library-preview {`
+- line 6159: `.media-library-preview pre {`
+- line 6173: `.media-library-preview__image,`
+- line 6174: `.media-library-preview__video {`
+- line 6186: `.media-library-preview__video {`
+- line 6190: `.media-library-preview__pdf {`
+- line 6198: `.scene-anchor-label[class*='scene-anchor-label--urgency-'] {`
+- line 6205: `.scene-anchor-label--urgency-critical,`
+- line 6206: `.scene-anchor-label--urgency-blocked {`
+- line 6210: `.boardroom-mission-cue {`
+- line 6222: `.boardroom-mission-cue__label,`
+- line 6223: `.boardroom-mission-cue__detail {`
+- line 6227: `.boardroom-mission-cue__label {`
+- line 6233: `.boardroom-mission-cue__detail {`
+- line 6240: `.world-district-presence-cue {`
+- line 6252: `.world-district-presence-cue__label,`
+- line 6253: `.world-district-presence-cue__detail {`
+- line 6257: `.world-district-presence-cue__label {`
+- line 6263: `.world-district-presence-cue__detail {`
+- line 6270: `.presence-ledger-status {`
+- line 6282: `.presence-ledger-status__label,`
+- line 6283: `.presence-ledger-status__detail {`
+- line 6287: `.presence-ledger-status__label {`
+- line 6293: `.presence-ledger-status__detail {`
+- line 6300: `.presence-ledger-status--fresh {`
+- line 6305: `.presence-ledger-status--stale,`
+- line 6306: `.presence-ledger-status--fallback {`
+- line 6311: `.scene-runtime-card {`
+- line 6322: `.scene-runtime-card--world {`
+- line 6326: `.scene-runtime-card__eyebrow {`
+- line 6334: `.scene-runtime-card__title {`
+- line 6340: `.scene-runtime-card__metrics {`
+- line 6346: `.scene-runtime-card__metric {`
+- line 6354: `.scene-runtime-card__metric strong {`
+- line 6359: `.scene-runtime-card__body {`
+- line 6365: `.scene-runtime-card__actions {`
+- line 6372: `.scene-runtime-card__action {`
+- line 6384: `.fleet-preview-surface {`
+- line 6398: `.fleet-preview-surface--attention {`
+- line 6403: `.fleet-preview-surface__header,`
+- line 6404: `.fleet-preview-surface__metrics,`
+- line 6405: `.fleet-preview-surface__route,`
+- line 6406: `.fleet-focused-view__hero,`
+- line 6407: `.fleet-focused-view__metrics,`
+- line 6408: `.fleet-focused-view__row,`
+- line 6409: `.fleet-focused-view__footer {`
+- line 6416: `.fleet-preview-surface__header {`
+- line 6424: `.fleet-preview-surface strong {`
+- line 6431: `.fleet-preview-surface__metrics {`
+- line 6435: `.fleet-preview-surface__metrics span,`
+- line 6436: `.fleet-focused-view__metric {`
+- line 6444: `.fleet-preview-surface__metrics b,`
+- line 6445: `.fleet-focused-view__metric b {`
+- line 6451: `.fleet-preview-surface small,`
+- line 6452: `.fleet-focused-view small {`
+- line 6459: `.fleet-preview-surface__route {`
+- line 6466: `.fleet-focused-view {`
+- line 6477: `.fleet-focused-view__eyebrow,`
+- line 6478: `.fleet-focused-view__status {`
+- line 6486: `.fleet-focused-view h3,`
+- line 6487: `.fleet-focused-view h4,`
+- line 6488: `.fleet-focused-view p {`
+- line 6492: `.fleet-focused-view h3 {`
+- line 6499: `.fleet-focused-view p {`
+- line 6504: `.fleet-focused-view__metrics {`
+- line 6509: `.fleet-focused-view__metric--good {`
+- line 6513: `.fleet-focused-view__metric--attention,`
+- line 6514: `.fleet-focused-view--attention .fleet-focused-view__status {`
+- line 6519: `.fleet-focused-view__grid {`
+- line 6525: `.fleet-focused-view section {`
+- line 6532: `.fleet-focused-view h4 {`
+- line 6540: `.fleet-focused-view__row {`
+- line 6547: `.fleet-focused-view__row b {`
+- line 6553: `.fleet-focused-view__footer {`
